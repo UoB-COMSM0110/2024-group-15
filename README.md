@@ -4,6 +4,44 @@
 Louis Nutt-Wilson, Xinyu Hu, Yining Xu, Ada Liang, Li-Hshin Chien
 
 
+
+# Requirements
+
+## Use-case diagram
+
+TODO
+
+## Use-case specifications
+
+* vs Human or vs Computer
+
+* then settings screen
+    * choose how many rounds you want to play
+    * how much health each player should have
+    * the number of planets
+
+* Points system + shop
+* Gravity planets; choosing between moon, mars, earth, etc.
+* Interactive terrain (destroyable by certain items in the shop ? )
+* solar wind ? like in TANKS, raft wars
+* black holes ?
+
+* shooting stars mechanics
+    * probabilities to do certain things
+    * turn into a planet/black hole
+    * gaining points etc
+
+* camera zooms in on the following of an arrow
+* whether to do a half and half screen where one side has negative gravity, or multiple planets completely visible on the screen
+
+* player can move around the planet rather than shoot for a move
+* moving to other planets ? maybe an item in the shop
+* HP bars and blood
+* Targets on other planets which give points when shot
+
+* Final screen: player X wins
+
+
 ## Game idea 1 - 2 player cooperative game
 
 It is a game involving both puzzles and actions. Similar to this part "Ice and Fire" of "It takes two" gameplay, but make it 2D.
@@ -57,6 +95,7 @@ Should we make the game undertale-like or the mario-like
   * **Camera movement**; in bowman and raft wars, the camera moves with the projectile so the shooting player cannot see exactly where they need to hit
   * **Gravity engine**; Gravity mechanics would need to be implemented for this idea (if it is set in space) and the balance between realism and difficulty would need to be found
   * **AI enemy**; allowing a single player to fight against a computer would add more depth to this game, and it would pose a challenge to create the computer player.
+<<<<<<< HEAD
 
 ### Prototype
 [![](./assets/thumbnails/Game2_pic.png)](https://drive.google.com/file/d/1X9CZkVwlnULj-P8qy6iIerfCmLlt9J-E/view?usp=sharing )
@@ -89,3 +128,5 @@ Should we make the game undertale-like or the mario-like
 | A3                                      | 1. Hit the ground                            |
 |                                         | 2. The ground breaks                        |
 |                                         | 3. Back to Basic Flow 5.                    |
+=======
+>>>>>>> 1363295 (test)
