@@ -28,7 +28,7 @@ TODO
 
 * shooting stars mechanics
     * probabilities to do certain things
-    * turn into a planet/black hole
+    * turn into a planet/black hole (which can be turned off in the settings)
     * gaining points etc
 
 * camera zooms in on the following of an arrow
