@@ -1,5 +1,8 @@
 # Software Engineering - Group 15
 
+## Team
+Louis Nutt-Wilson, Xinyu Hu, Yining Xu, Ada Liang, Li-Hshin Chien
+
 
 ## Game idea 1 - 2 player cooperative game
 
@@ -34,6 +37,9 @@ https://www.youtube.com/watch?v=Hmw73vcUzsg&list=PLqPLyUreLV8C59RyVDRESJtefspPi-
 ![](game-idea-imgs/game-idea-1-5.png)
 Should we make the game undertale-like or the mario-like
 
+### Prototype
+[![](./assets/thumbnails/Game1_pic.png)](https://drive.google.com/file/d/1vBCwzy2BSnOHUgJ7MrSeeB4-8P2UUbyQ/view?usp=drive_link )
+
 
 ## Game Idea 2 - 2 player versus game
 
@@ -52,8 +58,11 @@ Should we make the game undertale-like or the mario-like
   * **Gravity engine**; Gravity mechanics would need to be implemented for this idea (if it is set in space) and the balance between realism and difficulty would need to be found
   * **AI enemy**; allowing a single player to fight against a computer would add more depth to this game, and it would pose a challenge to create the computer player.
 
+### Prototype
+[![](./assets/thumbnails/Game2_pic.png)](https://drive.google.com/file/d/1X9CZkVwlnULj-P8qy6iIerfCmLlt9J-E/view?usp=sharing )
 
-### Requirements
+
+## Requirements
 
 
 **Use-Case Specification**
