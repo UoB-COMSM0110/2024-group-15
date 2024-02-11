@@ -51,3 +51,32 @@ Should we make the game undertale-like or the mario-like
   * **Camera movement**; in bowman and raft wars, the camera moves with the projectile so the shooting player cannot see exactly where they need to hit
   * **Gravity engine**; Gravity mechanics would need to be implemented for this idea (if it is set in space) and the balance between realism and difficulty would need to be found
   * **AI enemy**; allowing a single player to fight against a computer would add more depth to this game, and it would pose a challenge to create the computer player.
+
+
+### Requirements
+
+
+**Use-Case Specification**
+
+*Difficult Mode*
+
+
+| Use-Case Section                        | vs Human                                      |
+|-----------------------------------------|-----------------------------------------------|
+| **Description**                         | A run through of the game on hard mode        |
+| **Basic Flow**                          | Shoot your opponent until his/her HP becomes zero                    |
+| 1.                                      | Players can choose their own planet, each planet has different gravity |
+| 2.                                      | LEFT-CLICK and drag the mouse to control throwing power and angle (User can choose to hit the star or opponent) |
+| 3.                                      | May appear strong wind and change the trajectory of the arrow         |
+| 4.                                      | Hit opponent, their HP will be reduced [A1, A2, A3]                    |
+| 5.                                      | Change sides                                  |
+|                                         |                                               |
+| **Alternative Flow**                    |                                               |
+| A1                                      | 1. Hit a star, skill points will increase                                |
+|                                         | 2. Back to Basic Flow 5.                    |
+| A2                                      | 1. Hit a star, star becomes black hole                                    |
+|                                         | 2. No skill points will be added                                       |
+|                                         | 3. Back to Basic Flow 5.                    |
+| A3                                      | 1. Hit the ground                            |
+|                                         | 2. The ground breaks                        |
+|                                         | 3. Back to Basic Flow 5.                    |
