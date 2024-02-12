@@ -40,27 +40,6 @@ TODO
 
 **Use-Case Specification**
 
-*Easy Mode*
-
-
-| Use-Case Section     | vs Human                                                                                                                                                                   | vs Computer   |
-|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----|
-| **Description**      | A run through of the game on easy mode                                                                                                                                     |    |
-| **Basic Flow**       | Two players compete to get a higher score to win the game with no one losing all of his health points.                                                                     |    |
-| 1.                   | Each user presses the left mouse button, drags the mouse to determine the strength and direction, and releases the mouse to shoot. Each player can take one shot each turn. |    |
-| 2.                   | The user who is shot will lose his health points.                                                                                                                          |    |
-| 3.                   | The users can collect weapons and skills by shooting the stars.                                                                                                            |    |
-| 4.                   | The users can adjust their position by pressing A and D.                                                                                                                   |    |
-| 5.                   | The number of rounds will decrease after each user takes a shot.                                                                                                           |    |
-| 6.                   | The number of rounds decrease to 0 and the result is shown with the option to try again.                                                                                   |    |
-| **Alternative Flow** |                                                                                                                                                                            |    |
-| 1.                   | Each user presses the left mouse button, drags the mouse to determine the strength and direction, and releases the mouse to shoot. Each player can take one shot each turn. |    |
-| 2.                   | The user who is shot will lose his health point.                                                                                                                           |    |
-| 3.                   | The users can collect weapons and skills by shooting the stars.                                                                                                            |    |
-| 4.                   | The users can adjust their position by pressing A and D.                                                                                                                   |    |
-| 5.                   | The number of rounds will decrease after each user takes a shot.                                                                                                           |    |
-| 6.                   | The user has lost all of his health points within 10 rounds and the result is shown with the option to try again.                                                          |    |
-
 *Difficult Mode*
 
 
