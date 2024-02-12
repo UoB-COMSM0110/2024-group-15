@@ -7,6 +7,7 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 ![](assets/Group%20Photo.png)
 
 # Requirements
+
 ## User Storeies
 
 "As a player, I want to have personalize choices at the start of the game so that I can choose the game's difficulty based on my preferences.
@@ -34,7 +35,34 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 
 TODO
 
+
 ## Use-case specifications
+
+**Use-Case Specification**
+
+*Difficult Mode*
+
+
+| Use-Case Section                        | vs Human                                      | vs Computer                                                                                                     |
+|-----------------------------------------|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| **Description**                         | A run through of the game on hard mode        | 1 player run through of the game on hard mode, against a computer                                               |
+| **Basic Flow**                          | Shoot your opponent until his/her HP becomes zero                    | Shoot the computer until its HP becomes zero, or your own becomes zero                                          |
+| 1.                                      | Players can choose their own planet, each planet has different gravity | Players can choose their own planet, each planet has different gravity                                          |
+| 2.                                      | LEFT-CLICK and drag the mouse to control throwing power and angle (User can choose to hit the star or opponent) | LEFT-CLICK and drag the mouse to control throwing power and angle (User can choose to hit the star or opponent) |
+| 3.                                      | May appear strong wind and change the trajectory of the arrow         | ay appear strong wind and change the trajectory of the arrow                                                    |
+| 4.                                      | Hit opponent, their HP will be reduced [A1, A2, A3]                    | Hit opponent, their HP will be reduced [A1, A2, A3]                                                             |
+| 5.                                      | Change sides                                  | Change sides, computer will take their turn                                                                     |
+|                                         |                                               |                                                                                                                 |
+| **Alternative Flow**                    |                                               |                                                                                                                 |
+| A1                                      | 1. Hit a star, skill points will increase                                |                                                                                                                 |
+|                                         | 2. Back to Basic Flow 5.                    |                                                                                                                 |
+| A2                                      | 1. Hit a star, star becomes black hole                                    |                                                                                                                 |
+|                                         | 2. No skill points will be added                                       |                                                                                                                 |
+|                                         | 3. Back to Basic Flow 5.                    |                                                                                                                 |
+| A3                                      | 1. Hit the ground                            |                                                                                                                 |
+|                                         | 2. The ground breaks                        |                                                                                                                 |
+|                                         | 3. Back to Basic Flow 5.                    |                                                                                                                 |
+=======
 
 * vs Human or vs Computer
 
@@ -124,32 +152,7 @@ Should we make the game undertale-like or the mario-like
 [![](./assets/thumbnails/Game2_pic.png)](https://drive.google.com/file/d/1X9CZkVwlnULj-P8qy6iIerfCmLlt9J-E/view?usp=sharing )
 
 
-## Requirements
 
 
-**Use-Case Specification**
 
-*Difficult Mode*
-
-
-| Use-Case Section                        | vs Human                                      | vs Computer                                                                                                     |
-|-----------------------------------------|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **Description**                         | A run through of the game on hard mode        | 1 player run through of the game on hard mode, against a computer                                               |
-| **Basic Flow**                          | Shoot your opponent until his/her HP becomes zero                    | Shoot the computer until its HP becomes zero, or your own becomes zero                                          |
-| 1.                                      | Players can choose their own planet, each planet has different gravity | Players can choose their own planet, each planet has different gravity                                          |
-| 2.                                      | LEFT-CLICK and drag the mouse to control throwing power and angle (User can choose to hit the star or opponent) | LEFT-CLICK and drag the mouse to control throwing power and angle (User can choose to hit the star or opponent) |
-| 3.                                      | May appear strong wind and change the trajectory of the arrow         | ay appear strong wind and change the trajectory of the arrow                                                    |
-| 4.                                      | Hit opponent, their HP will be reduced [A1, A2, A3]                    | Hit opponent, their HP will be reduced [A1, A2, A3]                                                             |
-| 5.                                      | Change sides                                  | Change sides, computer will take their turn                                                                     |
-|                                         |                                               |                                                                                                                 |
-| **Alternative Flow**                    |                                               |                                                                                                                 |
-| A1                                      | 1. Hit a star, skill points will increase                                |                                                                                                                 |
-|                                         | 2. Back to Basic Flow 5.                    |                                                                                                                 |
-| A2                                      | 1. Hit a star, star becomes black hole                                    |                                                                                                                 |
-|                                         | 2. No skill points will be added                                       |                                                                                                                 |
-|                                         | 3. Back to Basic Flow 5.                    |                                                                                                                 |
-| A3                                      | 1. Hit the ground                            |                                                                                                                 |
-|                                         | 2. The ground breaks                        |                                                                                                                 |
-|                                         | 3. Back to Basic Flow 5.                    |                                                                                                                 |
-=======
 >>>>>>> 1363295 (test)
