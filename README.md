@@ -16,6 +16,20 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 "As a player, I want to have cases or tutorial examples telling me some of special designs of the game.”
 "As a player, I want a skip function to skip the animation, so that I can get the result immediately."
 
+## Stakeholders
+
+* Users of the game
+* The friends of the users of the game
+* The markers of the project
+* Future groups next year
+
+
+## User Stories
+
+"As a marker for this project, I want to see groups create engaging and well made games, with a strong process of development that utilises the techniques taught in this module."
+
+"As a future group for this module, we want to see good examples of games which will inspire us when creating our own game."
+
 ## Use-case diagram
 
 TODO
