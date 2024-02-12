@@ -1,9 +1,10 @@
 # Software Engineering - Group 15
 
 ## Team
-Louis Nutt-Wilson, Xinyu Hu, Yining Xu, Ada Liang, Li-Hshin Chien
 
+Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 
+![](assets/Group%20Photo.png)
 
 # Requirements
 
@@ -11,7 +12,7 @@ Louis Nutt-Wilson, Xinyu Hu, Yining Xu, Ada Liang, Li-Hshin Chien
 
 TODO
 
-## Use-case specifications
+## Use-case specifications
 
 * vs Human or vs Computer
 
