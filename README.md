@@ -8,14 +8,6 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 
 # Requirements
 
-## User Storeies
-
-"As a player, I want to have personalize choices at the start of the game so that I can choose the game's difficulty based on my preferences.
-"As a player, I want to gain resources through some special behviours in the game, and these resources can be able to trade for special skills, so it is bit more fun."
-"As a player, I want to know the force and the direction of my arrow, so I need a sign to acknowledge that."
-"As a second player, I want to be able to play the game with my friends, so that I can have fun with two players other than play against the computer.”
-"As a player, I want to have cases or tutorial examples telling me some of special designs of the game.”
-"As a player, I want a skip function to skip the animation, so that I can get the result immediately."
 
 ## Stakeholders
 
@@ -23,9 +15,20 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 * The friends of the users of the game
 * The markers of the project
 * Future groups next year
+* 
+## User Storeies
 
+"As a player, I want to have personalize choices at the start of the game so that I can choose the game's difficulty based on my preferences."
 
-## User Stories
+"As a player, I want to gain resources through some special behviours in the game, and these resources can be able to trade for special skills, so it is bit more fun."
+
+"As a player, I want to know the force and the direction of my arrow, so I need a sign to acknowledge that."
+
+"As a second player, I want to be able to play the game with my friends, so that I can have fun with two players other than play against the computer."
+
+"As a player, I want to have cases or tutorial examples telling me some of special designs of the game."
+
+"As a player, I want a skip function to skip the animation, so that I can get the result immediately."
 
 "As a marker for this project, I want to see groups create engaging and well made games, with a strong process of development that utilises the techniques taught in this module."
 
@@ -33,7 +36,8 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 
 ## Use-case diagram
 
-TODO
+![Diagram Image](game-idea-imgs/Diagram%202024-02-19%2004-26-53.png)
+
 
 
 ## Use-case specifications
