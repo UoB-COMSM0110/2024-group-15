@@ -1,11 +1,18 @@
 import processing.core.PVector;
 
 class Planet extends Object {
-    float mass;  // Mass
+    float mass;
+    float r;
 
     Planet(App app, int x, int y, int mass) {
-        super(app, x, y, new PVector(0 ,0));
+        super(app, x, y);
         this.mass = mass;
+        this.r = mass/10F;
+    }
+
+    Planet(App app, int x, int y, int mass, int radius) {
+        this(app, x, y, mass);
+        this.r = radius;
     }
 
     void move() {
@@ -14,27 +21,21 @@ class Planet extends Object {
 
     void draw() {
         app.fill(0, 255, 0);
-        app.ellipse(loc.x, loc.y, mass/10, mass/10);
+        app.ellipse(x, y, r*2, r*2);
     }
 
-    // Calculate gravitational force exerted by the planet on a space object
+    // Calculate gravitational force exerted by the planet on an object (maths which no one understands)
     PVector calculateGravity(Object obj) {
-        float G = 0.1F;  // Gravitational constant
-
-        // Calculate direction vector
-        PVector direction = new PVector(loc.x - obj.loc.x, loc.y - obj.loc.y);
+        float G = 0.1F;
+        PVector direction = new PVector(x-obj.x, y-obj.y);
 
         float distance = direction.mag();
 
-        // Avoid division by zero
         distance = App.constrain(distance, 5, 25);
-
-        // Calculate gravitational force magnitude
 
         float objectMass = 1F;
         float forceMagnitude = (G * mass * objectMass) / (distance * distance);
 
-        // Normalize the direction vector and scale by force magnitude
         direction.normalize();
         direction.mult(forceMagnitude);
 

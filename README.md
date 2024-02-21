@@ -36,7 +36,7 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 
 ## Use-case diagram
 
-![Diagram Image](game-idea-imgs/Diagram%202024-02-19%2004-26-53.png)
+![Diagram Image](assets/game-idea-imgs/Diagram%202024-02-19%2004-26-53.png)
 
 
 
@@ -123,10 +123,10 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 It is a game involving both puzzles and actions. Similar to this part "Ice and Fire" of "It takes two" gameplay, but make it 2D.
 https://www.youtube.com/watch?v=LaLqVvRAuSA
 * The main plot is: the mage twins receive a quest to find the kingdom's hidden treasure, a task that requires them to traverse through fields imbued with fire and ice. It the story can be told by giving the players a few slides at first (kinda like the start of HELLTAKER).
-  ![](game-idea-imgs/game-idea-1-1.png)
+  ![](assets/game-idea-imgs/game-idea-1-1.png)
 * the first room should be a tutorial room, with simple instructions and punching bags for players to try how to manipulate.
 * the second big room can be a field with environmental interaction(the players can figure out puzzles together and use their specialty to solve it) and of course there are some Minion to beat.
-  ![](game-idea-imgs/game-idea-1-2.png)
+  ![](assets/game-idea-imgs/game-idea-1-2.png)
 * the third room can be "BOSS ROOM", the twins finally get to the treasure, but first they are going to beat a giant dragon first...(by the way, The BOSS can switch between ice and fire attributes)
 
 ### The twist
@@ -145,10 +145,10 @@ And after being attaked, the players' HP should also be calculated.
 
 
 **To be discussed...**
-![](game-idea-imgs/game-idea-1-3.png)
-![](game-idea-imgs/game-idea-1-4.png)
+![](assets/game-idea-imgs/game-idea-1-3.png)
+![](assets/game-idea-imgs/game-idea-1-4.png)
 https://www.youtube.com/watch?v=Hmw73vcUzsg&list=PLqPLyUreLV8C59RyVDRESJtefspPi-eXq
-![](game-idea-imgs/game-idea-1-5.png)
+![](assets/game-idea-imgs/game-idea-1-5.png)
 Should we make the game undertale-like or the mario-like
 
 ### Prototype
@@ -159,9 +159,9 @@ Should we make the game undertale-like or the mario-like
 
 * A classic turn based 2d game, in the style of old flash games such as Raft Wars, Bowman, Fleabag and Mutt, etc.
 
-![raft wares](game-idea-imgs/raftwars.jpg)
-![image](game-idea-imgs/bowman.jpg)
-![image](game-idea-imgs/fleabag-vs-mutt.jpg)
+![raft wares](assets/game-idea-imgs/raftwars.jpg)
+![image](assets/game-idea-imgs/bowman.jpg)
+![image](assets/game-idea-imgs/fleabag-vs-mutt.jpg)
 
 
 ### Twist idea
