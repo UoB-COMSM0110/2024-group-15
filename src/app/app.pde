@@ -1,5 +1,5 @@
 /*
-*  the main class where the program is run from
+*  the main file where the program is run from
 */
 
 

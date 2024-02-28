@@ -2,7 +2,6 @@
 *  handles the mouse aim tool and changes the velocity of the arrow
 */
 
-import processing.core.PVector;
 
 public class Aimer {
     Arrow arrow;
@@ -72,27 +71,8 @@ public class Aimer {
         camera.apply();
 
 
-        // PATHFINDER TEST (this is just test code for pathfinding,
-        // uncomment the below if statement to see it in action
-       if (true) {
-           return;
-       }
-        Object path = new Object(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
-
-        path.velocity.mult(0.1F);
-        for (int i=0; i<200; i++) {
-
-            PVector totalGrav = new PVector(0, 0);
-            for (Planet p : planets) {
-                totalGrav.add(p.calculateGravity(path));
-            }
-
-            totalGrav.div(1);
-            path.velocity.add(totalGrav);
-
-            path.x += path.velocity.x;
-            path.y += path.velocity.y;
-            ellipse(path.x, path.y, 10, 10);
-        }
+        // PATHFINDER TEST
+        // Pathfinder path = new Pathfinder(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
+        // path.draw();
     }
 }

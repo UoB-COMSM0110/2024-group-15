@@ -1,5 +1,5 @@
 
-public class Player extends Object {
+public class Player extends Obj {
     Arrow arrow;
     Aimer aimer;
     Planet planet;

@@ -1,21 +1,18 @@
 /*
 *  The abstract class for all objects drawn to the screen
-*  This isn't an actual 'abstract' class yet as it is used by the pathfinder test, but it should be!
 */
 
-import processing.core.PVector;
-
-public class Object {
+abstract class Obj {
     PVector velocity;
     float x, y;
 
-    Object(float x, float y, PVector velocity) {
+    Obj(float x, float y, PVector velocity) {
         this.x = x;
         this.y = y;
         this.velocity = velocity;
     }
 
-    Object(float x, float y) {
+    Obj(float x, float y) {
         this(x, y, new PVector(0, 0));
     }
 
@@ -31,6 +28,5 @@ public class Object {
         y += velocity.y;
     }
 
-    // TODO put these into an interface/abs class
-    void draw() {}
+    abstract void draw();
 }

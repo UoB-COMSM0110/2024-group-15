@@ -1,6 +1,6 @@
-import processing.core.PVector;
 
-class Planet extends Object {
+
+class Planet extends Obj {
     float mass;
     float r;
 
@@ -25,7 +25,7 @@ class Planet extends Object {
     }
 
     // Calculate gravitational force exerted by the planet on an object (maths which no one understands)
-    PVector calculateGravity(Object obj) {
+    PVector calculateGravity(Obj obj) {
         float G = 0.1F;
         PVector direction = new PVector(x-obj.x, y-obj.y);
 

@@ -1,4 +1,4 @@
-public class Arrow extends Object {
+public class Arrow extends Obj {
     boolean isMoving = false;  // this gets set by the Aimer class when you fire an arrow
     PImage sprite;
 
