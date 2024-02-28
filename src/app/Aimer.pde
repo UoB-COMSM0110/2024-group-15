@@ -5,12 +5,10 @@
 import processing.core.PVector;
 
 public class Aimer {
-    App app;
     Arrow arrow;
     Player player;
 
-    Aimer(App app, Player player, Arrow arrow) {
-        this.app = app;
+    Aimer(Player player, Arrow arrow) {
         this.arrow = arrow;
         this.player = player;
     }
@@ -18,29 +16,29 @@ public class Aimer {
     boolean aiming = false;
 
     void update() {
-        if (!app.mousePressed && !aiming) {     // skip
+        if (!mousePressed && !aiming) {     // skip
             return;
         }
-        if (!app.mousePressed) {                // stop aiming and fire
+        if (!mousePressed) {                // stop aiming and fire
             arrow.isMoving = true;
             aiming = false;
-            app.camera.pushZoom();
+            camera.pushZoom();
             return;
         }
-        float x2 = app.mouseX;
-        float y2 = app.mouseY;
+        float x2 = mouseX;
+        float y2 = mouseY;
 
         if (!aiming) {                          // start aiming
             arrow.x = player.x;
             arrow.y = player.y;
 
-            x1 = app.mouseX;
-            y1 = app.mouseY;
+            x1 = mouseX;
+            y1 = mouseY;
 
             arrow.isMoving = false;
             aiming = true;
-            app.camera.updateXY(0, 0);
-            app.camera.popZoom();
+            camera.updateXY(0, 0);
+            camera.popZoom();
         }
 
         // get the vector of the 2 points made by mouse press
@@ -59,33 +57,33 @@ public class Aimer {
         }
 
         // draw the line
-        app.resetMatrix();
-        app.pushStyle();
+        resetMatrix();
+        pushStyle();
 
-        app.textSize(20);
-        app.fill(255);
-        app.text(lengthOfLine, x1, y1);
-        app.text(angleRadians*(180/(float)Math.PI), x2, y2);
+        textSize(20);
+        fill(255);
+        text(lengthOfLine, x1, y1);
+        text(angleRadians*(180/(float)Math.PI), x2, y2);
 
-        app.stroke(255, 255, 255);
-        app.line(x1, y1, x2, y2);
+        stroke(255, 255, 255);
+        line(x1, y1, x2, y2);
 
-        app.popStyle();
-        app.camera.apply();
+        popStyle();
+        camera.apply();
 
 
         // PATHFINDER TEST (this is just test code for pathfinding,
         // uncomment the below if statement to see it in action
-        if (true) {
-            return;
-        }
-        Object path = new Object(app, arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
+       if (true) {
+           return;
+       }
+        Object path = new Object(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
 
         path.velocity.mult(0.1F);
         for (int i=0; i<200; i++) {
 
             PVector totalGrav = new PVector(0, 0);
-            for (Planet p : app.planets) {
+            for (Planet p : planets) {
                 totalGrav.add(p.calculateGravity(path));
             }
 
@@ -94,7 +92,7 @@ public class Aimer {
 
             path.x += path.velocity.x;
             path.y += path.velocity.y;
-            app.ellipse(path.x, path.y, 10, 10);
+            ellipse(path.x, path.y, 10, 10);
         }
     }
 }
