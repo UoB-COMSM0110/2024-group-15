@@ -1,0 +1,79 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLClass</id><coordinates><x>384</x><y>384</y><w>104</w><h>104</h></coordinates><panel_attributes>&lt;&lt;abstract&gt;&gt;
+Obj
+--
+velocity:PVector 
+x:float
+y:float
+--
+move()
+abstract draw()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>248</x><y>560</y><w>104</w><h>104</h></coordinates><panel_attributes>Arrow
+--
++ velocity:PVector 
++ x:float
++ y:float
+--
++move():void
+abstract draw():void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>384</x><y>560</y><w>104</w><h>104</h></coordinates><panel_attributes>Pathfinder
+--
+
+--
++ draw():void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>560</y><w>192</w><h>96</h></coordinates><panel_attributes>Planet 
+--
++ mass:float 
++ r:float 
+--
++ move():void
++ draw():void
++ PVector calculateGravity():void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>736</x><y>560</y><w>104</w><h>104</h></coordinates><panel_attributes>Player
+--
++ arrow:Arrow 
++ aimer:Aimer 
++ planet:Planet
++ planetAngle:int 
+--
++ draw():void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>480</y><w>136</w><h>96</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>150;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>416</x><y>480</y><w>24</w><h>96</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>480</y><w>144</w><h>96</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;160;100</additional_attributes></element><element><id>Relation</id><coordinates><x>464</x><y>480</y><w>344</w><h>96</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;410;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>608</x><y>256</y><w>144</w><h>200</h></coordinates><panel_attributes>Camera
+--
++x:float
++y:float
++zoom:float 
++zoomXOffset:float 
++zoomYOffset:float 
+- zoomStack:Stack&lt;Float&gt; 
+--
++ updateXY():void
++ updateZoom:void
++ keyMove():void
++ apply():void
++ pushZoom():void
++ popZoom():void
++ applyXY():void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>80</x><y>288</y><w>192</w><h>96</h></coordinates><panel_attributes>Aimer
+--
++ arrow:Arrow 
++ player:Player 
++ x1:float 
++ y1:float 
++ aiming:boolean 
+--
++ update():void
++ draw():void
++ PVector calculateGravity(Obj obj):void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>352</x><y>0</y><w>216</w><h>248</h></coordinates><panel_attributes>App
+--
++ final ASSETS_PATH:String 
++ screenWidth:int
++ screenHeight:int 
++ imgs:HashMap&lt;String, PImage&gt;
++ static final SPACE:int  
++ static final R:int
++ static final W:int
++ static final S:int
++ keys:HashMap&lt;Integer, Boolean&gt;
++ camera:Camera 
++ planets:ArrayList&lt;Planet&gt;
++ players:ArrayList&lt;Player&gt;
++ activePlayer:Player 
+--
++ settings():void
++ setup():void
++ draw():void
++ keyPressed():void
++ keyReleased():void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>432</x><y>240</y><w>24</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;11;10;180</additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>128</y><w>200</w><h>176</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>230;10;10;10;10;200</additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>128</y><w>144</w><h>144</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;160;10;160;160</additional_attributes></element></diagram>

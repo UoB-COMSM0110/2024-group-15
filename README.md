@@ -118,6 +118,14 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 * Final screen: player X wins
 
 
+# Design
+## Class diagram
+ ![](assets/game-idea-imgs/file.png)
+## Modelling behaviour: Communication diagrams
+
+
+
+# Game idea
 ## Game idea 1 - 2 player cooperative game
 
 It is a game involving both puzzles and actions. Similar to this part "Ice and Fire" of "It takes two" gameplay, but make it 2D.
