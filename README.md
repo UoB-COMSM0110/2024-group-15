@@ -122,7 +122,7 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 ## Class diagram
  ![](assets/game-idea-imgs/file.png)
 ## Modelling behaviour: Communication diagrams
-
+![](assets/game-idea-imgs/cd.png)
 
 
 # Game idea
