@@ -1,6 +1,7 @@
 PFont f;
 int windowWidth = 1280;
 int windowHeight = 720;
+PImage backgroundImage;
 
 class InitialInterface{
   title t = new title("TITLE", 70);
@@ -102,10 +103,13 @@ void setup(){
   //set the size of the window
   size(1280, 720);
   //set the initial colour/background
-  background(255,255,255);
+  backgroundImage = loadImage("background.png");
+  
 }
 
 void draw(){
+  //render the background
+  background(backgroundImage);
   //if the mouse click the "START" button, it will start the game
   InitialInterface deIt = new InitialInterface();
   deIt.draw();
