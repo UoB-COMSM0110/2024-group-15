@@ -41,7 +41,8 @@ public class Aimer {
         }
         
         float lengthOfLine = (float)Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
-        float angleRadians = (float)Math.atan2(arrow.velocity.y, arrow.velocity.x);
+        float angleRadians = (float)Math.atan2(y1-y2, x1-x2);
+        //float angleRadians = (float)Math.atan2(arrow.velocity.y, arrow.velocity.x);
 
         // stop the line from growing in length past 200
         if (lengthOfLine > 200) {
@@ -54,8 +55,8 @@ public class Aimer {
         arrow.velocity = new PVector(x1-x2, y1-y2);
         // scale it by 0.1 (to make the arrow travel at a fairly normal speed)
         arrow.velocity.mult(0.1F);
-
         
+        //angle <- velocity, velocity <- x2, x2 <- angle(bug)
 
         // draw the line
         resetMatrix();
