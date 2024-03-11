@@ -27,14 +27,16 @@ abstract class Obj {
 
     public boolean isCollidingWith(Obj obj)
     {
-        return  abs(obj.getX()-getX()) < obj.objWidth/2 && 
-                abs(obj.getY()-getY()) < obj.objHeight/2;
+        return  !(getX() + objWidth < obj.getX() ||
+                obj.getX() + obj.objWidth < getX() ||
+                getY() + objHeight < obj.getY() ||
+                obj.getY() + obj.objHeight < getY());
     }
 
-    public void setDimensions(int width, int height)
+    public void setDimensions(float width, float height)
     {
-        objWidth = width;
-        objHeight = height;
+        objWidth = (int)width;
+        objHeight = (int)height;
     }
 
     void move() {

@@ -17,8 +17,10 @@ HashMap<Integer, Boolean> keys = new HashMap<>();
 Camera camera;
 ArrayList<Planet> planets = new ArrayList<>();
 
-Player p1, p2, activePlayer;
+Player activePlayer;
+Player[] players = new Player[2];
 
+ArrayList<Arrow> spentArrows = new ArrayList<>();
 
 public void settings() {
     size(screenWidth, screenHeight);
@@ -48,9 +50,9 @@ public void setup()
     planets.add(new Planet(500, 100, 1000));
 //        planets.add(new Planet(this, 300, 50, 10000, 20));
 
-    p1 = new Player(planets.get(0), 270, HeathBarPosition.LEFT);
-    p2 = new Player(planets.get(1), 250, HeathBarPosition.RIGHT);
-    activePlayer = p1;
+    players[0] = new Player(planets.get(0), 270, HeathBarPosition.LEFT);
+    players[1] = new Player(planets.get(1), 250, HeathBarPosition.RIGHT);
+    activePlayer = players[0];
 }
 
 public void draw()
@@ -63,12 +65,16 @@ public void draw()
     } else {
       camera.apply();
 
+
+      for (Arrow a : spentArrows) {
+        a.draw();
+      }
       for (Planet p : planets) {
           p.draw();
       }
-
-      p1.draw();
-      p2.draw();
+      for (Player p: players) {
+        p.draw();
+      }
     }
     //a simple and shit control of gameState
     if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
@@ -86,14 +92,23 @@ public void keyReleased()
     if (keys.containsKey(keyCode)) keys.put(keyCode, false);
 }
 
+
+public boolean updatePlayerHealths() {
+    for (Player p: players) {
+        if (activePlayer.getArrow().isCollidingWith(p)) {
+            p.removeHeart();
+            return true;
+        }
+    }
+    return false;
+}
+
 public void finishPlayerTurn()
 {
-    Player oldActivePlayer = activePlayer;
-    activePlayer = activePlayer == p1 ? p2 : p1;
+    int frameWait = updatePlayerHealths() ? 120 : 60;
 
-    if (oldActivePlayer.getArrow().isCollidingWith(oldActivePlayer)) {
-        oldActivePlayer.setHealth(oldActivePlayer.getHealth()-1);
-    }
+    spentArrows.add(new Arrow(activePlayer.getArrow()));
 
-    camera.animateCenterOnObject(activePlayer, 60);
+    activePlayer = activePlayer == players[0] ? players[1] : players[0];
+    camera.animateCenterOnObject(activePlayer, frameWait);
 }

@@ -38,7 +38,10 @@ public class Player extends Obj {
         rect(x, y, objWidth, objHeight);
         popStyle();
 
-        arrow.draw();
+        if (this == activePlayer) {
+            arrow.draw();
+        }
+        
         healthBar.draw();
     }
 
@@ -50,10 +53,10 @@ public class Player extends Obj {
         return health;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void removeHeart() {
+        health--;
+        healthBar.animateHealthBarLoss();
     } 
-
 
     // TODO temporary overrides until we use an actual image
     public float getX() {

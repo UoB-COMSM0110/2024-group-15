@@ -9,8 +9,11 @@ public class Camera {
     float zoom = 1.0F;
     float zoomXOffset = 0, zoomYOffset = 0;
     Stack<Float> zoomStack = new Stack<>();
+
     boolean cameraIsMoving = false;
     int waitFrames;
+    float interpolationAmount = 0.02;   // speed with which the camera moves at
+
 
     Camera() {
         this.x = 0;
@@ -24,7 +27,7 @@ public class Camera {
                 waitFrames--;
             }
             else if (x != targetX && y != targetY) {
-                updateXY(lerp(x, targetX, 0.05), lerp(y, targetY, 0.05));
+                updateXY(lerp(x, targetX, interpolationAmount), lerp(y, targetY, interpolationAmount));
             }
             else {
                 cameraIsMoving = false;

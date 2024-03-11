@@ -53,4 +53,8 @@ public class HealthBar {
 
         camera.apply();
     }
+
+    public void animateHealthBarLoss() {
+        // TODO
+    }
 }

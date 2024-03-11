@@ -15,13 +15,24 @@ class Planet extends Obj {
         this.r = radius;
     }
 
-    void move() {
-
-    }
+    void move() { }
 
     void draw() {
         fill(0, 255, 0);
         ellipse(x, y, r*2, r*2);
+    }
+
+    public boolean isCollidingWith(Obj obj)
+    {
+        float dxsq = (obj.getX()-x)*(obj.getX()-x);
+        float dysq = (obj.getY()-y)*(obj.getY()-y);
+
+        double distance = Math.sqrt(dxsq + dysq);
+
+        if (distance < r + (obj.objWidth)/2 - 5) {
+            return true;
+        }
+        return false;
     }
 
     // Calculate gravitational force exerted by the planet on an object (maths which no one understands)
