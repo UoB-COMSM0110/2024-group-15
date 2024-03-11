@@ -72,7 +72,8 @@ public void draw()
           p.draw();
       }
     }
-    if(mousePressed){
+    //a simple and shit control of gameState
+    if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
       gameState = 1;
     }
     
