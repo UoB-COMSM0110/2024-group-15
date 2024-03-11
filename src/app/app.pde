@@ -5,8 +5,9 @@
 
 final String ASSETS_PATH = "../../game-assets/";
 
-int screenWidth = 700;
-int screenHeight = 500;
+int screenWidth = 1280;
+int screenHeight = 720;
+int gameState = 0;
 
 HashMap<String, PImage> imgs = new HashMap<>();
 
@@ -50,21 +51,34 @@ public void setup()
     players.add(new Player(planets.get(0), 270));
     players.add(new Player(planets.get(1), 250));
     activePlayer = players.get(0);
-
+    
+    
 }
 
 public void draw()
-{
-    camera.keyMove();  // for debug moving/zooming the camera
-    camera.apply();
+{    
+    if(gameState == 0){
+      InitialInterface deIt = new InitialInterface();
+      deIt.draw();
+    } else {
+      camera.keyMove();  // for debug moving/zooming the camera
+      camera.apply();
 
-    background(0);
-    for (Planet p : planets) {
-        p.draw();
+      background(0);
+      for (Planet p : planets) {
+          p.draw();
+      }
+      for (Player p : players) {
+          p.draw();
+      }
     }
-    for (Player p : players) {
-        p.draw();
+    //a simple and shit control of gameState
+    if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
+      gameState = 1;
     }
+    
+    
+   
 }
 
 // Key press handling
