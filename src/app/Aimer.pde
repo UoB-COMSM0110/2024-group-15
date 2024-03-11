@@ -15,7 +15,7 @@ public class Aimer {
     boolean aiming = false;
 
     void update() {
-        if (!mousePressed && !aiming) {     // skip
+        if (!mousePressed && !aiming && camera.cameraIsMoving) {     // skip
             return;
         }
         if (!mousePressed) {                // stop aiming and fire
@@ -27,7 +27,7 @@ public class Aimer {
         float x2 = mouseX;
         float y2 = mouseY;
 
-        if (!aiming) {                          // start aiming
+        if (!aiming) {                      // start aiming
             arrow.x = player.x;
             arrow.y = player.y;
 
@@ -36,7 +36,7 @@ public class Aimer {
 
             arrow.isMoving = false;
             aiming = true;
-            camera.updateXY(0, 0);
+            camera.centerOnObject(player);
             camera.popZoom();
         }
         

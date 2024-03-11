@@ -16,8 +16,8 @@ HashMap<Integer, Boolean> keys = new HashMap<>();
 
 Camera camera;
 ArrayList<Planet> planets = new ArrayList<>();
-ArrayList<Player> players = new ArrayList<>();
-Player activePlayer;
+
+Player p1, p2, activePlayer;
 
 
 public void settings() {
@@ -48,37 +48,32 @@ public void setup()
     planets.add(new Planet(500, 100, 1000));
 //        planets.add(new Planet(this, 300, 50, 10000, 20));
 
-    players.add(new Player(planets.get(0), 270));
-    players.add(new Player(planets.get(1), 250));
-    activePlayer = players.get(0);
-    
-    
+    p1 = new Player(planets.get(0), 270, HeathBarPosition.LEFT);
+    p2 = new Player(planets.get(1), 250, HeathBarPosition.RIGHT);
+    activePlayer = p1;
 }
 
 public void draw()
 {    
+    background(0);
+
     if(gameState == 0){
       InitialInterface deIt = new InitialInterface();
       deIt.draw();
     } else {
-      camera.keyMove();  // for debug moving/zooming the camera
       camera.apply();
 
-      background(0);
       for (Planet p : planets) {
           p.draw();
       }
-      for (Player p : players) {
-          p.draw();
-      }
+
+      p1.draw();
+      p2.draw();
     }
     //a simple and shit control of gameState
     if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
       gameState = 1;
     }
-    
-    
-   
 }
 
 // Key press handling
@@ -89,4 +84,16 @@ public void keyPressed()
 public void keyReleased()
 {
     if (keys.containsKey(keyCode)) keys.put(keyCode, false);
+}
+
+public void finishPlayerTurn()
+{
+    Player oldActivePlayer = activePlayer;
+    activePlayer = activePlayer == p1 ? p2 : p1;
+
+    if (oldActivePlayer.getArrow().isCollidingWith(oldActivePlayer)) {
+        oldActivePlayer.setHealth(oldActivePlayer.getHealth()-1);
+    }
+
+    camera.animateCenterOnObject(activePlayer, 60);
 }

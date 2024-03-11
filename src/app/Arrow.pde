@@ -22,6 +22,7 @@ public class Arrow extends Obj {
 
             if (distance < planet.r + (sprite.width*1.5F)/2 - 5) {
                 isMoving = false;
+                finishPlayerTurn();
                 return;
             }
         }
