@@ -96,5 +96,3 @@ class menuIcon extends startMenuComponent{
         rect(getPosX() - 10, getPosY() - getFontSize() * 2, 60 * getContent().length(), 60);
     }  
 }
-
-//------------------------------------------------------------
