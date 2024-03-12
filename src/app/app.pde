@@ -10,6 +10,7 @@ int screenHeight = 720;
 int gameState = 0;
 int planetRadius = 1000;
 int offset = 200;
+int maxDistanceBetweenPlanets = 500;
 
 HashMap<String, PImage> imgs = new HashMap<>();
 
@@ -181,7 +182,7 @@ public void generateRandomLocations(Planet planet){
          // Test whether this position will be duplicated by other planets' positions
          for(Planet p : planets){
              float distance = (float)Math.sqrt((p.x - x) * (p.x - x) + (p.y -y) * (p.y - y));
-             if(distance <= (p.r + planet.r + offset)){
+             if(distance <= (p.r + planet.r + offset) || distance > (p.r + planet.r + maxDistanceBetweenPlanets)){
                  isSuitableLocation = false;
                  break;
              }
@@ -193,4 +194,3 @@ public void generateRandomLocations(Planet planet){
          }
     }
 }
-
