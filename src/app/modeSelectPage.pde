@@ -35,60 +35,30 @@ class ModeSelectionInterface {
     noFill();
     rect(selectionBoxX, selectionBoxY, selectionBoxWidth, selectionBoxHeight);
     
-    if (gameState == GameState.MODEPAGE) {
-    keyPressed();
-  }
-    
+    keyDetected();
   }
 
-    //void keyPressed() {
-    //if (key == ' ') {
-    //    gameState = GameState.MODEPAGE;
-    //}
 
-  //  if (gameState == GameState.MODEPAGE) {
-  //      if (key == CODED) {
-  //          if (keyCode == UP) {
-  //              // 移动选择框到 easy button
-  //              selectionBoxX = easyButton.getPosX() - 10;
-  //              selectionBoxY = easyButton.getPosY() - easyButton.getFontSize() * 2;
-  //          } else if (keyCode == DOWN) {
-  //              // 移动选择框到 hard button
-  //              selectionBoxX = hardButton.getPosX() - 10;
-  //              selectionBoxY = hardButton.getPosY() - hardButton.getFontSize() * 2;
-  //          }
-  //      } else if (key == ENTER) {
-  //          // 确认选择
-  //          if (selectionBoxX == easyButton.getPosX() - 10) {
-  //              gameState = GameState.EASY;
-  //          } else if (selectionBoxX == hardButton.getPosX() - 10) {
-  //              gameState = GameState.HARD;
-  //          }
-  //        }
-  //    }
-  //}
   
- void keyPressed() {
-  if (gameState == GameState.MODEPAGE) {
+ void keyDetected() {
     if (keyCode == UP) {
-      // 移動選擇框到 easy button
+      // move to easy button
       selectionBoxX = easyButton.getPosX() - 10;
       selectionBoxY = easyButton.getPosY() - easyButton.getFontSize() * 2;
+      
     } else if (keyCode == DOWN) {
-      // 移動選擇框到 hard button
+      // move to hard button
       selectionBoxX = hardButton.getPosX() - 10;
       selectionBoxY = hardButton.getPosY() - hardButton.getFontSize() * 2;
     } else if (keyCode == ENTER) {
-      // 確認選擇
-      if (selectionBoxX == easyButton.getPosX() - 10) {
+  
+      if (selectionBoxY == easyButton.getPosY() - easyButton.getFontSize() * 2) {
         gameState = GameState.EASY;
-      } else if (selectionBoxX == hardButton.getPosX() - 10) {
+      } else if (selectionBoxY ==  hardButton.getPosY() - hardButton.getFontSize() * 2) {
         gameState = GameState.HARD;
       }
      }
-    }
   }
-
 
   //void mousePressed() {
   //    if (gameState == GameState.MODEPAGE) {
@@ -99,8 +69,6 @@ class ModeSelectionInterface {
   //      }
   //    }
   //  }
-  
-  
   
 }
 

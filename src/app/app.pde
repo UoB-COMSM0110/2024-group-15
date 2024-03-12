@@ -32,6 +32,8 @@ Player[] players = new Player[2];
 
 ArrayList<Arrow> spentArrows = new ArrayList<>();
 
+ModeSelectionInterface modeSelection;
+
 public void settings() {
     size(screenWidth, screenHeight);
     // Anti aliasing
@@ -74,6 +76,8 @@ public void setup()
     players[0] = new Player(planets.get(0), 270, HeathBarPosition.LEFT);
     players[1] = new Player(planets.get(1), 250, HeathBarPosition.RIGHT);
     activePlayer = players[0];
+    
+    modeSelection = new ModeSelectionInterface();
 
 }
 
@@ -96,9 +100,7 @@ public void draw()
       }
       
     } else if(gameState == GameState.MODEPAGE){
-      ModeSelectionInterface modeSelection = new ModeSelectionInterface();
       modeSelection.draw();
-      
       
       //if(mousePressed) {
       //  modeSelection.mousePressed();
@@ -123,11 +125,8 @@ public void draw()
 // Key press handling
 public void keyPressed()
 {
-    //if (keys.containsKey(keyCode)) keys.put(keyCode, true);
+    if (keys.containsKey(keyCode)) keys.put(keyCode, true);
     
-    if (keyPressed) {
-        gameState = GameState.MODEPAGE;
-    }
 }
 public void keyReleased()
 {
