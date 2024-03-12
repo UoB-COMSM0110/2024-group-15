@@ -1,5 +1,5 @@
-
 public class Player extends Obj {
+    PlayerNum playerNum;
     Arrow arrow;
     Aimer aimer;
     Planet planet;
@@ -8,10 +8,12 @@ public class Player extends Obj {
     int health = 10;
     HealthBar healthBar;
 
-    Player(Planet planet, int planetAngle, HeathBarPosition heathBarPosition) {
+
+    Player(Planet planet, int planetAngle, PlayerNum playerNum) {
         super(planet.x, planet.y);
         this.planetAngle = planetAngle;
         this.planet = planet;
+        this.playerNum = playerNum;
 
         double radians = Math.toRadians(planetAngle);
 
@@ -25,7 +27,7 @@ public class Player extends Obj {
 
         setDimensions(30, 60);      // TODO placeholder until actual player sprite
 
-        healthBar = new HealthBar(this, heathBarPosition);
+        healthBar = new HealthBar(this, playerNum);
     }
 
     void draw() {
@@ -51,6 +53,10 @@ public class Player extends Obj {
 
     public int getHealth() {
         return health;
+    }
+
+    public PlayerNum getPlayerNum() {
+        return playerNum;
     }
 
     public void removeHeart() {
