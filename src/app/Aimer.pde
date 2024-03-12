@@ -75,7 +75,7 @@ public class Aimer {
 
 
         // PATHFINDER TEST
-        Pathfinder path = new Pathfinder(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
-        path.draw();
+        // Pathfinder path = new Pathfinder(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
+        // path.draw();
     }
 }
