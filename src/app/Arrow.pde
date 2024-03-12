@@ -37,6 +37,7 @@ public class Arrow extends Obj {
                 return;
             }
         }
+        
         for (Player p: players) {
             if (p.isCollidingWith(this)) {
                 stopMovingAndFinishTurn();

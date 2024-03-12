@@ -31,6 +31,7 @@ abstract class Obj {
                 obj.getX() + obj.objWidth < getX() ||
                 getY() + objHeight < obj.getY() ||
                 obj.getY() + obj.objHeight < getY());
+        
     }
 
     public void setDimensions(float width, float height)
