@@ -6,6 +6,7 @@
 public class HealthBar {
     int x, y;
     Player player;
+    int animationFrame = 0;
 
     HealthBar(Player player, PlayerNum playerNum) {
         this.player = player;
@@ -37,7 +38,13 @@ public class HealthBar {
                 fill(255, 100, 70);
             }
             else {
-                fill(100, 100, 100);
+                if (animationFrame > 0 && player.getHealth() == i) {
+                    fill(255, 255, 255);
+                    animationFrame--;
+                }
+                else {
+                    fill(100, 100, 100);
+                }
             }
             drawHeart(x+i*20);
         }
@@ -46,9 +53,12 @@ public class HealthBar {
         resetMatrix();
 
         camera.apply();
+
+
     }
 
     public void animateHealthBarLoss() {
-        // TODO
+        animationFrame = 120;
+
     }
 }
