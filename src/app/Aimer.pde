@@ -1,7 +1,7 @@
 /*
 *  handles the mouse aim tool and changes the velocity of the arrow
 */
-
+int maxPower = 200;
 
 public class Aimer {
     Arrow arrow;
@@ -15,7 +15,15 @@ public class Aimer {
     boolean aiming = false;
 
     void update() {
-        if (!mousePressed && !aiming && camera.cameraIsMoving) {     // skip
+        if (arrow.isMoving || camera.isMoving()) {  //  if moving arrow OR camera is moving skip    TODO these should be a getters
+            return;
+        }
+        if (!(mousePressed && mouseButton == LEFT) && !aiming) {     // skip if left mouse not pressed and not aiming
+            return;
+        }
+        //stop aiming if right click the mouse
+        if(mousePressed && mouseButton == RIGHT){
+            aiming = false;
             return;
         }
         if (!mousePressed) {                // stop aiming and fire
@@ -26,7 +34,7 @@ public class Aimer {
         }
         float x2 = mouseX;
         float y2 = mouseY;
-
+        
         if (!aiming) {                      // start aiming
             arrow.x = player.x;
             arrow.y = player.y;
@@ -39,16 +47,16 @@ public class Aimer {
             camera.centerOnObject(player);
             camera.popZoom();
         }
-        
+       
         float lengthOfLine = (float)Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
         float angleRadians = (float)Math.atan2(y1-y2, x1-x2);
         //float angleRadians = (float)Math.atan2(arrow.velocity.y, arrow.velocity.x);
 
         // stop the line from growing in length past 200
-        if (lengthOfLine > 200) {
-            lengthOfLine = 200;
-            x2 = x1 - 200 * (float)Math.cos(angleRadians);
-            y2 = y1 - 200 * (float)Math.sin(angleRadians);
+        if (lengthOfLine > maxPower) {
+            lengthOfLine = maxPower;
+            x2 = x1 - maxPower * (float)Math.cos(angleRadians);
+            y2 = y1 - maxPower * (float)Math.sin(angleRadians);
         }
         
         // get the vector of the 2 points made by mouse press

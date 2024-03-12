@@ -10,7 +10,10 @@ public class Camera {
     float zoomXOffset = 0, zoomYOffset = 0;
     Stack<Float> zoomStack = new Stack<>();
 
-    boolean cameraIsMoving = false;
+    private final int ARRIVAL_THRESHOLD = 4; // The distance (in pixels) from the target when isMoving is changed to false
+
+    private boolean cameraIsMoving = false;
+    private boolean hasNotReachedTarget = false;
     int waitFrames;
     float interpolationAmount = 0.02;   // speed with which the camera moves at
 
@@ -20,16 +23,24 @@ public class Camera {
         this.y = 0;
     }
 
+    private boolean cameraEffectivelyAtTarget() {
+        return abs(x-targetX) < ARRIVAL_THRESHOLD && abs(y-targetY) < ARRIVAL_THRESHOLD;
+    }
+
     // the main camera function; called during App.draw()
     public void apply() {
-        if (cameraIsMoving) {
+        if (hasNotReachedTarget) {
             if (waitFrames > 0) {
                 waitFrames--;
             }
-            else if (x != targetX && y != targetY) {
+            else if (x != targetX || y != targetY) {
                 updateXY(lerp(x, targetX, interpolationAmount), lerp(y, targetY, interpolationAmount));
             }
             else {
+                hasNotReachedTarget = false;
+            }
+
+            if (cameraIsMoving && cameraEffectivelyAtTarget()) {
                 cameraIsMoving = false;
             }
         }
@@ -61,6 +72,7 @@ public class Camera {
         targetY = obj.getY()-height/2;
 
         cameraIsMoving = true;
+        hasNotReachedTarget = true;
         this.waitFrames = waitFrames;
     }
 
@@ -97,5 +109,9 @@ public class Camera {
 
     public void applyXY() {
         translate(-x+zoomXOffset, -y+zoomYOffset);
+    }
+
+    public boolean isMoving() {
+        return cameraIsMoving;
     }
 }

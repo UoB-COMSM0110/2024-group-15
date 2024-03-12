@@ -18,6 +18,8 @@ int screenHeight = 720;
 GameState gameState = GameState.STARTPAGE;
 //int gameState = 0;
 int planetRadius = 1000;
+int minDistanceBetweenPlanets = 200;
+int maxDistanceBetweenPlanets = 500;
 
 HashMap<String, PImage> imgs = new HashMap<>();
 
@@ -33,6 +35,12 @@ Player[] players = new Player[2];
 ArrayList<Arrow> spentArrows = new ArrayList<>();
 
 ModeSelectionInterface modeSelection;
+
+public enum PlayerNum {
+    ONE,
+    TWO,
+}
+
 
 public void settings() {
     size(screenWidth, screenHeight);
@@ -57,11 +65,7 @@ public void setup()
 //        camera.updateZoom(0.5F);
 
     imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
-    
-    //add planets in random locations inside the screen
-    int planetsLocationX = (int)(Math.random() * screenWidth);
-    int planetsLocationY = (int)(Math.random() * screenHeight);
-    
+
     //fixed positions
     planets.add(new Planet(100, screenHeight-100, 1000));
     planets.add(new Planet(500, 100, planetRadius));
@@ -71,10 +75,18 @@ public void setup()
     for(Planet p : planets){
         generateRandomLocations(p);
     }
+    //set the left and right planet
+    Planet leftPlanet, rightPlanet;
+    if(planets.get(0).x < planets.get(1).x){
+        leftPlanet = planets.get(0);
+        rightPlanet = planets.get(1);
+    } else {
+        leftPlanet = planets.get(1);
+        rightPlanet = planets.get(0);
+    }
     
-
-    players[0] = new Player(planets.get(0), 270, HeathBarPosition.LEFT);
-    players[1] = new Player(planets.get(1), 250, HeathBarPosition.RIGHT);
+    players[0] = new Player(leftPlanet, 270, PlayerNum.ONE);
+    players[1] = new Player(rightPlanet, 250, PlayerNum.TWO);
     activePlayer = players[0];
     
     modeSelection = new ModeSelectionInterface();
@@ -109,12 +121,16 @@ public void draw()
     } else if (gameState == GameState.EASY) {
       camera.apply();
 
+      // debugging code which removes health when pressing R
+      // if (keys.get(R) == true) {
+      //   activePlayer.removeHeart();
+      // }
 
       for (Arrow a : spentArrows) {
         a.draw();
       }
       for (Planet p : planets) {
-          p.draw();
+         p.draw();
       }
       for (Player p: players) {
         p.draw();
@@ -134,6 +150,28 @@ public void keyReleased()
 }
 
 
+private Player getOtherPlayer(Player p) {
+    switch (p.getPlayerNum()) {
+        case ONE: 
+            return players[1];
+        case TWO: 
+            return players[0];
+        default:
+            return null;
+    }
+}
+
+
+public Player checkForPlayerDeaths() {
+    for (Player p: players) {
+        if (p.getHealth() <= 0) {
+            return p;
+        } 
+    }
+    return null;
+}
+
+
 public boolean updatePlayerHealths() {
     for (Player p: players) {
         if (activePlayer.getArrow().isCollidingWith(p)) {
@@ -150,9 +188,32 @@ public void finishPlayerTurn()
 
     spentArrows.add(new Arrow(activePlayer.getArrow()));
 
-    activePlayer = activePlayer == players[0] ? players[1] : players[0];
+    Player deadPlayer = checkForPlayerDeaths();
+    if (deadPlayer != null) {
+        setWinnerAndGameOver(getOtherPlayer(deadPlayer));
+        return;
+    }
+
+    activePlayer.getArrow().cannotBeCollidedWith = true;
+
+    activePlayer = getOtherPlayer(activePlayer);
     camera.animateCenterOnObject(activePlayer, frameWait);
 }
+
+
+public void setWinnerAndGameOver(Player p)
+{
+    /** TODO
+     *      New game state
+     *      Show winner screen (PLAYER X WINS!)
+     *      Play again button? exit button? etc.
+    */
+    camera.animateCenterOnObject(p, 60);
+    println("PLAYER" + (p.getPlayerNum() == PlayerNum.ONE ? "1 " : "2 ") +"WINS!");
+}
+
+
+
 
 //random locations of planets
 public void generateRandomLocations(Planet planet){
@@ -163,7 +224,8 @@ public void generateRandomLocations(Planet planet){
          float y = (float)(Math.random()*screenHeight);
          // Test whether this position will be duplicated by other planets' positions
          for(Planet p : planets){
-             if(Math.abs(p.x - x) <= (p.r + planet.r)){
+             float distance = (float)Math.sqrt((p.x - x) * (p.x - x) + (p.y -y) * (p.y - y));
+             if(distance <= (p.r + planet.r + minDistanceBetweenPlanets) || distance > (p.r + planet.r + maxDistanceBetweenPlanets)){
                  isSuitableLocation = false;
                  break;
              }

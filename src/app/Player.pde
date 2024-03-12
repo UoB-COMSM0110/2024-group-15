@@ -1,5 +1,5 @@
-
 public class Player extends Obj {
+    PlayerNum playerNum;
     Arrow arrow;
     Aimer aimer;
     Planet planet;
@@ -8,14 +8,16 @@ public class Player extends Obj {
     int health = 10;
     HealthBar healthBar;
 
-    Player(Planet planet, int planetAngle, HeathBarPosition heathBarPosition) {
-        super(planet.x, planet.y);
+
+    Player(Planet planet, int planetAngle, PlayerNum playerNum) {
+        super(planet.x, planet.y, 30, 60);   // TODO this will change when we use an image instead of a rect
         this.planetAngle = planetAngle;
         this.planet = planet;
+        this.playerNum = playerNum;
 
         double radians = Math.toRadians(planetAngle);
 
-        // placeholder name; this should be generalized within object
+        // TODO placeholder name; this should be generalized within object
         int valueThatShouldBeDependantUponSprite = 35;
         x += (float) ((planet.r+valueThatShouldBeDependantUponSprite)*Math.cos(radians));
         y += (float) ((planet.r+valueThatShouldBeDependantUponSprite)*Math.sin(radians));
@@ -23,9 +25,7 @@ public class Player extends Obj {
         arrow = new Arrow(x, y);
         aimer = new Aimer(this, arrow);
 
-        setDimensions(30, 60);      // TODO placeholder until actual player sprite
-
-        healthBar = new HealthBar(this, heathBarPosition);
+        healthBar = new HealthBar(this, playerNum);
     }
 
     void draw() {
@@ -53,6 +53,10 @@ public class Player extends Obj {
         return health;
     }
 
+    public PlayerNum getPlayerNum() {
+        return playerNum;
+    }
+
     public void removeHeart() {
         health--;
         healthBar.animateHealthBarLoss();
@@ -60,9 +64,9 @@ public class Player extends Obj {
 
     // TODO temporary overrides until we use an actual image
     public float getX() {
-        return x+(objWidth/2);
+        return x;
     }
     public float getY() {
-        return y+(objWidth/2);
+        return y;
     }
 }

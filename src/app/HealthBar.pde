@@ -3,19 +3,14 @@
 */
 
 
-enum HeathBarPosition {
-    LEFT,
-    RIGHT,
-}
-
-
 public class HealthBar {
     int x, y;
     Player player;
+    int animationFrame = 0;
 
-    HealthBar(Player player, HeathBarPosition pos) {
+    HealthBar(Player player, PlayerNum playerNum) {
         this.player = player;
-        this.x = pos == HeathBarPosition.LEFT ? 20 : width-200;
+        this.x = playerNum == PlayerNum.ONE ? 20 : width-200;
         this.y = 20;
     }
 
@@ -43,7 +38,13 @@ public class HealthBar {
                 fill(255, 100, 70);
             }
             else {
-                fill(100, 100, 100);
+                if (animationFrame > 0 && player.getHealth() == i) {
+                    fill(255, 255, 255);
+                    animationFrame--;
+                }
+                else {
+                    fill(100, 100, 100);
+                }
             }
             drawHeart(x+i*20);
         }
@@ -52,9 +53,12 @@ public class HealthBar {
         resetMatrix();
 
         camera.apply();
+
+
     }
 
     public void animateHealthBarLoss() {
-        // TODO
+        animationFrame = 120;
+
     }
 }
