@@ -89,6 +89,22 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 |                                         | 3. Back to Basic Flow 5.                    |                                                                                                                 |
 =======
 
+
+## Heuristic Analysis (First week)
+
+| Interface        | Issue                                                                               | Heuristic(s) | Frequency (0-4) | Impact (0-4, easy-difficult) | Persistence (0-4, once-repeated) | Severity=AVG(Freq+Impact+Persistence) |
+|------------------|-------------------------------------------------------------------------------------|--------------|-----------------|------------------------------|----------------------------------|---------------------------------------|
+| UI               | Visually Unclear (Who is P1, P2, is it even 2 player? no UI etc, Where do I shoot?) | 1, 3, 10     | 4               | 3                            | 4                                | 3.66                                  |
+| Arrow (Obj)      | Arrow hitbox glitches sometimes                                                     | 5, 7         | 1               | 2                            | 2                                | 1.66                                  |
+| Game Logic (App) | Game flow is unclear                                                                | 1, 3, 10     | 3               | 3                            | 1 (when learning)                | 2.33                                  |
+| Camera           | Camera movement with arrow keys doesn't make sense                                  | 3, 4, 10     | 1               | 4                            | 1                                | 2                                     |
+
+
+## Heuristic Analysis (Second week)
+
+TODO
+
+
 * vs Human or vs Computer
 
 * then settings screen
@@ -187,5 +203,3 @@ Should we make the game undertale-like or the mario-like
 
 
 
-
->>>>>>> 1363295 (test)
