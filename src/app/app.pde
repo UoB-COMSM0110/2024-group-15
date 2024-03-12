@@ -8,6 +8,8 @@ final String ASSETS_PATH = "../../game-assets/";
 int screenWidth = 1280;
 int screenHeight = 720;
 int gameState = 0;
+int planetRadius = 1000;
+int offset = 200;
 
 HashMap<String, PImage> imgs = new HashMap<>();
 
@@ -56,14 +58,22 @@ public void setup()
     //add planets in random locations inside the screen
     int planetsLocationX = (int)(Math.random() * screenWidth);
     int planetsLocationY = (int)(Math.random() * screenHeight);
-    //planets.add(new Planet(100, screenHeight-100, 1000));
-    planets.add(new Planet(planetsLocationX, planetsLocationY, 1000));
-    planets.add(new Planet(500, 100, 1000));
+    
+    //fixed positions
+    planets.add(new Planet(100, screenHeight-100, 1000));
+    planets.add(new Planet(500, 100, planetRadius));
 //        planets.add(new Planet(this, 300, 50, 10000, 20));
+    
+    //generate random locations of planets
+    for(Planet p : planets){
+        generateRandomLocations(p);
+    }
+    
 
     players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
     players[1] = new Player(planets.get(1), 250, PlayerNum.TWO);
     activePlayer = players[0];
+
 }
 
 public void draw()
@@ -151,6 +161,7 @@ public void finishPlayerTurn()
     camera.animateCenterOnObject(activePlayer, frameWait);
 }
 
+
 public void setWinnerAndGameOver(Player p)
 {
     /** TODO
@@ -162,4 +173,27 @@ public void setWinnerAndGameOver(Player p)
 }
 
 
+
+
+//random locations of planets
+public void generateRandomLocations(Planet planet){
+    while(true) {
+         boolean isSuitableLocation = true;
+         //generate random positions
+         float x = (float)(Math.random()*screenWidth);
+         float y = (float)(Math.random()*screenHeight);
+         // Test whether this position will be duplicated by other planets' positions
+         for(Planet p : planets){
+             if(Math.abs(p.x - x) <= (p.r + planet.r + offset)){
+                 isSuitableLocation = false;
+                 break;
+             }
+         }
+         if(isSuitableLocation){
+             planet.x = x;
+             planet.y = y;
+             break;
+         }
+    }
+}
 
