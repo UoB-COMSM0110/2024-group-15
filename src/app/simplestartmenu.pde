@@ -8,6 +8,7 @@ class InitialInterface{
   PImage img = loadImage("./start-menu-idea/start-button.png");
   PImage backgroundImage = loadImage("./start-menu-idea/background.jpg");
   
+
   
   void draw(){
     //we could use image, text or animation.
@@ -29,6 +30,11 @@ class InitialInterface{
     p2.draw();
     image(img, 800,400);
     
+    //press any button to start
+    fill(255);
+    textSize(25);
+    //textAlign(CENTER, CENTER);
+    text("Press Any Button To Start", screenWidth/2 - 130, screenHeight - 60);
     
   }
 }
@@ -90,10 +96,18 @@ class menuIcon extends startMenuComponent{
         super(name, posX, posY, size);
     }
     
+//class PressToStartText extends startMenuComponent {
+//    PressToStartText(String content, int posX, int posY, int fontSize) {
+//        super(content, posX, posY, fontSize);
+//    }
+    
+    
     void draw(){
         stroke(0);
         noFill();
         rect(getPosX() - 10, getPosY() - getFontSize() * 2, 60 * getContent().length(), 60);
+        
+  
     }  
 }
 

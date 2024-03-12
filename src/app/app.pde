@@ -2,12 +2,21 @@
 *  the main file where the program is run from
 */
 
+enum GameState {
+  STARTPAGE,
+  MODEPAGE,
+  EASY,
+  HARD,
+  POPMENU, 
+  SHOP
+}
 
 final String ASSETS_PATH = "../../game-assets/";
 
 int screenWidth = 1280;
 int screenHeight = 720;
-int gameState = 0;
+GameState gameState = GameState.STARTPAGE;
+//int gameState = 0;
 int planetRadius = 1000;
 
 HashMap<String, PImage> imgs = new HashMap<>();
@@ -68,11 +77,13 @@ public void setup()
 
 }
 
+
 public void draw()
 {    
     background(0);
 
-    if(gameState == 0){
+    //if(gameState == 0){
+    if(gameState == GameState.STARTPAGE){
       InitialInterface deIt = new InitialInterface();
       deIt.draw();
       //a simple and shit control of gameState
@@ -80,9 +91,20 @@ public void draw()
       //  gameState = 1;
       //}
       if(keyPressed){
-        gameState = 1;
+        //gameState = 1;
+        gameState = GameState.MODEPAGE;
       }
-    } else {
+      
+    } else if(gameState == GameState.MODEPAGE){
+      ModeSelectionInterface modeSelection = new ModeSelectionInterface();
+      modeSelection.draw();
+      
+      
+      //if(mousePressed) {
+      //  modeSelection.mousePressed();
+      //}
+      
+    } else if (gameState == GameState.EASY) {
       camera.apply();
 
 
@@ -101,12 +123,17 @@ public void draw()
 // Key press handling
 public void keyPressed()
 {
-    if (keys.containsKey(keyCode)) keys.put(keyCode, true);
+    //if (keys.containsKey(keyCode)) keys.put(keyCode, true);
+    
+    if (keyPressed) {
+        gameState = GameState.MODEPAGE;
+    }
 }
 public void keyReleased()
 {
     if (keys.containsKey(keyCode)) keys.put(keyCode, false);
 }
+
 
 public boolean updatePlayerHealths() {
     for (Player p: players) {
