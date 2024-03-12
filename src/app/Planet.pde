@@ -8,6 +8,8 @@ class Planet extends Obj {
         super(x, y);
         this.mass = mass;
         this.r = mass/10F;
+        setDimensions(r*2, r*2);
+        setHitBox(r*2, r*2);
     }
 
     Planet(int x, int y, int mass, int radius) {
@@ -15,7 +17,7 @@ class Planet extends Obj {
         this.r = radius;
     }
 
-    void move() { }
+    void move() { /* planets don't move at the moment */ }
 
     void draw() {
         fill(0, 255, 0);
@@ -29,7 +31,7 @@ class Planet extends Obj {
 
         double distance = Math.sqrt(dxsq + dysq);
 
-        if (distance < r + (obj.objWidth)/2 - 5) {
+        if (distance < r + (obj.getHitBoxWidth())/2 - 5) {
             return true;
         }
         return false;

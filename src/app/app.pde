@@ -130,10 +130,13 @@ private Player getOtherPlayer(Player p) {
 }
 
 
-public void checkForPlayerDeath(Player p) {
-    if (p.getHealth() <= 0) {
-        setWinnerAndGameOver(getOtherPlayer(p));
-    } 
+public Player checkForPlayerDeaths() {
+    for (Player p: players) {
+        if (p.getHealth() <= 0) {
+            return p;
+        } 
+    }
+    return null;
 }
 
 
@@ -141,7 +144,6 @@ public boolean updatePlayerHealths() {
     for (Player p: players) {
         if (activePlayer.getArrow().isCollidingWith(p)) {
             p.removeHeart();
-            checkForPlayerDeath(p);
             return true;
         }
     }
@@ -153,6 +155,12 @@ public void finishPlayerTurn()
     int frameWait = updatePlayerHealths() ? 120 : 60;
 
     spentArrows.add(new Arrow(activePlayer.getArrow()));
+
+    Player deadPlayer = checkForPlayerDeaths();
+    if (deadPlayer != null) {
+        setWinnerAndGameOver(getOtherPlayer(deadPlayer));
+        return;
+    }
 
     activePlayer = getOtherPlayer(activePlayer);
     camera.animateCenterOnObject(activePlayer, frameWait);
@@ -166,6 +174,7 @@ public void setWinnerAndGameOver(Player p)
      *      Show winner screen (PLAYER X WINS!)
      *      Play again button? exit button? etc.
     */
+    camera.animateCenterOnObject(p, 60);
     println("PLAYER" + (p.getPlayerNum() == PlayerNum.ONE ? "1 " : "2 ") +"WINS!");
 }
 
