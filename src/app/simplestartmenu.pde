@@ -1,13 +1,13 @@
 PFont f;
-int windowWidth = 1280;
-int windowHeight = 720;
+
 
 class InitialInterface{
   title t = new title("TITLE", 70);
-  menuIcon p1 = new menuIcon("P1", windowWidth/2 - 50, windowHeight/2 + 100, 30);
-  menuIcon p2 = new menuIcon("P2", windowWidth/2 - 50, windowHeight/2 + 200, 30);
+  menuIcon p1 = new menuIcon("P1", screenWidth/2 - 50, screenHeight/2 + 100, 30);
+  menuIcon p2 = new menuIcon("P2", screenWidth/2 - 50, screenHeight/2 + 200, 30);
   PImage img = loadImage("./start-menu-idea/start-button.png");
   PImage backgroundImage = loadImage("./start-menu-idea/background.jpg");
+  
   
   void draw(){
     //we could use image, text or animation.
@@ -81,7 +81,7 @@ class startMenuComponent {
 
 class title extends startMenuComponent{
     public title(String name, int size){
-        super(name, windowWidth / 2 - name.length()*20, size*2, size);
+        super(name, screenWidth / 2 - name.length()*20, size*2, size);
     }
 }
 
