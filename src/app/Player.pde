@@ -34,6 +34,7 @@ public class Player extends Obj {
             aimer.update();
         }
         pushStyle();
+        //player standby
         fill(255, 255, 255);
         rect(x, y, objWidth, objHeight);
         popStyle();

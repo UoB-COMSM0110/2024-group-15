@@ -22,6 +22,7 @@ public class Camera {
 
     // the main camera function; called during App.draw()
     public void apply() {
+      //image(backgroundImage, 0, 0, screenWidth, screenHeight);
         if (cameraIsMoving) {
             if (waitFrames > 0) {
                 waitFrames--;
@@ -62,6 +63,7 @@ public class Camera {
 
         cameraIsMoving = true;
         this.waitFrames = waitFrames;
+        //image(backgroundImage, 0, 0, screenWidth, screenHeight);
     }
 
     public void keyMove() {
@@ -97,5 +99,6 @@ public class Camera {
 
     public void applyXY() {
         translate(-x+zoomXOffset, -y+zoomYOffset);
+        //image(backgroundImage, 0, 0);
     }
 }

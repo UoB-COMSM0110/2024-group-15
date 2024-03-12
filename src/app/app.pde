@@ -5,10 +5,11 @@
 
 final String ASSETS_PATH = "../../game-assets/";
 
-int screenWidth = 1280;
-int screenHeight = 720;
+int screenWidth = 1024;
+int screenHeight = 767;
 int gameState = 0;
 int planetRadius = 1000;
+PImage backgroundImage;
 
 HashMap<String, PImage> imgs = new HashMap<>();
 
@@ -44,16 +45,20 @@ public void setup()
 
     camera = new Camera();
 //        camera.updateZoom(0.5F);
-
+    backgroundImage = loadImage("./art-img/space1-1.png");
     imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
+    imgs.put("planet1", loadImage(ASSETS_PATH+"planet2.png"));
+    imgs.put("planet2", loadImage(ASSETS_PATH+"planet3.gif"));
+    
     
     //add planets in random locations inside the screen
     int planetsLocationX = (int)(Math.random() * screenWidth);
     int planetsLocationY = (int)(Math.random() * screenHeight);
     
     //fixed positions
-    planets.add(new Planet(100, screenHeight-100, 1000));
-    planets.add(new Planet(500, 100, planetRadius));
+    //
+    planets.add(new Planet(100, screenHeight-100, 1000,true));
+    planets.add(new Planet(500, 100, planetRadius,false));
 //        planets.add(new Planet(this, 300, 50, 10000, 20));
     
     //generate random locations of planets
@@ -69,9 +74,9 @@ public void setup()
 }
 
 public void draw()
-{    
-    background(0);
-
+{   
+    //background(0);
+    background(backgroundImage);
     if(gameState == 0){
       InitialInterface deIt = new InitialInterface();
       deIt.draw();
@@ -84,7 +89,7 @@ public void draw()
       }
     } else {
       camera.apply();
-
+  //image(backgroundImage, 0, 0);
 
       for (Arrow a : spentArrows) {
         a.draw();

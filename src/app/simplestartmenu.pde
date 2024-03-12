@@ -6,7 +6,7 @@ class InitialInterface{
   menuIcon p1 = new menuIcon("P1", screenWidth/2 - 50, screenHeight/2 + 100, 30);
   menuIcon p2 = new menuIcon("P2", screenWidth/2 - 50, screenHeight/2 + 200, 30);
   PImage img = loadImage("./start-menu-idea/start-button.png");
-  PImage backgroundImage = loadImage("./start-menu-idea/background.jpg");
+  PImage backgroundImage = loadImage("./start-menu-idea/Space3.png");
   
   
   void draw(){
