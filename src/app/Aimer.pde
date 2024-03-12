@@ -18,7 +18,12 @@ public class Aimer {
         if (arrow.isMoving || camera.isMoving()) {  //  if moving arrow OR camera is moving skip    TODO these should be a getters
             return;
         }
-        if (!mousePressed && !aiming) {     // skip if not pressed and not aiming
+        if (!(mousePressed && mouseButton == LEFT) && !aiming) {     // skip if left mouse not pressed and not aiming
+            return;
+        }
+        //stop aiming if right click the mouse
+        if(mousePressed && mouseButton == RIGHT){
+            aiming = false;
             return;
         }
         if (!mousePressed) {                // stop aiming and fire
@@ -29,7 +34,7 @@ public class Aimer {
         }
         float x2 = mouseX;
         float y2 = mouseY;
-
+        
         if (!aiming) {                      // start aiming
             arrow.x = player.x;
             arrow.y = player.y;
@@ -42,7 +47,7 @@ public class Aimer {
             camera.centerOnObject(player);
             camera.popZoom();
         }
-        
+       
         float lengthOfLine = (float)Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
         float angleRadians = (float)Math.atan2(y1-y2, x1-x2);
         //float angleRadians = (float)Math.atan2(arrow.velocity.y, arrow.velocity.x);
