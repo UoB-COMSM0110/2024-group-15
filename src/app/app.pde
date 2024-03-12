@@ -64,6 +64,13 @@ public void draw()
     if(gameState == 0){
       InitialInterface deIt = new InitialInterface();
       deIt.draw();
+      //a simple and shit control of gameState
+      //if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
+      //  gameState = 1;
+      //}
+      if(keyPressed){
+        gameState = 1;
+      }
     } else {
       camera.keyMove();  // for debug moving/zooming the camera
       camera.apply();
@@ -76,10 +83,7 @@ public void draw()
           p.draw();
       }
     }
-    //a simple and shit control of gameState
-    if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
-      gameState = 1;
-    }
+    
     
     
    
