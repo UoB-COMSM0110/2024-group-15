@@ -15,7 +15,10 @@ public class Aimer {
     boolean aiming = false;
 
     void update() {
-        if (!mousePressed && !aiming && camera.cameraIsMoving) {     // skip
+        if (arrow.isMoving || camera.isMoving()) {  //  if moving arrow OR camera is moving skip    TODO these should be a getters
+            return;
+        }
+        if (!mousePressed && !aiming) {     // skip if not pressed and not aiming
             return;
         }
         if (!mousePressed) {                // stop aiming and fire
