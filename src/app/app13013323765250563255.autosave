@@ -65,18 +65,10 @@ public void setup()
     for(Planet p : planets){
         generateRandomLocations(p);
     }
-    //set the left and right planet
-    Planet leftPlanet, rightPlanet;
-    if(planets.get(0).x < planets.get(1).x){
-        leftPlanet = planets.get(0);
-        rightPlanet = planets.get(1);
-    } else {
-        leftPlanet = planets.get(1);
-        rightPlanet = planets.get(0);
-    }
     
-    players[0] = new Player(leftPlanet, 270, PlayerNum.ONE);
-    players[1] = new Player(rightPlanet, 250, PlayerNum.TWO);
+
+    players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
+    players[1] = new Player(planets.get(1), 250, PlayerNum.TWO);
     activePlayer = players[0];
 
 }
@@ -95,8 +87,10 @@ public void draw()
       if(keyPressed){
         gameState = 1;
       }
+
     } else {
         camera.apply();
+
 
       // debugging code which removes health when pressing R
       // if (keys.get(R) == true) {
@@ -107,7 +101,7 @@ public void draw()
         a.draw();
       }
       for (Planet p : planets) {
-         p.draw();
+          p.draw();
       }
       for (Player p: players) {
         p.draw();
@@ -138,13 +132,10 @@ private Player getOtherPlayer(Player p) {
 }
 
 
-public Player checkForPlayerDeaths() {
-    for (Player p: players) {
-        if (p.getHealth() <= 0) {
-            return p;
-        } 
-    }
-    return null;
+public void checkForPlayerDeath(Player p) {
+    if (p.getHealth() <= 0) {
+        setWinnerAndGameOver(getOtherPlayer(p));
+    } 
 }
 
 
@@ -152,6 +143,7 @@ public boolean updatePlayerHealths() {
     for (Player p: players) {
         if (activePlayer.getArrow().isCollidingWith(p)) {
             p.removeHeart();
+            checkForPlayerDeath(p);
             return true;
         }
     }
@@ -163,12 +155,6 @@ public void finishPlayerTurn()
     int frameWait = updatePlayerHealths() ? 120 : 60;
 
     spentArrows.add(new Arrow(activePlayer.getArrow()));
-
-    Player deadPlayer = checkForPlayerDeaths();
-    if (deadPlayer != null) {
-        setWinnerAndGameOver(getOtherPlayer(deadPlayer));
-        return;
-    }
 
     activePlayer = getOtherPlayer(activePlayer);
     camera.animateCenterOnObject(activePlayer, frameWait);
@@ -182,7 +168,6 @@ public void setWinnerAndGameOver(Player p)
      *      Show winner screen (PLAYER X WINS!)
      *      Play again button? exit button? etc.
     */
-    camera.animateCenterOnObject(p, 60);
     println("PLAYER" + (p.getPlayerNum() == PlayerNum.ONE ? "1 " : "2 ") +"WINS!");
 }
 

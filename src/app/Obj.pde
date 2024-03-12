@@ -48,6 +48,7 @@ abstract class Obj {
                 obj.getX() + obj.getHitBoxWidth() >= getX() &&
                 getY() + getHitBoxHeight() >= obj.getY()    &&
                 obj.getY() + obj.getHitBoxHeight() >= getY();
+
     }
 
     public float getHitBoxWidth() {

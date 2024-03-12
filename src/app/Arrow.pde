@@ -50,6 +50,7 @@ public class Arrow extends Obj {
                 return;
             }
         }
+        
         for (Player p: players) {
             if (this.isCollidingWith(p)) {               // call overrided method in Arrow (this)
                 stopMovingAndFinishTurn();
