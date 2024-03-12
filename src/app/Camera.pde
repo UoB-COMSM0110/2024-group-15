@@ -1,8 +1,8 @@
-/*
-* This class simulates a camera by scaling all drawings based on x, y and zoom
-*/
 import java.util.Stack;
 
+/*
+*   Camera simulation based on scaling all drawings based on x, y and zoom
+*/
 
 public class Camera {
     float x, y, targetX, targetY;

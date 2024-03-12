@@ -25,6 +25,8 @@ Player[] players = new Player[2];
 
 ArrayList<Arrow> spentArrows = new ArrayList<>();
 
+StartMenu startMenu;
+
 
 public enum PlayerNum {
     ONE,
@@ -74,6 +76,9 @@ public void setup()
         leftPlanet = planets.get(1);
         rightPlanet = planets.get(0);
     }
+
+
+    startMenu = new StartMenu();
     
     players[0] = new Player(leftPlanet, 270, PlayerNum.ONE);
     players[1] = new Player(rightPlanet, 250, PlayerNum.TWO);
@@ -86,8 +91,8 @@ public void draw()
     background(0);
 
     if(gameState == 0){
-      InitialInterface deIt = new InitialInterface();
-      deIt.draw();
+        
+      startMenu.draw();
       //a simple and shit control of gameState
       //if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
       //  gameState = 1;

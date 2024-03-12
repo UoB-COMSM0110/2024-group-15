@@ -1,6 +1,6 @@
 
 
-class Planet extends Obj {
+class Planet extends Entity {
     float mass;
     float r;
 
@@ -24,14 +24,14 @@ class Planet extends Obj {
         ellipse(x, y, r*2, r*2);
     }
 
-    public boolean isCollidingWith(Obj obj)
+    public boolean isCollidingWith(Entity e)
     {
-        float dxsq = (obj.getX()-x)*(obj.getX()-x);
-        float dysq = (obj.getY()-y)*(obj.getY()-y);
+        float dxsq = (e.getX()-x)*(e.getX()-x);
+        float dysq = (e.getY()-y)*(e.getY()-y);
 
         double distance = Math.sqrt(dxsq + dysq);
 
-        if (distance < r + (obj.getHitBoxWidth())/2 - 5) {
+        if (distance < r + (e.getHitBoxWidth())/2 - 5) {
             return true;
         }
         return false;

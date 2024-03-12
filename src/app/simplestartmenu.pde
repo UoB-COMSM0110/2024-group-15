@@ -1,98 +1,113 @@
-PFont f;
+/** 
+NOTES
+ *  all imgs should load in app.pde
+ *  all fonts should load in app.pde
+ *  start button should just be text I think (not an img)
+ *  class names and enums need a capital letter at the start
+ *  indent 4 spaces
+*/       
 
 
-class InitialInterface{
-  title t = new title("TITLE", 70);
-  menuIcon p1 = new menuIcon("P1", screenWidth/2 - 50, screenHeight/2 + 100, 30);
-  menuIcon p2 = new menuIcon("P2", screenWidth/2 - 50, screenHeight/2 + 200, 30);
-  PImage img = loadImage("./start-menu-idea/start-button.png");
-  PImage backgroundImage = loadImage("./start-menu-idea/background.jpg");
+enum StartMenuState {
+    VS,
+    DIFFICULTY,
+}
+
+/*
+*   the start menu class (holds buttons, text etc.)
+*/
+class StartMenu {
+    StartMenuComponent gameTitle;
+    Button vsHuman;
+    Button vsComputer;
+
+    PImage backgroundImage = loadImage("./start-menu-idea/background.jpg");
+
+
+    StartMenu() {
+        gameTitle = new StartMenuComponent("BOWMAN", 70*2, 70);
+        vsHuman = new Button("vs Human", screenHeight/2 + 100, 30);
+        vsComputer = new Button("vs Computer", screenHeight/2 + 200, 30);
+
+
+    }
   
-  
-  void draw(){
-    //we could use image, text or animation.
-    image(backgroundImage, 0, 0, screenWidth, screenHeight);
-    //The title
-    fill(0, 255, 255);
-    f = createFont("./start-menu-idea/OpenSans-Regular.ttf", t.getFontSize());
-    textFont(f);
-    text(t.getContent(), t.getPosX(), t.getPosY());
-    
-    //The Start button, 1P, 2P?
-    fill(0, 255, 255);
-    textFont(f);
-    text(p1.getContent(), p1.getPosX(), p1.getPosY());
-    text(p2.getContent(), p2.getPosX(), p2.getPosY());
-    
-    //The frames of p1 and p2
-    p1.draw();
-    p2.draw();
-    image(img, 800,400);
-    
-    
-  }
+
+    void draw() {
+
+        pushStyle();
+        // image(backgroundImage, 0, 0, screenWidth, screenHeight);
+        fill(0, 255, 255);
+        gameTitle.draw();
+        vsHuman.draw();
+        vsComputer.draw();
+
+
+        // DEBUG draw cross for centering
+        stroke(255);
+        line(width/2, 0, width/2, height);
+        line(0, height/2, width, height/2);
+
+        popStyle();
+    }
 }
 
-class startMenuComponent {
-    private String content;
-    private int posX;
-    private int posY;
-    private int fontSize;
+/*
+*   
+*/
+class StartMenuComponent extends Obj {
+    protected String content;
+    protected int fontSize;
+    PFont f;
 
-    public startMenuComponent(String content, int posX, int posY, int fontSize) {
+    StartMenuComponent(String content, float x, float y, int fontSize) {
+        super(x, y);
         this.content = content;
-        this.posX = posX;
-        this.posY = posY;
         this.fontSize = fontSize;
+        this.f = createFont("./start-menu-idea/OpenSans-Regular.ttf", fontSize);
+
+        textFont(f);
+        textSize(fontSize);
+        setDimensions(textWidth(content), fontSize);
     }
 
-    public String getContent() {
-        return content;
+    StartMenuComponent(String content, float y, int fontSize) {
+        this(content, 0, y, fontSize);
+        x = width/2;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getPosX() {
-        return posX;
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
-    
-    public int getFontSize() {
-        return fontSize;
-    }
-
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
-    }
-}
-
-class title extends startMenuComponent{
-    public title(String name, int size){
-        super(name, screenWidth / 2 - name.length()*20, size*2, size);
-    }
-}
-
-class menuIcon extends startMenuComponent{
-    public menuIcon(String name, int posX, int posY, int size){
-        super(name, posX, posY, size);
-    }
-    
-    void draw(){
+    public void draw() {
         stroke(0);
-        noFill();
-        rect(getPosX() - 10, getPosY() - getFontSize() * 2, 60 * getContent().length(), 60);
-    }  
+        fill(0, 255, 255);
+        textFont(f);
+        text(content, x-objWidth/2, y);
+    }
+}
+
+class Button extends StartMenuComponent{
+    final int YPAD = 10;
+
+    Button(String name, int x, int y, int fontSize){
+        super(name, x, y, fontSize);
+    }
+
+    Button(String content, int y, int fontSize) {
+        super(content, y, fontSize);
+    }
+    
+    void draw() {
+        if (mouseHovering()) {
+            fill(100, 100, 100);
+        }
+        else {
+            noFill();
+        }
+        stroke(255);
+        rect(x-objWidth/2, y-objHeight, objWidth, objHeight+YPAD);
+        super.draw();
+    }
+
+    private boolean mouseHovering() {
+        return (mouseX > x-objWidth/2 && mouseX < x+objWidth/2 && mouseY > y-objHeight && mouseY < y+YPAD);
+    }
 }

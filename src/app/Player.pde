@@ -1,4 +1,4 @@
-public class Player extends Obj {
+public class Player extends Entity {
     PlayerNum playerNum;
     Arrow arrow;
     Aimer aimer;
