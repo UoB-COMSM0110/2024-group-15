@@ -2,12 +2,21 @@
 *  the main file where the program is run from
 */
 
+enum GameState {
+  STARTPAGE,
+  MODEPAGE,
+  EASY,
+  HARD,
+  POPMENU, 
+  SHOP
+}
 
 final String ASSETS_PATH = "../../game-assets/";
 
 int screenWidth = 1280;
 int screenHeight = 720;
-int gameState = 0;
+GameState gameState = GameState.STARTPAGE;
+//int gameState = 0;
 int planetRadius = 1000;
 int minDistanceBetweenPlanets = 200;
 int maxDistanceBetweenPlanets = 500;
@@ -25,6 +34,7 @@ Player[] players = new Player[2];
 
 ArrayList<Arrow> spentArrows = new ArrayList<>();
 
+ModeSelectionInterface modeSelection;
 
 public enum PlayerNum {
     ONE,
@@ -78,14 +88,18 @@ public void setup()
     players[0] = new Player(leftPlanet, 270, PlayerNum.ONE);
     players[1] = new Player(rightPlanet, 250, PlayerNum.TWO);
     activePlayer = players[0];
+    
+    modeSelection = new ModeSelectionInterface();
 
 }
+
 
 public void draw()
 {    
     background(0);
 
-    if(gameState == 0){
+    //if(gameState == 0){
+    if(gameState == GameState.STARTPAGE){
       InitialInterface deIt = new InitialInterface();
       deIt.draw();
       //a simple and shit control of gameState
@@ -93,10 +107,19 @@ public void draw()
       //  gameState = 1;
       //}
       if(keyPressed){
-        gameState = 1;
+        //gameState = 1;
+        gameState = GameState.MODEPAGE;
       }
-    } else {
-        camera.apply();
+      
+    } else if(gameState == GameState.MODEPAGE){
+      modeSelection.draw();
+      
+      //if(mousePressed) {
+      //  modeSelection.mousePressed();
+      //}
+      
+    } else if (gameState == GameState.EASY) {
+      camera.apply();
 
       // debugging code which removes health when pressing R
       // if (keys.get(R) == true) {
@@ -119,6 +142,7 @@ public void draw()
 public void keyPressed()
 {
     if (keys.containsKey(keyCode)) keys.put(keyCode, true);
+    
 }
 public void keyReleased()
 {

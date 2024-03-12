@@ -5,9 +5,11 @@ class InitialInterface{
   title t = new title("TITLE", 70);
   menuIcon p1 = new menuIcon("P1", screenWidth/2 - 50, screenHeight/2 + 100, 30);
   menuIcon p2 = new menuIcon("P2", screenWidth/2 - 50, screenHeight/2 + 200, 30);
+  PressToStartText t1 = new PressToStartText("Press Any Button To Start", screenWidth/2 -130 , screenHeight - 60, 25);
   PImage img = loadImage("./start-menu-idea/start-button.png");
   PImage backgroundImage = loadImage("./start-menu-idea/background.jpg");
   
+
   
   void draw(){
     //we could use image, text or animation.
@@ -27,6 +29,7 @@ class InitialInterface{
     //The frames of p1 and p2
     p1.draw();
     p2.draw();
+    t1.draw();
     image(img, 800,400);
     
     
@@ -94,5 +97,21 @@ class menuIcon extends startMenuComponent{
         stroke(0);
         noFill();
         rect(getPosX() - 10, getPosY() - getFontSize() * 2, 60 * getContent().length(), 60);
+        
+  
     }  
 }
+
+class PressToStartText extends startMenuComponent {
+    PressToStartText(String content, int posX, int posY, int fontSize) {
+        super(content, posX, posY, fontSize);
+    }
+    
+    void draw() {
+      fill(255);
+      textSize(25);
+      text(getContent(), getPosX(), getPosY());
+    }
+}
+
+//------------------------------------------------------------
