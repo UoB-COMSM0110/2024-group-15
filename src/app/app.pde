@@ -16,9 +16,11 @@ HashMap<Integer, Boolean> keys = new HashMap<>();
 
 Camera camera;
 ArrayList<Planet> planets = new ArrayList<>();
-ArrayList<Player> players = new ArrayList<>();
-Player activePlayer;
 
+Player activePlayer;
+Player[] players = new Player[2];
+
+ArrayList<Arrow> spentArrows = new ArrayList<>();
 
 public void settings() {
     size(screenWidth, screenHeight);
@@ -52,15 +54,15 @@ public void setup()
     planets.add(new Planet(500, 100, 1000));
 //        planets.add(new Planet(this, 300, 50, 10000, 20));
 
-    players.add(new Player(planets.get(0), 270));
-    players.add(new Player(planets.get(1), 250));
-    activePlayer = players.get(0);
-    
-    
+    players[0] = new Player(planets.get(0), 270, HeathBarPosition.LEFT);
+    players[1] = new Player(planets.get(1), 250, HeathBarPosition.RIGHT);
+    activePlayer = players[0];
 }
 
 public void draw()
 {    
+    background(0);
+
     if(gameState == 0){
       InitialInterface deIt = new InitialInterface();
       deIt.draw();
@@ -72,21 +74,19 @@ public void draw()
         gameState = 1;
       }
     } else {
-      camera.keyMove();  // for debug moving/zooming the camera
       camera.apply();
 
-      background(0);
+
+      for (Arrow a : spentArrows) {
+        a.draw();
+      }
       for (Planet p : planets) {
           p.draw();
       }
-      for (Player p : players) {
-          p.draw();
+      for (Player p: players) {
+        p.draw();
       }
     }
-    
-    
-    
-   
 }
 
 // Key press handling
@@ -99,4 +99,24 @@ public void keyReleased()
     if (keys.containsKey(keyCode)) keys.put(keyCode, false);
 }
 
+public boolean updatePlayerHealths() {
+    for (Player p: players) {
+        if (activePlayer.getArrow().isCollidingWith(p)) {
+            p.removeHeart();
+            return true;
+        }
+    }
+    return false;
+}
+
+public void finishPlayerTurn()
+{
+    int frameWait = updatePlayerHealths() ? 120 : 60;
+
+    spentArrows.add(new Arrow(activePlayer.getArrow()));
+
+    activePlayer = activePlayer == players[0] ? players[1] : players[0];
+    camera.animateCenterOnObject(activePlayer, frameWait);
+}
+=======
 //random locations of planets

@@ -10,3 +10,8 @@ game.iml
 
 ### Mac OS ###
 .DS_Store
+
+### Sublime Text ###
+*.sublime-project
+*.sublime-workspace
+build-tmp/
