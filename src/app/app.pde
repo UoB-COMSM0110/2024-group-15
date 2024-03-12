@@ -8,6 +8,7 @@ final String ASSETS_PATH = "../../game-assets/";
 int screenWidth = 1280;
 int screenHeight = 720;
 int gameState = 0;
+int planetRadius = 1000;
 
 HashMap<String, PImage> imgs = new HashMap<>();
 
@@ -48,10 +49,15 @@ public void setup()
     int planetsLocationX = (int)(Math.random() * screenWidth);
     int planetsLocationY = (int)(Math.random() * screenHeight);
     //planets.add(new Planet(100, screenHeight-100, 1000));
-    planets.add(new Planet(planetsLocationX, planetsLocationY, 1000));
-    planets.add(new Planet(500, 100, 1000));
+    planets.add(new Planet(planetsLocationX, planetsLocationY, planetRadius));
+    planets.add(new Planet(500, 100, planetRadius));
 //        planets.add(new Planet(this, 300, 50, 10000, 20));
-
+    
+    //generate random locations of planets
+    for(Planet p : planets){
+        generateRandomLocations(p);
+    }
+    
     players.add(new Player(planets.get(0), 270));
     players.add(new Player(planets.get(1), 250));
     activePlayer = players.get(0);
@@ -100,3 +106,23 @@ public void keyReleased()
 }
 
 //random locations of planets
+public void generateRandomLocations(Planet planet){
+    while(true) {
+         boolean isSuitableLocation = true;
+         //generate random positions
+         float x = (float)(Math.random()*screenWidth);
+         float y = (float)(Math.random()*screenHeight);
+         // Test whether this position will be duplicated by other planets' positions
+         for(Planet p : planets){
+             if(Math.abs(p.x - x) <= (p.r + planet.r)){
+                 isSuitableLocation = false;
+                 break;
+             }
+         }
+         if(isSuitableLocation){
+             planet.x = x;
+             planet.y = y;
+             break;
+         }
+    }
+}
