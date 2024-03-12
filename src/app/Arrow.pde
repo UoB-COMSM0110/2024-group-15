@@ -1,16 +1,19 @@
 public class Arrow extends Obj {
     boolean isMoving = false;  // this gets set by the Aimer class when you fire an arrow
     PImage sprite;
-    float realWidth, realHeight;        // TODO instead of this, use a hitbox width+height as well for Objs
     float normalizedX, normalizedY;
+    boolean cannotBeCollidedWith = false;
+
+    float startX, startY;
+
+    boolean startedMoving = false;
 
     Arrow(float x, float y) {
         super(x, y);
         sprite = imgs.get("arrow");
         float scale = 1.5;
-        realWidth = sprite.width*scale;
-        realHeight = sprite.height*scale;
-        setDimensions(1, 1);    // set dimensions to 1, 1 so collision only occurs at the arrowhead
+        setDimensions(sprite.width*scale,  sprite.height*scale);
+        setHitBox(1, 3);
     }
 
     Arrow(Arrow a) {
@@ -26,20 +29,30 @@ public class Arrow extends Obj {
 
     void move() {
         if (!isMoving) {
+            startedMoving = false;
             return;
         }
+        if (startedMoving == false) {   // first frame of movement
+            startX = x;
+            startY = y;
+            startedMoving = true;
+            cannotBeCollidedWith = true;
+        }
+        if (cannotBeCollidedWith && abs(startX-x) > 30 && abs(startY-y) > 60) {    // if arrow has moved out of player hitbox, start collisions
+            cannotBeCollidedWith = false;
+        }
 
-        // planet collision detection
-        // not perfect, as it doesn't let arrows fly sideways close to a planet
+
+        // collision detection
         for (Planet planet : planets) {
-            if (planet.isCollidingWith(this)) {
+            if (planet.isCollidingWith(this)) {     // call overrided method in Planet
                 stopMovingAndFinishTurn();
                 return;
             }
         }
         
         for (Player p: players) {
-            if (p.isCollidingWith(this)) {
+            if (this.isCollidingWith(p)) {               // call overrided method in Arrow (this)
                 stopMovingAndFinishTurn();
                 return;
             }
@@ -57,11 +70,11 @@ public class Arrow extends Obj {
         rotate(radians(270));
         rotate(angleRadians);
         imageMode(CENTER);
-        image(sprite, 0, 0, realWidth, realHeight);
+        image(sprite, 0, 0, objWidth, objHeight);
 
         popMatrix();
 
-        float arrowHeadRadius = (realWidth/2)*0.8;
+        float arrowHeadRadius = (objWidth/2)*0.8;
 
         normalizedX = x+arrowHeadRadius*cos(radians(270)+angleRadians);
         normalizedY = y+arrowHeadRadius*sin(radians(270)+angleRadians);
@@ -72,5 +85,10 @@ public class Arrow extends Obj {
     }
     public float getY() {
         return normalizedY;
+    }
+
+    @Override
+    public boolean isCollidingWith(Obj obj) {
+        return cannotBeCollidedWith ? false : super.isCollidingWith(obj);
     }
 }

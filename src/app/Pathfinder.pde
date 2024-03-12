@@ -1,6 +1,6 @@
 public class Pathfinder extends Obj {
 	 Pathfinder(float x, float y, PVector velocity) {
-        super(x, y, velocity);
+        super(x, y, 0, 0, velocity);
         velocity.mult(0.1F);
     }
 
