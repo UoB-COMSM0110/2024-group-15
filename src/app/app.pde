@@ -24,6 +24,13 @@ Player[] players = new Player[2];
 
 ArrayList<Arrow> spentArrows = new ArrayList<>();
 
+
+public enum PlayerNum {
+    ONE,
+    TWO,
+}
+
+
 public void settings() {
     size(screenWidth, screenHeight);
     // Anti aliasing
@@ -59,8 +66,8 @@ public void setup()
     }
     
 
-    players[0] = new Player(planets.get(0), 270, HeathBarPosition.LEFT);
-    players[1] = new Player(planets.get(1), 250, HeathBarPosition.RIGHT);
+    players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
+    players[1] = new Player(planets.get(1), 250, PlayerNum.TWO);
     activePlayer = players[0];
 
 }
@@ -82,6 +89,10 @@ public void draw()
     } else {
       camera.apply();
 
+      // debugging code which removes health when pressing R
+      // if (keys.get(R) == true) {
+      //   activePlayer.removeHeart();
+      // }
 
       for (Arrow a : spentArrows) {
         a.draw();
@@ -105,10 +116,31 @@ public void keyReleased()
     if (keys.containsKey(keyCode)) keys.put(keyCode, false);
 }
 
+
+private Player getOtherPlayer(Player p) {
+    switch (p.getPlayerNum()) {
+        case ONE: 
+            return players[1];
+        case TWO: 
+            return players[0];
+        default:
+            return null;
+    }
+}
+
+
+public void checkForPlayerDeath(Player p) {
+    if (p.getHealth() <= 0) {
+        setWinnerAndGameOver(getOtherPlayer(p));
+    } 
+}
+
+
 public boolean updatePlayerHealths() {
     for (Player p: players) {
         if (activePlayer.getArrow().isCollidingWith(p)) {
             p.removeHeart();
+            checkForPlayerDeath(p);
             return true;
         }
     }
@@ -121,9 +153,23 @@ public void finishPlayerTurn()
 
     spentArrows.add(new Arrow(activePlayer.getArrow()));
 
-    activePlayer = activePlayer == players[0] ? players[1] : players[0];
+    activePlayer = getOtherPlayer(activePlayer);
     camera.animateCenterOnObject(activePlayer, frameWait);
 }
+
+
+public void setWinnerAndGameOver(Player p)
+{
+    /** TODO
+     *      New game state
+     *      Show winner screen (PLAYER X WINS!)
+     *      Play again button? exit button? etc.
+    */
+    println("PLAYER" + (p.getPlayerNum() == PlayerNum.ONE ? "1 " : "2 ") +"WINS!");
+}
+
+
+
 
 //random locations of planets
 public void generateRandomLocations(Planet planet){
@@ -147,3 +193,4 @@ public void generateRandomLocations(Planet planet){
          }
     }
 }
+

@@ -3,19 +3,13 @@
 */
 
 
-enum HeathBarPosition {
-    LEFT,
-    RIGHT,
-}
-
-
 public class HealthBar {
     int x, y;
     Player player;
 
-    HealthBar(Player player, HeathBarPosition pos) {
+    HealthBar(Player player, PlayerNum playerNum) {
         this.player = player;
-        this.x = pos == HeathBarPosition.LEFT ? 20 : width-200;
+        this.x = playerNum == PlayerNum.ONE ? 20 : width-200;
         this.y = 20;
     }
 
