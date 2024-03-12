@@ -88,7 +88,7 @@ public void draw()
         gameState = 1;
       }
     } else {
-      camera.apply();
+        camera.apply();
 
       // debugging code which removes health when pressing R
       // if (keys.get(R) == true) {
