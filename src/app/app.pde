@@ -43,8 +43,12 @@ public void setup()
 //        camera.updateZoom(0.5F);
 
     imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
-
-    planets.add(new Planet(100, screenHeight-100, 1000));
+    
+    //add planets in random locations inside the screen
+    int planetsLocationX = (int)(Math.random() * screenWidth);
+    int planetsLocationY = (int)(Math.random() * screenHeight);
+    //planets.add(new Planet(100, screenHeight-100, 1000));
+    planets.add(new Planet(planetsLocationX, planetsLocationY, 1000));
     planets.add(new Planet(500, 100, 1000));
 //        planets.add(new Planet(this, 300, 50, 10000, 20));
 
@@ -90,3 +94,5 @@ public void keyReleased()
 {
     if (keys.containsKey(keyCode)) keys.put(keyCode, false);
 }
+
+//random locations of planets
