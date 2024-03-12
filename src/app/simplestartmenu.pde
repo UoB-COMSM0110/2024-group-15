@@ -11,7 +11,7 @@ class InitialInterface{
   
   void draw(){
     //we could use image, text or animation.
-    background(backgroundImage);
+    image(backgroundImage, 0, 0, screenWidth, screenHeight);
     //The title
     fill(0, 255, 255);
     f = createFont("./start-menu-idea/OpenSans-Regular.ttf", t.getFontSize());
