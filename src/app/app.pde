@@ -45,8 +45,12 @@ public void setup()
 //        camera.updateZoom(0.5F);
 
     imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
-
-    planets.add(new Planet(100, screenHeight-100, 1000));
+    
+    //add planets in random locations inside the screen
+    int planetsLocationX = (int)(Math.random() * screenWidth);
+    int planetsLocationY = (int)(Math.random() * screenHeight);
+    //planets.add(new Planet(100, screenHeight-100, 1000));
+    planets.add(new Planet(planetsLocationX, planetsLocationY, 1000));
     planets.add(new Planet(500, 100, 1000));
 //        planets.add(new Planet(this, 300, 50, 10000, 20));
 
@@ -62,6 +66,13 @@ public void draw()
     if(gameState == 0){
       InitialInterface deIt = new InitialInterface();
       deIt.draw();
+      //a simple and shit control of gameState
+      //if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
+      //  gameState = 1;
+      //}
+      if(keyPressed){
+        gameState = 1;
+      }
     } else {
       camera.apply();
 
@@ -76,10 +87,6 @@ public void draw()
         p.draw();
       }
     }
-    //a simple and shit control of gameState
-    if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
-      gameState = 1;
-    }
 }
 
 // Key press handling
@@ -91,7 +98,6 @@ public void keyReleased()
 {
     if (keys.containsKey(keyCode)) keys.put(keyCode, false);
 }
-
 
 public boolean updatePlayerHealths() {
     for (Player p: players) {
@@ -112,3 +118,5 @@ public void finishPlayerTurn()
     activePlayer = activePlayer == players[0] ? players[1] : players[0];
     camera.animateCenterOnObject(activePlayer, frameWait);
 }
+=======
+//random locations of planets
