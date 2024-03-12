@@ -54,11 +54,7 @@ public void setup()
 //        camera.updateZoom(0.5F);
 
     imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
-    
-    //add planets in random locations inside the screen
-    int planetsLocationX = (int)(Math.random() * screenWidth);
-    int planetsLocationY = (int)(Math.random() * screenHeight);
-    
+
     //fixed positions
     planets.add(new Planet(100, screenHeight-100, 1000));
     planets.add(new Planet(500, 100, planetRadius));
@@ -184,7 +180,8 @@ public void generateRandomLocations(Planet planet){
          float y = (float)(Math.random()*screenHeight);
          // Test whether this position will be duplicated by other planets' positions
          for(Planet p : planets){
-             if(Math.abs(p.x - x) <= (p.r + planet.r + offset)){
+             float distance = (float)Math.sqrt((p.x - x) * (p.x - x) + (p.y -y) * (p.y - y));
+             if(distance <= (p.r + planet.r + offset)){
                  isSuitableLocation = false;
                  break;
              }
