@@ -47,11 +47,7 @@ public void setup()
 //        camera.updateZoom(0.5F);
 
     imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
-    
-    //add planets in random locations inside the screen
-    int planetsLocationX = (int)(Math.random() * screenWidth);
-    int planetsLocationY = (int)(Math.random() * screenHeight);
-    
+
     //fixed positions
     planets.add(new Planet(100, screenHeight-100, 1000));
     planets.add(new Planet(500, 100, planetRadius));
