@@ -134,7 +134,8 @@ public void generateRandomLocations(Planet planet){
          float y = (float)(Math.random()*screenHeight);
          // Test whether this position will be duplicated by other planets' positions
          for(Planet p : planets){
-             if(Math.abs(p.x - x) <= (p.r + planet.r + offset)){
+             float distance = (float)Math.sqrt((p.x - x) * (p.x - x) + (p.y -y) * (p.y - y));
+             if(distance <= (p.r + planet.r + offset)){
                  isSuitableLocation = false;
                  break;
              }

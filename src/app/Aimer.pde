@@ -1,7 +1,7 @@
 /*
 *  handles the mouse aim tool and changes the velocity of the arrow
 */
-
+int maxPower = 200;
 
 public class Aimer {
     Arrow arrow;
@@ -45,10 +45,10 @@ public class Aimer {
         //float angleRadians = (float)Math.atan2(arrow.velocity.y, arrow.velocity.x);
 
         // stop the line from growing in length past 200
-        if (lengthOfLine > 200) {
-            lengthOfLine = 200;
-            x2 = x1 - 200 * (float)Math.cos(angleRadians);
-            y2 = y1 - 200 * (float)Math.sin(angleRadians);
+        if (lengthOfLine > maxPower) {
+            lengthOfLine = maxPower;
+            x2 = x1 - maxPower * (float)Math.cos(angleRadians);
+            y2 = y1 - maxPower * (float)Math.sin(angleRadians);
         }
         
         // get the vector of the 2 points made by mouse press
