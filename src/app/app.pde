@@ -170,6 +170,8 @@ public void finishPlayerTurn()
         return;
     }
 
+    activePlayer.getArrow().cannotBeCollidedWith = true;
+
     activePlayer = getOtherPlayer(activePlayer);
     camera.animateCenterOnObject(activePlayer, frameWait);
 }

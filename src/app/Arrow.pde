@@ -13,7 +13,7 @@ public class Arrow extends Obj {
         sprite = imgs.get("arrow");
         float scale = 1.5;
         setDimensions(sprite.width*scale,  sprite.height*scale);
-        setHitBox(1, 3);
+        setHitBox(1, 1);
     }
 
     Arrow(Arrow a) {
@@ -38,7 +38,7 @@ public class Arrow extends Obj {
             startedMoving = true;
             cannotBeCollidedWith = true;
         }
-        if (cannotBeCollidedWith && abs(startX-x) > 30 && abs(startY-y) > 60) {    // if arrow has moved out of player hitbox, start collisions
+        else if (cannotBeCollidedWith && abs(startX-x) > 30 && abs(startY-y) > 60) {    // if arrow has moved out of player hitbox, start collisions
             cannotBeCollidedWith = false;
         }
 
