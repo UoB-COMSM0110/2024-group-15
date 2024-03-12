@@ -3,13 +3,13 @@ class ModeSelectionInterface {
   menuButton easyButton = new menuButton("EASY", screenWidth/2 - 50, screenHeight/2 + 100, 30);
   menuButton hardButton = new menuButton("HARD", screenWidth/2 - 50, screenHeight/2 + 200, 30);
   
-  int selectionBoxX; // 用于表示选择框的x坐标
-  int selectionBoxY; // 用于表示选择框的y坐标
+  int selectionBoxX; 
+  int selectionBoxY; 
   int selectionBoxWidth;
   int selectionBoxHeight;
 
   ModeSelectionInterface() {
-    selectionBoxX = easyButton.getPosX() - 10; // 初始位置在easy button左边
+    selectionBoxX = easyButton.getPosX() - 10;
     selectionBoxY = easyButton.getPosY() - easyButton.getFontSize() * 2;
     selectionBoxWidth = 60 * easyButton.getContent().length();
     selectionBoxHeight = 60;
