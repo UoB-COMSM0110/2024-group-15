@@ -30,15 +30,15 @@ class Planet extends Entity {
         //this.sprite=imgs.get("planet2");
     }
     Planet(int x, int y, int mass, boolean imageflag) {
-    super(x, y);
-    this.mass = mass;
-    this.r = mass/10F;
-    if(imageflag==true){
-      //sprite is null? why??
-      sprite = imgs.get("planet1");
-    }else if(imageflag==false){
-        this.sprite=imgs.get("planet2");
-    }
+        super(x, y);
+        this.mass = mass;
+        this.r = mass/10F;
+        if(imageflag==true){
+          //sprite is null? why??
+          sprite = imgs.get("planet1");
+        }else if(imageflag==false){
+            this.sprite=imgs.get("planet2");
+        }
     }
     
     public void increaseNumberOfArrowsHit(){   //(cheating point related)
@@ -49,7 +49,7 @@ class Planet extends Entity {
         return numberOfArrowsOnMe;
     }
     
-}
+
 
 
 
@@ -107,4 +107,5 @@ class Planet extends Entity {
 
         return direction;
     }
+    
 }
