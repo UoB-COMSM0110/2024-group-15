@@ -44,6 +44,7 @@ HashMap<Integer, Boolean> keys = new HashMap<>();
 
 Camera camera;
 StartMenu startMenu;
+Tutorial tutorial;
 ArrayList<Planet> planets = new ArrayList<>();
 ArrayList<Arrow> spentArrows = new ArrayList<>();
 Player[] players = new Player[2];
@@ -52,6 +53,7 @@ Player activePlayer;
 int planetRadius = 1000;
 int minDistanceBetweenPlanets = 700;
 int maxDistanceBetweenPlanets = 800;
+
 
 
 public void settings() {
@@ -130,7 +132,8 @@ public void setup()
     activePlayer = players[0];
     
     // modeSelection = new ModeSelectionInterface();
-
+    
+    tutorial = new Tutorial();
 }
 
 
@@ -148,7 +151,9 @@ public void draw()
     }
 
     camera.apply();
-
+    
+    tutorial.draw();        //The help message during gameplay
+    
     for (Arrow a : spentArrows) {
         a.draw();
     }
