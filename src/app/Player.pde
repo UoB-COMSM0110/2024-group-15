@@ -42,7 +42,7 @@ public class Player extends Entity {
 
 
         healthBar = new HealthBar(this, playerNum);
-        animation = new Animation(1);
+        animation = new Animation(AnimationStatus.IDLE);
     }
 
 //     void draw() {
@@ -72,14 +72,14 @@ void draw() {
     if (this == activePlayer) {
         if (arrow.isMoving) arrow.move();
         aimer.update();
-        if (animation.status != 2) {
-            animation.status = 2;
-            animation.loadImages();
-        }
+        // if (animation.status != AnimationStatus.DRAW) {
+        //     animation.status = AnimationStatus.DRAW;
+        //     animation.loadImages();
+        // }
         animation.playAnimationStatic(this);
     } else {
-        if (animation.status != 1) {
-            animation.status = 1;
+        if (animation.status != AnimationStatus.IDLE) {
+            animation.status = AnimationStatus.IDLE;
             animation.loadImages();
         }
         animation.playAnimationLoop(this);
@@ -90,14 +90,15 @@ void draw() {
     //player standby
     //fill(255, 255, 255);
     //rect(x, y, objWidth, objHeight);
-    if (animation.status == 1) {
+    if (animation.status == AnimationStatus.IDLE) {
            // animation.loadImages();
             animation.playAnimationLoop(this);
-        }else{
-         // animation.loadImages();
-          animation.playAnimationStatic(this);
-          
         }
+    else{
+         // animation.loadImages();
+        animation.playAnimationStatic(this);      
+    }
+
     popStyle();
 
     if (this == activePlayer) {
