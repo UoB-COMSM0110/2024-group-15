@@ -24,6 +24,10 @@ class Planet extends Entity {
         ellipse(x, y, r*2, r*2);
     }
 
+    public float getRadius() {
+        return r;
+    }
+
     public boolean isCollidingWith(Entity e)
     {
         float dxsq = (e.getX()-x)*(e.getX()-x);

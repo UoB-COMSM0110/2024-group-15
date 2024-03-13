@@ -2,128 +2,152 @@
 *  the main file where the program is run from
 */
 
+import java.util.HashMap;
+import java.util.Collections;
+import java.io.File;
 
-final String ASSETS_PATH = "../../game-assets/";
+enum GameState {
+  STARTPAGE,
+  GAME,
+  POPMENU, 
+  SHOP,
+  GAMEOVER,
+}
 
-int screenWidth = 1280;
-int screenHeight = 720;
-int gameState = 0;
-int planetRadius = 1000;
-int minDistanceBetweenPlanets = 200;
-int maxDistanceBetweenPlanets = 500;
+enum Settings {
+    VSCOMPUTER,
+    VSHUMAN,
+    EASY,
+    HARD,
+}
 
-HashMap<String, PImage> imgs = new HashMap<>();
-
-static final int SPACE=32, R=82, W=87, S=83;
-HashMap<Integer, Boolean> keys = new HashMap<>();
-
-Camera camera;
-ArrayList<Planet> planets = new ArrayList<>();
-
-Player activePlayer;
-Player[] players = new Player[2];
-
-ArrayList<Arrow> spentArrows = new ArrayList<>();
-
-StartMenu startMenu;
-
-
-public enum PlayerNum {
+enum PlayerNum {
     ONE,
     TWO,
 }
 
+static final String ASSETS_PATH = "../../game-assets/".replace("/", File.separator);
+static final int SPACE=32, R=82, W=87, S=83;
+
+GameState gameState = GameState.STARTPAGE;
+HashMap<String, Settings> gameSettings = new HashMap<>();
+
+HashMap<String, PImage> imgs = new HashMap<>();
+HashMap<Integer, Boolean> keys = new HashMap<>();
+
+Camera camera;
+StartMenu startMenu;
+ArrayList<Planet> planets = new ArrayList<>();
+ArrayList<Arrow> spentArrows = new ArrayList<>();
+Player[] players = new Player[2];
+Player activePlayer;
+
+int planetRadius = 1000;
+int minDistanceBetweenPlanets = 300;
+int maxDistanceBetweenPlanets = 800;
+
 
 public void settings() {
-    size(screenWidth, screenHeight);
+    size(1280, 720);
     // Anti aliasing
     smooth(8);
 }
 
+
+
+// Use this method for loading images (stored in the `game-assets` folder)
+public void loadAssets() {
+    imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
+
+}
+
+
 public void setup()
 {
+    loadAssets();
+
     keys.put(UP, false);
     keys.put(DOWN, false);
     keys.put(LEFT, false);
     keys.put(RIGHT, false);
-
     keys.put(SPACE, false);
     keys.put(R, false);
     keys.put(W, false);
     keys.put(S, false);
 
-
     camera = new Camera();
-//        camera.updateZoom(0.5F);
-
-    imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
 
     //fixed positions
-    planets.add(new Planet(100, screenHeight-100, 1000));
+    planets.add(new Planet(100, height-100, 1000));
     planets.add(new Planet(500, 100, planetRadius));
-//        planets.add(new Planet(this, 300, 50, 10000, 20));
-    
+    randomisePlanetLocations();
+
+
     //generate random locations of planets
-    for(Planet p : planets){
-        generateRandomLocations(p);
-    }
+    // for(Planet p : planets){
+    //     generateRandomLocations(p);
+    // }
+
+    
+
+    Collections.sort(planets, (p1, p2) -> Float.compare(p1.getX(), p2.getX()));
+
     //set the left and right planet
-    Planet leftPlanet, rightPlanet;
-    if(planets.get(0).x < planets.get(1).x){
-        leftPlanet = planets.get(0);
-        rightPlanet = planets.get(1);
-    } else {
-        leftPlanet = planets.get(1);
-        rightPlanet = planets.get(0);
-    }
+    // Planet leftPlanet, rightPlanet;
+    // if(planets.get(0).x < planets.get(1).x){
+    //     leftPlanet = planets.get(0);
+    //     rightPlanet = planets.get(1);
+    // } else {
+    //     leftPlanet = planets.get(1);
+    //     rightPlanet = planets.get(0);
+    // }
 
 
     startMenu = new StartMenu();
     
-    players[0] = new Player(leftPlanet, 270, PlayerNum.ONE);
-    players[1] = new Player(rightPlanet, 250, PlayerNum.TWO);
+    players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
+    players[1] = new Player(planets.get(1), 250, PlayerNum.TWO);
     activePlayer = players[0];
+    
+    // modeSelection = new ModeSelectionInterface();
 
 }
+
 
 public void draw()
 {    
     background(0);
 
-    if(gameState == 0){
-        
-      startMenu.draw();
-      //a simple and shit control of gameState
-      //if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
-      //  gameState = 1;
-      //}
-      if(keyPressed){
-        gameState = 1;
-      }
-    } else {
-        camera.apply();
-
-      // debugging code which removes health when pressing R
-      // if (keys.get(R) == true) {
-      //   activePlayer.removeHeart();
-      // }
-
-      for (Arrow a : spentArrows) {
-        a.draw();
-      }
-      for (Planet p : planets) {
-         p.draw();
-      }
-      for (Player p: players) {
-        p.draw();
-      }
+    switch (gameState) {
+        case STARTPAGE:
+            startMenu.draw();
+            return;
+        case GAME:
+            break;
     }
+    camera.apply();
+
+    for (Arrow a : spentArrows) {
+        a.draw();
+    }
+    for (Planet p : planets) {
+        p.draw();
+    }
+    for (Player p: players) {
+        p.draw();
+    }
+
+    // debugging code which removes health when pressing R
+    // if (keys.get(R) == true) {
+    //   activePlayer.removeHeart();
+    // }
 }
 
 // Key press handling
 public void keyPressed()
 {
     if (keys.containsKey(keyCode)) keys.put(keyCode, true);
+    
 }
 public void keyReleased()
 {
@@ -197,24 +221,49 @@ public void setWinnerAndGameOver(Player p)
 
 
 //random locations of planets
-public void generateRandomLocations(Planet planet){
-    while(true) {
-         boolean isSuitableLocation = true;
-         //generate random positions
-         float x = (float)(Math.random()*screenWidth);
-         float y = (float)(Math.random()*screenHeight);
-         // Test whether this position will be duplicated by other planets' positions
-         for(Planet p : planets){
-             float distance = (float)Math.sqrt((p.x - x) * (p.x - x) + (p.y -y) * (p.y - y));
-             if(distance <= (p.r + planet.r + minDistanceBetweenPlanets) || distance > (p.r + planet.r + maxDistanceBetweenPlanets)){
-                 isSuitableLocation = false;
-                 break;
-             }
-         }
-         if(isSuitableLocation){
-             planet.x = x;
-             planet.y = y;
-             break;
-         }
+public void randomisePlanetLocations() {
+    boolean areSuitableLocations = false;
+
+    while (!areSuitableLocations) {
+        // generate random positions
+        for (Planet p: planets) {
+            p.setX(random(width));
+            p.setY(random(height));
+        }
+        // Test whether this position will be duplicated by other planets' positions
+        for (Planet p: planets) {
+            Planet nextPlanet = planets.get((planets.indexOf(p)+1) % planets.size());
+
+            float distance = sqrt( 
+                    (p.getX() - nextPlanet.getX()) * (p.getX() - nextPlanet.getX()) +
+                    (p.getY() -nextPlanet.getY()) * (p.getY() - nextPlanet.getY()));
+
+            if( distance <= (p.getRadius() + nextPlanet.getRadius() + minDistanceBetweenPlanets) ||
+                distance > (p.getRadius() + nextPlanet.getRadius() + maxDistanceBetweenPlanets)) {
+                areSuitableLocations = true;
+                break;
+            }
+        }
     }
+
+
+    // while(true) {
+    //      boolean isSuitableLocation = true;
+         
+    //      float x = (float)(Math.random()*width);
+    //      float y = (float)(Math.random()*height);
+         
+    //      for(Planet p : planets){
+    //          float distance = (float)Math.sqrt((p.x - x) * (p.x - x) + (p.y -y) * (p.y - y));
+    //          if(distance <= (p.r + planet.r + minDistanceBetweenPlanets) || distance > (p.r + planet.r + maxDistanceBetweenPlanets)){
+    //              isSuitableLocation = false;
+    //              break;
+    //          }
+    //      }
+    //      if(isSuitableLocation){
+    //          planet.x = x;
+    //          planet.y = y;
+    //          break;
+    //      }
+    // }
 }

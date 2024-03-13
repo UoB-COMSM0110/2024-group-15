@@ -58,7 +58,7 @@ public class Arrow extends Entity {
             }
         }        
         super.move();
-        camera.updateXY(x-screenWidth/2F, y-screenHeight/2F);
+        camera.updateXY(x-width/2, y-height/2);
     }
 
     void draw() {
