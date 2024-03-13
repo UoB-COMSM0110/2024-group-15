@@ -127,7 +127,7 @@ public void draw()
             break;
         case GAMEOVER:
             gameOverPage.draw();
-            break;
+            return;
     }
     camera.apply();
 

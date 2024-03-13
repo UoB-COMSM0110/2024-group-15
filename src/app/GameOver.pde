@@ -5,10 +5,17 @@ class GameOverPage {
     
     GameOverPage() {
         
-        winTitle = new StartMenuComponent("", width / 2, height / 2 - 50, 30);
+        winTitle = new StartMenuComponent("", width / 2 - 50, height / 2 - 50, 30);
 
         exitButton = new Button("Exit", width / 2, height / 2 + 100, 30, () -> {
+            // reset game state
             gameState = GameState.STARTPAGE;
+            startMenu = new StartMenu();
+            // reset arrow and player
+            planets = new ArrayList<>();
+            spentArrows = new ArrayList<>();
+            players = new Player[2];
+            setup();
         });
     }
     
