@@ -35,31 +35,47 @@ public class Player extends Obj {
         healthBar = new HealthBar(this, heathBarPosition);
         animation = new Animation(1);
         
-         animation.status=1;
+
     }
 
-    void draw() {
-        if (this == activePlayer) {
-            if (arrow.isMoving) arrow.move();
-            aimer.update();
+void draw() {
+    if (this == activePlayer) {
+        if (arrow.isMoving) arrow.move();
+        aimer.update();
+        if (animation.status != 2) {
+            animation.status = 2;
+            animation.loadImages();
+        }
+        animation.playAnimationStatic(this);
+    } else {
+        if (animation.status != 1) {
+            animation.status = 1;
+            animation.loadImages();
+        }
+        animation.playAnimationLoop(this);
+        // TODO play standby status;
+    }
+
+    pushStyle();
+    //player standby
+    //fill(255, 255, 255);
+    //rect(x, y, objWidth, objHeight);
+    if (animation.status == 1) {
+           // animation.loadImages();
+            animation.playAnimationLoop(this);
         }else{
-          animation.status=1;
-          animation.playAnimationLoop(this);
+         // animation.loadImages();
+          animation.playAnimationStatic(this);
           
-        //TODO play standby status;
         }
-        pushStyle();
-        //player standby
-        fill(255, 255, 255);
-        rect(x, y, objWidth, objHeight);
-        popStyle();
+    popStyle();
 
-        if (this == activePlayer) {
-            arrow.draw();
-        }
-        
-        healthBar.draw();
+    if (this == activePlayer) {
+        arrow.draw();
     }
+
+    healthBar.draw();
+}
 
     Arrow getArrow() {
         return arrow;

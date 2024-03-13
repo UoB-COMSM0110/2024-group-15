@@ -7,7 +7,7 @@ public class Animation {
   //int playerStatus; 
   
    private int currentFrame = 0;
-  private int frameDuration = 4; 
+  private int frameDuration = 50; 
   private int lastFrameChange = 0;
   private boolean isLooping = false;
 
@@ -20,36 +20,42 @@ public class Animation {
     switch (this.status) {
       //stand by: not this person's turn or the arrow has been shoot 
       case 1:
-        images = loadAnimationImages("idle", 13);
+        images = loadAnimationImages("idle",0, 12);
         break;
      //aiming:2_atk,1-8 frame
       case 2:
-        images = loadAnimationImages("2_atk", 8);
+        images = loadAnimationImages("2_atk", 1,8);
         break;
        //fire:2_atk,8-12 frames
       case 3:
-        images = loadAnimationImages("2_atk", 10);
+        images = loadAnimationImages("2_atk",8, 10);
         break;
       //fire(cheat mode)
        case 4:
-        images = loadAnimationImages("3_atk", 10);
+        images = loadAnimationImages("3_atk",0, 10);
         break;
        //heath bar get down
        case 5:
-        images = loadAnimationImages("take_hit", 10);
+        images = loadAnimationImages("take_hit",0, 10);
         break;
         
     }
   }
 
-  private PImage[] loadAnimationImages(String subfolder, int count) {
+private PImage[] loadAnimationImages(String subfolder, int startframe, int count) {
     PImage[] animationImages = new PImage[count];
-    for (int i = 0; i < count; i++) {
-      String filename = animatePath + File.separator + subfolder + File.separator + subfolder + "_" + i + ".png";
-      animationImages[i] = loadImage(filename);
+    animationImages[0] = null; 
+    for (int i = startframe; i < count; i++) {
+        String filename = animatePath + File.separator + subfolder + File.separator + subfolder + "_" + i + ".png";
+        PImage loadedImage = loadImage(filename);
+        if (loadedImage == null) {
+            System.err.println("Error loading image: " + filename);
+        } else {
+            animationImages[i] = loadedImage;
+        }
     }
     return animationImages;
-  }
+}
 
 public void playAnimationLoop(Player player) {
     float x = player.getX();
@@ -58,6 +64,9 @@ public void playAnimationLoop(Player player) {
     if (currentTime - lastFrameChange > frameDuration) {
       currentFrame = (currentFrame + 1) % images.length; 
       lastFrameChange = currentTime;
+    }
+        if (images[currentFrame] != null) {
+        image(images[currentFrame], x+3, y-30);
     }
     //image for the postion
     //image(images[currentFrame], x, y); 
@@ -75,7 +84,11 @@ public void playAnimationLoop(Player player) {
         }
         lastFrameChange = currentTime;
       }
-      //image(images[currentFrame], x, y); 
+          if (images[currentFrame] != null) {
+        image(images[currentFrame], x+3, y-30);
+    }
+     // image(images[currentFrame], x, y); 
+      
     }
    }
 }
