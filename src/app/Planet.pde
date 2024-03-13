@@ -9,17 +9,17 @@ class Planet extends Entity {
         super(x, y);
         this.mass = mass;
         this.r = mass/10F;
-<<<<<<< HEAD
+
         setDimensions(r*2, r*2);
         setHitBox(r*2, r*2);
-=======
+
         //this.sprite=imgs.get("planet1");
 
 /*
         imageMode(CENTER);
         image(sprite, 0, 0, realWidth, realHeight);
 */
->>>>>>> Ada
+
     }
 
     Planet(int x, int y, int mass, int radius) {
@@ -41,17 +41,16 @@ class Planet extends Entity {
 }
 
 
-<<<<<<< HEAD
+
     void move() { /* planets don't move at the moment */ }
 
-=======
-    void move() { }
+
     
     //image for the planet.
->>>>>>> Ada
+
     void draw() {
         fill(0, 255, 0);
-if (sprite != null) {
+    if (sprite != null) {
             // Check if sprite is not null before using it
             imageMode(CENTER);
             image(this.sprite, x, y, r * 2, r * 2);

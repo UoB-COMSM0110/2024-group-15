@@ -1,12 +1,12 @@
-<<<<<<< HEAD
+
 public class Player extends Entity {
     PlayerNum playerNum;
-=======
 
-public class Player extends Obj {
+
+
   
   
->>>>>>> Ada
+
     Arrow arrow;
     Aimer aimer;
     Planet planet;
@@ -24,11 +24,11 @@ public class Player extends Obj {
         super(planet.x, planet.y, 30, 60);   // TODO this will change when we use an image instead of a rect
         this.planetAngle = planetAngle;
         this.planet = planet;
-<<<<<<< HEAD
+
         this.playerNum = playerNum;
-=======
+
         //this.playerstatus=STANDBY;
->>>>>>> Ada
+
 
         double radians = Math.toRadians(planetAngle);
 
@@ -40,32 +40,33 @@ public class Player extends Obj {
         arrow = new Arrow(x, y);
         aimer = new Aimer(this, arrow);
 
-<<<<<<< HEAD
+
         healthBar = new HealthBar(this, playerNum);
+        animation = new Animation(1);
     }
 
-    void draw() {
-        if (this == activePlayer) {
-            if (arrow.isMoving) arrow.move();
-            aimer.update();
-        }
-        pushStyle();
-        fill(255, 255, 255);
-        rect(x, y, objWidth, objHeight);
-        popStyle();
+//     void draw() {
+//         if (this == activePlayer) {
+//             if (arrow.isMoving) arrow.move();
+//             aimer.update();
+//         }
+//         pushStyle();
+//         fill(255, 255, 255);
+//         rect(x, y, objWidth, objHeight);
+//         popStyle();
 
-        if (this == activePlayer) {
-            arrow.draw();
-        }
-=======
-        setDimensions(30, 60);      // TODO placeholder until actual player sprite
+//         if (this == activePlayer) {
+//             arrow.draw();
+//         }
+// =======
+//         setDimensions(30, 60);      // TODO placeholder until actual player sprite
 
-        healthBar = new HealthBar(this, heathBarPosition);
-        animation = new Animation(1);
->>>>>>> Ada
+//         healthBar = new HealthBar(this, heathBarPosition);
+//         animation = new Animation(1);
+// >>>>>>> Ada
         
 
-    }
+//     }
 
 void draw() {
     if (this == activePlayer) {

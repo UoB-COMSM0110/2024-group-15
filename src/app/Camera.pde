@@ -29,12 +29,9 @@ public class Camera {
 
     // the main camera function; called during App.draw()
     public void apply() {
-<<<<<<< HEAD
+
         if (hasNotReachedTarget) {
-=======
-      //image(backgroundImage, 0, 0, screenWidth, screenHeight);
-        if (cameraIsMoving) {
->>>>>>> Ada
+
             if (waitFrames > 0) {
                 waitFrames--;
             }
