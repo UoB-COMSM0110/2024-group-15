@@ -1,4 +1,4 @@
-public class Pathfinder extends Obj {
+public class Pathfinder extends Entity {
 	 Pathfinder(float x, float y, PVector velocity) {
         super(x, y, 0, 0, velocity);
         velocity.mult(0.1F);

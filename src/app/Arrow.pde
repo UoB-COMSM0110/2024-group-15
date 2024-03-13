@@ -1,4 +1,4 @@
-public class Arrow extends Obj {
+public class Arrow extends Entity {
     boolean isMoving = false;  // this gets set by the Aimer class when you fire an arrow
     PImage sprite;
     float normalizedX, normalizedY;
@@ -58,7 +58,7 @@ public class Arrow extends Obj {
             }
         }        
         super.move();
-        camera.updateXY(x-screenWidth/2F, y-screenHeight/2F);
+        camera.updateXY(x-width/2, y-height/2);
     }
 
     void draw() {
@@ -88,7 +88,7 @@ public class Arrow extends Obj {
     }
 
     @Override
-    public boolean isCollidingWith(Obj obj) {
-        return cannotBeCollidedWith ? false : super.isCollidingWith(obj);
+    public boolean isCollidingWith(Entity e) {
+        return cannotBeCollidedWith ? false : super.isCollidingWith(e);
     }
 }
