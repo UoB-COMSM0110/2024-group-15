@@ -77,8 +77,6 @@ public void playAnimationLoop(Player player) {
         if (images[currentFrame] != null) {
         image(images[currentFrame], x+3, y-30);
     }
-    //image for the postion
-    //image(images[currentFrame], x, y); 
   }
 
 
@@ -108,21 +106,5 @@ public void playAnimationLoop(Player player) {
       currentFrame = 0;
       isAnimating = false;
     }
-
-    //   int currentTime = millis();
-    //   if (currentTime - lastFrameChange > frameDuration) {
-    //     currentFrame++;  
-    //     if (currentFrame >= images.length) {
-    //       currentFrame = images.length - 1;  
-    //       isLooping = false;  
-    //     }
-    //     lastFrameChange = currentTime;
-    //   }
-    //       if (images[currentFrame] != null) {
-    //     image(images[currentFrame], x+3, y-30);
-    // }
-    //  // image(images[currentFrame], x, y); 
-      
-    // }
    }
 }

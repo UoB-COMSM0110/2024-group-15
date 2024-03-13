@@ -55,6 +55,14 @@ public class Camera {
         this.y = y;
     }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
     public void updateZoom(float zoom) {
         this.zoom = zoom;
         zoomXOffset = (1-zoom)*(width/2F);

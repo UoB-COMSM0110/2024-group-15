@@ -69,7 +69,7 @@ public class Arrow extends Entity {
         translate(x, y);
         rotate(radians(270));
         rotate(angleRadians);
-        imageMode(CENTER);
+        imageMode(CENTER);          // TODO just have this at the start maybe
         image(sprite, 0, 0, objWidth, objHeight);
 
         popMatrix();

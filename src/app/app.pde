@@ -36,7 +36,7 @@ int screenWidth = 1024;
 int screenHeight = 767;
 
 
-PImage backgroundImage;
+PImage backgroundImage, transparentStars;
 
 
 HashMap<String, PImage> imgs = new HashMap<>();
@@ -95,6 +95,7 @@ public void setup()
 
 //        camera.updateZoom(0.5F);
     backgroundImage = loadImage("./art-img/space1-1.png");
+    transparentStars = loadImage("./art-img/transparent-stars.png");
     
     
     
@@ -137,7 +138,24 @@ public void setup()
 public void draw()
 {    
     background(0);
-    background(backgroundImage);
+    imageMode(CENTER);
+
+    float backgroundImageX = width/2 - (camera.getX()*0.3);
+    float backgroundImageY = height/2 - (camera.getY()*0.3);
+    image(backgroundImage, backgroundImageX, backgroundImageY);
+
+    image(backgroundImage, backgroundImageX-width, backgroundImageY);
+    image(backgroundImage, backgroundImageX-width, backgroundImageY-height);
+    image(backgroundImage, backgroundImageX, backgroundImageY-height);
+    image(backgroundImage, backgroundImageX+width, backgroundImageY-height);
+    image(backgroundImage, backgroundImageX+width, backgroundImageY);
+    image(backgroundImage, backgroundImageX+width, backgroundImageY+height);
+    image(backgroundImage, backgroundImageX, backgroundImageY+height);
+    image(backgroundImage, backgroundImageX-width, backgroundImageY+height);
+
+
+    image(transparentStars, backgroundImageX*1.2, backgroundImageY*1.2, width*3, height*3);
+    // background(backgroundImage);
 
     switch (gameState) {
         case STARTPAGE:
