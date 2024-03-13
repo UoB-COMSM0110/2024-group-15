@@ -99,8 +99,8 @@ public void setup()
     
     
     //add planets in random locations inside the screen
-    int planetsLocationX = (int)(Math.random() * screenWidth);
-    int planetsLocationY = (int)(Math.random() * screenHeight);
+    //int planetsLocationX = (int)(Math.random() * screenWidth);
+    //int planetsLocationY = (int)(Math.random() * screenHeight);
     
 
 
@@ -261,13 +261,14 @@ public void randomisePlanetLocations() {
             float distance = sqrt( 
                     (p.getX() - nextPlanet.getX()) * (p.getX() - nextPlanet.getX()) +
                     (p.getY() -nextPlanet.getY()) * (p.getY() - nextPlanet.getY()));
-
-            if( distance <= (p.getRadius() + nextPlanet.getRadius() + minDistanceBetweenPlanets) ||
-                distance > (p.getRadius() + nextPlanet.getRadius() + maxDistanceBetweenPlanets)) {
+            
+            if( distance <= (p.getRadius() + nextPlanet.getRadius() + minDistanceBetweenPlanets) ||          //The distance should not be less than minDistance 
+                distance > (p.getRadius() + nextPlanet.getRadius() + maxDistanceBetweenPlanets)) {           //or not be larger than maxDistance
                 hasUnsuitableLocations = true;
                 break;
             }
         }
+        //no unsuitable locations -> setting the areSuitableLocations to true (end the loop)
         if(!hasUnsuitableLocations){
             areSuitableLocations = true;
         }
