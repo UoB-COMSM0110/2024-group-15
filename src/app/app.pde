@@ -213,10 +213,26 @@ public boolean updatePlayerHealths() {
     return false;
 }
 
+//public boolean updatePlayerHealths(boolean cheatMode) {
+//    for (Player p : players) {
+//        if (activePlayer.getArrow().isCollidingWith(p)) {
+//            if (cheatMode) {
+//                p.removeHeart();
+//                p.removeHeart();
+//            } else {
+//                p.removeHeart();
+//            }
+//            return true;
+//        }
+//    }
+//    return false;
+//}
+
+
 public void finishPlayerTurn()
 {
     int frameWait = updatePlayerHealths() ? 120 : 60;
-
+    // int frameWait = updatePlayerHealths(false) ? 120 : 60;
     spentArrows.add(new Arrow(activePlayer.getArrow()));
 
     Player deadPlayer = checkForPlayerDeaths();
