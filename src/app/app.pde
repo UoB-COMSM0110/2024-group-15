@@ -158,7 +158,6 @@ public void draw()
     for (Player p: players) {
         p.draw();
     }
-
     // debugging code which removes health when pressing R
     // if (keys.get(R) == true) {
     //   activePlayer.removeHeart();
