@@ -2,16 +2,19 @@ class Tutorial {
     TutorialComponent helpMessage;
     
     Tutorial() {
-        helpMessage = new TutorialComponent("Left click, drag the mouse", 0, height - 100, 70);
+        helpMessage = new TutorialComponent("Fire: (L)Mouse; Cancel: (R)Mouse", 10, height, 27);      //Help message: content, x, y, fontsize
     }
     
     void draw() {
+        resetMatrix();      //reset other camera moving so that the tutorial can be print on the lfet-button of the window
         pushStyle();
 
         fill(0, 255, 255);
         helpMessage.draw();
 
         popStyle();
+        resetMatrix();
+        camera.apply();
     }
 }
 
@@ -33,8 +36,8 @@ class TutorialComponent extends Obj {
 
     public void draw() {
         stroke(0);
-        fill(0, 255, 255);
+        fill(255, 255, 255);      //change tutorial's colour
         textFont(f);
-        text(content, x-objWidth/2, y);
+        text(content, x, y - fontSize);
     }
 }
