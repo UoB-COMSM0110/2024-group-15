@@ -49,6 +49,8 @@ ArrayList<Arrow> spentArrows = new ArrayList<>();
 Player[] players = new Player[2];
 Player activePlayer;
 
+ShopInterface shopMenu;
+
 int planetRadius = 1000;
 int minDistanceBetweenPlanets = 700;
 int maxDistanceBetweenPlanets = 800;
@@ -129,7 +131,11 @@ public void setup()
     players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
     players[1] = new Player(planets.get(1), 250, PlayerNum.TWO);
     activePlayer = players[0];
-    
+
+
+
+    shopMenu = new ShopInterface();
+
     // modeSelection = new ModeSelectionInterface();
 
 }
@@ -177,10 +183,15 @@ public void draw()
         p.draw();
     }
 
+    // shopMenu.draw();
+
     // debugging code which removes health when pressing R
-    // if (keys.get(R) == true) {
-    //   activePlayer.removeHeart();
-    // }
+    if (frameCount % (60*3) == 0) {
+      activePlayer.removeHeart();
+    }
+
+
+
 }
 
 // Key press handling

@@ -1,3 +1,9 @@
+enum ShopInterfaceState{
+   CLOSED,
+   OPEN,
+}
+
+
 class ShopInterface {
    int buttonWidth = 300;  
    int buttonHeight = 70; 
@@ -10,14 +16,38 @@ class ShopInterface {
    int colorBlueCode = 208;
    int textColor = 0;
 
+
+   Button shopButton = new Button("SHOP", width-40, 40, 20, () -> {
+            state = ShopInterfaceState.OPEN;
+   });
+
+   ShopInterfaceState state = ShopInterfaceState.CLOSED;
+
    void draw() {
-      background(0);
-      textAlign(CENTER, CENTER);
+
+      // textAlign(CENTER, CENTER);
+
+      resetMatrix();
+      pushStyle();
+
+      if (state == ShopInterfaceState.CLOSED) {
+         shopButton.draw();
+         return;
+      }
+
+
+
+      // background(0);
+      
 
       drawButtonWithShadow(startX, startY, "Path Finder", 
                            color(colorRedCode,colorGreenCode, colorBlueCode));
       drawButtonWithShadow(startX, startY + buttonHeight + buttonGap, "Double Strike", 
                            color(colorRedCode,colorGreenCode, colorBlueCode));
+
+      popStyle();
+      camera.apply();
+
    }
 
    void mousePressed() {

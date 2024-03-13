@@ -34,13 +34,21 @@ public class HealthBar {
 
         noStroke();
         for (int i=0; i<10; i++) {
+            // resetMatrix();
             if (player.getHealth() > i) {
                 fill(255, 100, 70);
             }
             else {
                 if (animationFrame > 0 && player.getHealth() == i) {
-                    fill(255, 255, 255);
+
+                    float normal = (1/(float)120)*animationFrame;
+
+                    color fade = lerpColor(color(100, 100, 100), color(255, 255, 255), normal);
+
+                    fill(fade);
                     animationFrame--;
+                    // scale(normal+1);
+                    // translate(20*normal, -10*(1+normal));
                 }
                 else {
                     fill(100, 100, 100);
@@ -59,6 +67,5 @@ public class HealthBar {
 
     public void animateHealthBarLoss() {
         animationFrame = 120;
-
     }
 }
