@@ -39,6 +39,10 @@ public class Aimer {
             arrow.x = player.x;
             arrow.y = player.y;
 
+            player.animation.status = AnimationStatus.DRAW;
+            player.animation.loadImages();
+            player.animation.currentFrame = 0;
+
             x1 = mouseX;
             y1 = mouseY;
 

@@ -32,11 +32,19 @@ static final int SPACE=32, R=82, W=87, S=83;
 GameState gameState = GameState.STARTPAGE;
 HashMap<String, Settings> gameSettings = new HashMap<>();
 
+int screenWidth = 1024;
+int screenHeight = 767;
+
+
+PImage backgroundImage;
+
+
 HashMap<String, PImage> imgs = new HashMap<>();
 HashMap<Integer, Boolean> keys = new HashMap<>();
 
 Camera camera;
 StartMenu startMenu;
+Tutorial tutorial;
 ArrayList<Planet> planets = new ArrayList<>();
 ArrayList<Arrow> spentArrows = new ArrayList<>();
 Player[] players = new Player[2];
@@ -44,12 +52,13 @@ Player activePlayer;
 GameOverPage gameOverPage;
 
 int planetRadius = 1000;
-int minDistanceBetweenPlanets = 300;
+int minDistanceBetweenPlanets = 700;
 int maxDistanceBetweenPlanets = 800;
 
 
+
 public void settings() {
-    size(1280, 720);
+    size(screenWidth, screenHeight);
     // Anti aliasing
     smooth(8);
 }
@@ -59,7 +68,8 @@ public void settings() {
 // Use this method for loading images (stored in the `game-assets` folder)
 public void loadAssets() {
     imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
-
+    imgs.put("planet1", loadImage(ASSETS_PATH+"planet2.png"));
+    imgs.put("planet2", loadImage(ASSETS_PATH+"planet3.gif"));
 }
 
 
@@ -78,10 +88,22 @@ public void setup()
 
     camera = new Camera();
 
+
     //fixed positions
-    planets.add(new Planet(100, height-100, 1000));
-    planets.add(new Planet(500, 100, planetRadius));
+    planets.add(new Planet(100, screenHeight-100, 1000,true));
+    planets.add(new Planet(500, 100, planetRadius,false));
     randomisePlanetLocations();
+
+
+
+//        camera.updateZoom(0.5F);
+    backgroundImage = loadImage("./art-img/space1-1.png");
+    
+    
+    
+    //add planets in random locations inside the screen
+
+    
 
 
     //generate random locations of planets
@@ -112,12 +134,16 @@ public void setup()
     
     gameOverPage = new GameOverPage();
 
+    // modeSelection = new ModeSelectionInterface();
+    
+    tutorial = new Tutorial();
 }
 
 
 public void draw()
 {    
     background(0);
+    background(backgroundImage);
 
     switch (gameState) {
         case STARTPAGE:
@@ -129,8 +155,11 @@ public void draw()
             gameOverPage.draw();
             return;
     }
-    camera.apply();
 
+    camera.apply();
+    
+    tutorial.draw();        //The help message during gameplay
+    
     for (Arrow a : spentArrows) {
         a.draw();
     }
@@ -140,9 +169,6 @@ public void draw()
     for (Player p: players) {
         p.draw();
     }
-    
-   
-
     // debugging code which removes health when pressing R
     // if (keys.get(R) == true) {
     //   activePlayer.removeHeart();
@@ -193,10 +219,26 @@ public boolean updatePlayerHealths() {
     return false;
 }
 
+//public boolean updatePlayerHealths(boolean cheatMode) {
+//    for (Player p : players) {
+//        if (activePlayer.getArrow().isCollidingWith(p)) {
+//            if (cheatMode) {
+//                p.removeHeart();
+//                p.removeHeart();
+//            } else {
+//                p.removeHeart();
+//            }
+//            return true;
+//        }
+//    }
+//    return false;
+//}
+
+
 public void finishPlayerTurn()
 {
     int frameWait = updatePlayerHealths() ? 120 : 60;
-
+    // int frameWait = updatePlayerHealths(false) ? 120 : 60;
     spentArrows.add(new Arrow(activePlayer.getArrow()));
 
     Player deadPlayer = checkForPlayerDeaths();
@@ -234,6 +276,7 @@ public void randomisePlanetLocations() {
     boolean areSuitableLocations = false;
 
     while (!areSuitableLocations) {
+        boolean hasUnsuitableLocations = false;
         // generate random positions
         for (Planet p: planets) {
             p.setX(random(width));
@@ -246,12 +289,16 @@ public void randomisePlanetLocations() {
             float distance = sqrt( 
                     (p.getX() - nextPlanet.getX()) * (p.getX() - nextPlanet.getX()) +
                     (p.getY() -nextPlanet.getY()) * (p.getY() - nextPlanet.getY()));
-
-            if( distance <= (p.getRadius() + nextPlanet.getRadius() + minDistanceBetweenPlanets) ||
-                distance > (p.getRadius() + nextPlanet.getRadius() + maxDistanceBetweenPlanets)) {
-                areSuitableLocations = true;
+            
+            if( distance <= (p.getRadius() + nextPlanet.getRadius() + minDistanceBetweenPlanets) ||          //The distance should not be less than minDistance 
+                distance > (p.getRadius() + nextPlanet.getRadius() + maxDistanceBetweenPlanets)) {           //or not be larger than maxDistance
+                hasUnsuitableLocations = true;
                 break;
             }
+        }
+        //no unsuitable locations -> setting the areSuitableLocations to true (end the loop)
+        if(!hasUnsuitableLocations){
+            areSuitableLocations = true;
         }
     }
 
