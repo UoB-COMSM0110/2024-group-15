@@ -50,7 +50,7 @@ Player[] players = new Player[2];
 Player activePlayer;
 
 int planetRadius = 1000;
-int minDistanceBetweenPlanets = 300;
+int minDistanceBetweenPlanets = 700;
 int maxDistanceBetweenPlanets = 800;
 
 
@@ -99,8 +99,7 @@ public void setup()
     
     
     //add planets in random locations inside the screen
-    //int planetsLocationX = (int)(Math.random() * screenWidth);
-    //int planetsLocationY = (int)(Math.random() * screenHeight);
+
     
 
 
