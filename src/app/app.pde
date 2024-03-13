@@ -186,12 +186,9 @@ public void draw()
     // shopMenu.draw();
 
     // debugging code which removes health when pressing R
-    if (frameCount % (60*3) == 0) {
-      activePlayer.removeHeart();
-    }
-
-
-
+    // if (frameCount % (60*3) == 0) {
+      // activePlayer.removeHeart();
+    // }
 }
 
 // Key press handling
