@@ -14,6 +14,7 @@ enum GameState {
   GAMEOVER,
 }
 
+<<<<<<< HEAD
 enum Settings {
     VSCOMPUTER,
     VSHUMAN,
@@ -31,6 +32,13 @@ static final int SPACE=32, R=82, W=87, S=83;
 
 GameState gameState = GameState.STARTPAGE;
 HashMap<String, Settings> gameSettings = new HashMap<>();
+
+int screenWidth = 1024;
+int screenHeight = 767;
+
+int planetRadius = 1000;
+PImage backgroundImage;
+
 
 HashMap<String, PImage> imgs = new HashMap<>();
 HashMap<Integer, Boolean> keys = new HashMap<>();
@@ -77,11 +85,31 @@ public void setup()
 
     camera = new Camera();
 
+
     //fixed positions
     planets.add(new Planet(100, height-100, 1000));
     planets.add(new Planet(500, 100, planetRadius));
     randomisePlanetLocations();
 
+
+
+//        camera.updateZoom(0.5F);
+    backgroundImage = loadImage("./art-img/space1-1.png");
+    imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
+    imgs.put("planet1", loadImage(ASSETS_PATH+"planet2.png"));
+    imgs.put("planet2", loadImage(ASSETS_PATH+"planet3.gif"));
+    
+    
+    //add planets in random locations inside the screen
+    int planetsLocationX = (int)(Math.random() * screenWidth);
+    int planetsLocationY = (int)(Math.random() * screenHeight);
+    
+    //fixed positions
+    //
+    planets.add(new Planet(100, screenHeight-100, 1000,true));
+    planets.add(new Planet(500, 100, planetRadius,false));
+//        planets.add(new Planet(this, 300, 50, 10000, 20));
+    
 
     //generate random locations of planets
     // for(Planet p : planets){
@@ -115,6 +143,7 @@ public void setup()
 
 
 public void draw()
+<<<<<<< HEAD
 {    
     background(0);
 
@@ -124,6 +153,34 @@ public void draw()
             return;
         case GAME:
             break;
+=======
+{   
+    //background(0);
+    background(backgroundImage);
+    if(gameState == 0){
+      InitialInterface deIt = new InitialInterface();
+      deIt.draw();
+      //a simple and shit control of gameState
+      //if(mousePressed && mouseX >= 800 && mouseY >= 400 && mouseY <= 528 && mouseX <= 928){
+      //  gameState = 1;
+      //}
+      if(keyPressed){
+        gameState = 1;
+      }
+    } else {
+      camera.apply();
+  //image(backgroundImage, 0, 0);
+
+      for (Arrow a : spentArrows) {
+        a.draw();
+      }
+      for (Planet p : planets) {
+          p.draw();
+      }
+      for (Player p: players) {
+        p.draw();
+      }
+>>>>>>> Ada
     }
     camera.apply();
 
