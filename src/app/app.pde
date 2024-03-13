@@ -248,6 +248,7 @@ public void randomisePlanetLocations() {
     boolean areSuitableLocations = false;
 
     while (!areSuitableLocations) {
+        boolean hasUnsuitableLocations = false;
         // generate random positions
         for (Planet p: planets) {
             p.setX(random(width));
@@ -263,9 +264,12 @@ public void randomisePlanetLocations() {
 
             if( distance <= (p.getRadius() + nextPlanet.getRadius() + minDistanceBetweenPlanets) ||
                 distance > (p.getRadius() + nextPlanet.getRadius() + maxDistanceBetweenPlanets)) {
-                areSuitableLocations = true;
+                hasUnsuitableLocations = true;
                 break;
             }
+        }
+        if(!hasUnsuitableLocations){
+            areSuitableLocations = true;
         }
     }
 
