@@ -1,17 +1,24 @@
 
 public class Player extends Obj {
+  
+  
     Arrow arrow;
     Aimer aimer;
     Planet planet;
+    Animation animation;
+    //int playerStatus; 
     int planetAngle;
+   
 
     int health = 10;
     HealthBar healthBar;
+    
 
     Player(Planet planet, int planetAngle, HeathBarPosition heathBarPosition) {
         super(planet.x, planet.y);
         this.planetAngle = planetAngle;
         this.planet = planet;
+        //this.playerstatus=STANDBY;
 
         double radians = Math.toRadians(planetAngle);
 
@@ -26,12 +33,20 @@ public class Player extends Obj {
         setDimensions(30, 60);      // TODO placeholder until actual player sprite
 
         healthBar = new HealthBar(this, heathBarPosition);
+        animation = new Animation(1);
+        
+         animation.status=1;
     }
 
     void draw() {
         if (this == activePlayer) {
             if (arrow.isMoving) arrow.move();
             aimer.update();
+        }else{
+          animation.status=1;
+          animation.playAnimationLoop(this);
+          
+        //TODO play standby status;
         }
         pushStyle();
         //player standby
@@ -55,6 +70,7 @@ public class Player extends Obj {
     }
 
     public void removeHeart() {
+      //TODO play a hit animation.
         health--;
         healthBar.animateHealthBarLoss();
     } 
