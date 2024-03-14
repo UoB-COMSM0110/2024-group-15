@@ -49,6 +49,7 @@ ArrayList<Planet> planets = new ArrayList<>();
 ArrayList<Arrow> spentArrows = new ArrayList<>();
 Player[] players = new Player[2];
 Player activePlayer;
+GameOverPage gameOverPage;
 
 int planetRadius = 1000;
 int minDistanceBetweenPlanets = 700;
@@ -131,6 +132,8 @@ public void setup()
     players[1] = new Player(planets.get(1), 250, PlayerNum.TWO);
     activePlayer = players[0];
     
+    gameOverPage = new GameOverPage();
+
     // modeSelection = new ModeSelectionInterface();
     
     tutorial = new Tutorial();
@@ -148,6 +151,9 @@ public void draw()
             return;
         case GAME:
             break;
+        case GAMEOVER:
+            gameOverPage.draw();
+            return;
     }
 
     camera.apply();
@@ -238,6 +244,7 @@ public void finishPlayerTurn()
     Player deadPlayer = checkForPlayerDeaths();
     if (deadPlayer != null) {
         setWinnerAndGameOver(getOtherPlayer(deadPlayer));
+   
         return;
     }
 
@@ -255,10 +262,12 @@ public void setWinnerAndGameOver(Player p)
      *      Show winner screen (PLAYER X WINS!)
      *      Play again button? exit button? etc.
     */
+    gameState = GameState.GAMEOVER;
+    gameOverPage.setWinner(p.getPlayerNum() == PlayerNum.ONE ? "1" : "2");
+    
     camera.animateCenterOnObject(p, 60);
     println("PLAYER" + (p.getPlayerNum() == PlayerNum.ONE ? "1 " : "2 ") +"WINS!");
 }
-
 
 
 
