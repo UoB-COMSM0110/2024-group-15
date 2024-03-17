@@ -30,11 +30,13 @@ public class Aimer {
             arrow.isMoving = true;
             aiming = false;
             camera.pushZoom();
+
+            isPathFinderActive = false;
             return;
         }
         float x2 = mouseX;
         float y2 = mouseY;
-        
+
         if (!aiming) {                      // start aiming
             arrow.x = player.x;
             arrow.y = player.y;
@@ -51,7 +53,7 @@ public class Aimer {
             camera.centerOnObject(player);
             camera.popZoom();
         }
-       
+
         float lengthOfLine = (float)Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
         float angleRadians = (float)Math.atan2(y1-y2, x1-x2);
         //float angleRadians = (float)Math.atan2(arrow.velocity.y, arrow.velocity.x);
@@ -62,12 +64,12 @@ public class Aimer {
             x2 = x1 - maxPower * (float)Math.cos(angleRadians);
             y2 = y1 - maxPower * (float)Math.sin(angleRadians);
         }
-        
+
         // get the vector of the 2 points made by mouse press
         arrow.velocity = new PVector(x1-x2, y1-y2);
         // scale it by 0.1 (to make the arrow travel at a fairly normal speed)
         arrow.velocity.mult(0.1F);
-        
+
         //angle <- velocity, velocity <- x2, x2 <- angle(bug)
 
         // draw the line
@@ -89,5 +91,10 @@ public class Aimer {
         // PATHFINDER TEST
         // Pathfinder path = new Pathfinder(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
         // path.draw();
+        if (isPathFinderActive) {
+            Pathfinder path = new Pathfinder(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
+            path.draw();
+        }
+
     }
 }
