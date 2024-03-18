@@ -50,12 +50,21 @@ ArrayList<Arrow> spentArrows = new ArrayList<>();
 Player[] players = new Player[2];
 Player activePlayer;
 GameOverPage gameOverPage;
+ShopPage shopPage;
 
 int planetRadius = 1000;
 int minDistanceBetweenPlanets = 700;
 int maxDistanceBetweenPlanets = 800;
 
 
+
+// The exact number is not final
+int arrowCount = 10;
+// For debugging purpose
+// int arrowCount = 2;
+
+boolean isDoubleStrikeActive = false;
+boolean isPathFinderActive = false;
 
 public void settings() {
     size(screenWidth, screenHeight);
@@ -98,12 +107,12 @@ public void setup()
 
 //        camera.updateZoom(0.5F);
     backgroundImage = loadImage("./art-img/space1-1.png");
-    
-    
-    
+
+
+
     //add planets in random locations inside the screen
 
-    
+
 
 
     //generate random locations of planets
@@ -111,7 +120,7 @@ public void setup()
     //     generateRandomLocations(p);
     // }
 
-    
+
 
     Collections.sort(planets, (p1, p2) -> Float.compare(p1.getX(), p2.getX()));
 
@@ -127,21 +136,23 @@ public void setup()
 
 
     startMenu = new StartMenu();
-    
+
     players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
     players[1] = new Player(planets.get(1), 250, PlayerNum.TWO);
     activePlayer = players[0];
-    
+
     gameOverPage = new GameOverPage();
 
     // modeSelection = new ModeSelectionInterface();
-    
+
     tutorial = new Tutorial();
+
+    shopPage = new ShopPage();
 }
 
 
 public void draw()
-{    
+{
     background(0);
     background(backgroundImage);
 
@@ -150,16 +161,36 @@ public void draw()
             startMenu.draw();
             return;
         case GAME:
+            for (Planet p : planets) {
+                if (p.getNumberOfArrowsOnMe() >= arrowCount) {
+                    for (Player player : players) {
+                        if (player.planet.equals(p)
+                            && !player.equals(activePlayer)
+                            // Assuming each player can use this mode once for the time being
+                            && !player.hasUsedShop()) {
+                            gameState = GameState.SHOP;
+                            player.markAsUsedShop();
+                            break;
+                        }
+                    }
+                }
+                if (gameState == GameState.SHOP) {
+                    break;
+                }
+            }
             break;
         case GAMEOVER:
             gameOverPage.draw();
             return;
+        case SHOP:
+            shopPage.draw();
+            return;
     }
 
     camera.apply();
-    
+
     tutorial.draw();        //The help message during gameplay
-    
+
     for (Arrow a : spentArrows) {
         a.draw();
     }
@@ -179,7 +210,7 @@ public void draw()
 public void keyPressed()
 {
     if (keys.containsKey(keyCode)) keys.put(keyCode, true);
-    
+
 }
 public void keyReleased()
 {
@@ -189,9 +220,9 @@ public void keyReleased()
 
 private Player getOtherPlayer(Player p) {
     switch (p.getPlayerNum()) {
-        case ONE: 
+        case ONE:
             return players[1];
-        case TWO: 
+        case TWO:
             return players[0];
         default:
             return null;
@@ -203,21 +234,39 @@ public Player checkForPlayerDeaths() {
     for (Player p: players) {
         if (p.getHealth() <= 0) {
             return p;
-        } 
+        }
     }
     return null;
 }
 
 
+// public boolean updatePlayerHealths() {
+//     for (Player p: players) {
+//         if (activePlayer.getArrow().isCollidingWith(p)) {
+//             p.removeHeart();
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
 public boolean updatePlayerHealths() {
-    for (Player p: players) {
+    boolean playerHit = false;
+
+    for (Player p : players) {
         if (activePlayer.getArrow().isCollidingWith(p)) {
             p.removeHeart();
-            return true;
+            if (isDoubleStrikeActive) {
+                p.removeHeart();
+                isDoubleStrikeActive = false;
+            }
+            playerHit = true;
+            break;
         }
     }
-    return false;
+    return playerHit;
 }
+
 
 //public boolean updatePlayerHealths(boolean cheatMode) {
 //    for (Player p : players) {

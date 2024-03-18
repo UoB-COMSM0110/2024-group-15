@@ -17,7 +17,8 @@ public class Player extends Entity {
 
     int health = 10;
     HealthBar healthBar;
-    
+
+    private boolean hasUsedShop = false;
 
 
     Player(Planet planet, int planetAngle, PlayerNum playerNum) {
@@ -64,7 +65,7 @@ public class Player extends Entity {
 //         healthBar = new HealthBar(this, heathBarPosition);
 //         animation = new Animation(1);
 // >>>>>>> Ada
-        
+
 
 //     }
 
@@ -96,7 +97,7 @@ void draw() {
         }
     else{
          // animation.loadImages();
-        animation.playAnimationStatic(this);      
+        animation.playAnimationStatic(this);
     }
 
     popStyle();
@@ -124,7 +125,7 @@ void draw() {
       //TODO play a hit animation.
         health--;
         healthBar.animateHealthBarLoss();
-    } 
+    }
 
     // TODO temporary overrides until we use an actual image
     public float getX() {
@@ -132,5 +133,13 @@ void draw() {
     }
     public float getY() {
         return y;
+    }
+
+    public boolean hasUsedShop() {
+        return this.hasUsedShop;
+    }
+
+    public void markAsUsedShop() {
+        this.hasUsedShop = true;
     }
 }

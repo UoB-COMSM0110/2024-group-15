@@ -1,46 +1,47 @@
-class ShopInterface {
-    int buttonWidth = 300;  
-    int buttonHeight = 70; 
-    int startX = 490; 
-    int startY = 250; 
-    int buttonGap = 30; 
-    int shadowOffset = 10; 
-    int colorRedCode = 64;
-    int colorGreenCode = 224;
-    int colorBlueCode = 208;
-    int textColor = 0;
+class ShopPage {
 
-    void draw() {
-        background(0);
-        textAlign(CENTER, CENTER);
+    StartMenuComponent shopTitle;
+    Button optionButton1;
+    Button optionButton2;
 
-        drawButtonWithShadow(startX, startY, "Path Finder", 
-                             color(colorRedCode,colorGreenCode, colorBlueCode));
-        drawButtonWithShadow(startX, startY + buttonHeight + buttonGap, "Double Strike", 
-                             color(colorRedCode,colorGreenCode, colorBlueCode));
+    ShopPage() {
+        shopTitle = new StartMenuComponent("SHOP", width / 2, 70, 40);
+        int buttonYStart = height / 2 - 50;
+        int buttonSpacing = 100;
+
+        optionButton1 = new Button("Path Finder", width / 2, buttonYStart, 30, () -> {
+        println("Selected Path Finder");
+        isPathFinderActive = true;
+        gameState = GameState.GAME;
+        camera.centerOnObject(activePlayer);
+        });
+
+        optionButton2 = new Button("Double Strike", width / 2, buttonYStart + buttonSpacing, 30, () -> {
+        println("Selected Double Strike");
+        gameState = GameState.GAME;
+        doubleStrike();
+        });
     }
 
-    void mousePressed() {
-        if (mouseX > startX && mouseX < startX + buttonWidth && 
-            mouseY > startY && mouseY < startY + buttonHeight) {
-            // TODO
-            // Enable path finder
-            println("Select path finder");
-        }
-        if (mouseX > startX && mouseX < startX + buttonWidth && 
-            mouseY > startY + buttonHeight + buttonGap && mouseY < startY + 2 * buttonHeight + buttonGap) {
-            // TODO
-            println("Select double strike");
-        }
-    }
+     void draw() {
 
-    void drawButtonWithShadow(int x, int y, String text, color buttonColour) {
-        fill(40,40,40); 
-        rect(x + shadowOffset, y + shadowOffset, buttonWidth, buttonHeight); 
-        fill(buttonColour);
-        rect(x, y, buttonWidth, buttonHeight); 
-        fill(textColor); 
-        textSize(25); 
-        text(text, x + buttonWidth/2, y + buttonHeight/2);
-    }
+         shopTitle.draw();
+         optionButton1.draw();
+         optionButton2.draw();
+
+     }
+
+     void doubleStrike() {
+         Player currentActivePlayer = activePlayer;
+         isDoubleStrikeActive = true;
+         boolean playerHit = updatePlayerHealths();
+
+         if (playerHit) {
+             updatePlayerHealths();
+         }
+
+         camera.centerOnObject(activePlayer);
+         gameState = GameState.GAME;
+         isDoubleStrikeActive = false;
+     }
 }
