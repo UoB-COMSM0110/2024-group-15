@@ -67,6 +67,7 @@ public void loadAssets() {
     imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
     imgs.put("planet1", loadImage(ASSETS_PATH+"planet2.png"));
     imgs.put("planet2", loadImage(ASSETS_PATH+"planet3.gif"));
+    imgs.put("bow", loadImage(ASSETS_PATH+"bow.png"));
 }
 
 

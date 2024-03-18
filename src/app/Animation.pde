@@ -4,7 +4,7 @@ import java.io.File;
 enum AnimationStatus{
   IDLE,
   DRAW,
-  FIRE,
+  HIT,
 }
 
 public class Animation {
@@ -32,6 +32,10 @@ public class Animation {
      //aiming:2_atk,1-8 frame
       case DRAW:
         images = loadAnimationImages("2_atk", 0, 8);
+        isAnimating = true;
+        break;
+      case HIT:
+        images = loadAnimationImages("take_hit",0,6 );
         isAnimating = true;
         break;
        //fire:2_atk,8-12 frames
@@ -100,7 +104,7 @@ public void playAnimationLoop(Player player) {
     image(images[currentFrame], x+3, y-30);
 
 
-    if (frameCount % 8 == 0) {
+    if (frameCount % 4 == 0) {
         currentFrame++;
     }
 

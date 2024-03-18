@@ -122,6 +122,7 @@ void draw() {
 
     public void removeHeart() {
       //TODO play a hit animation.
+      animation.status=AnimationStatus.HIT;
         health--;
         healthBar.animateHealthBarLoss();
     } 
