@@ -12,12 +12,9 @@ public class Pathfinder extends Entity {
         initialY = y;
         locationX = new ArrayList<>();
         locationY = new ArrayList<>();
-        locationX.add(x);
-        locationY.add(y);
     }
 
     void getLocations(){
-        
         int numberOfMovements = 200;
         for(int i = 0; i < numberOfMovements; i++){
             move();
@@ -26,8 +23,7 @@ public class Pathfinder extends Entity {
                 locationY.add(y);
             } else {
                 break;
-            }
-            
+            }        
         }
     }
 

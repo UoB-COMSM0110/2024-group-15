@@ -184,7 +184,7 @@ public void draw()
             }
             break;
         case EASYGAMESET:
-            camera.setZoom(0.65F);//zoom out
+            //camera.setZoom(0.65F);//zoom out
             gameState = GameState.EASYGAME;
             return;
         case EASYGAME:
