@@ -9,6 +9,7 @@ import java.io.File;
 enum GameState {
   STARTPAGE,
   GAME,
+  EASYGAME,
   POPMENU, 
   SHOP,
   GAMEOVER,
@@ -59,9 +60,9 @@ int maxDistanceBetweenPlanets = 800;
 
 
 // The exact number is not final
-int arrowCount = 10;
+//int arrowCount = 10;
 // For debugging purpose
-// int arrowCount = 2;
+int arrowCount = 2;
 
 boolean isDoubleStrikeActive = false;
 boolean isPathFinderActive = false;
@@ -161,6 +162,8 @@ public void draw()
             startMenu.draw();
             return;
         case GAME:
+
+            //Shop
             for (Planet p : planets) {
                 if (p.getNumberOfArrowsOnMe() >= arrowCount) {
                     for (Player player : players) {
@@ -178,6 +181,9 @@ public void draw()
                     break;
                 }
             }
+            break;
+        case EASYGAME:
+            isPathFinderActive = true; //easy game with a default pathFinder
             break;
         case GAMEOVER:
             gameOverPage.draw();
