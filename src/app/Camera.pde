@@ -62,16 +62,18 @@ public class Camera {
     }
 
     public void centerOnObject(Obj obj)
-    {
-        x = obj.getX()-width/2;
-        y = obj.getY()-height/2;
+    {   
+        // x = obj.getX()-(width/2);
+        // y = obj.getY()-(height/2);
+        x = obj.getX()*zoom-(width/2);
+        y = obj.getY()*zoom-(height/2);
     }
 
 
     public void animateCenterOnObject(Obj obj, int waitFrames)
     {
-        targetX = obj.getX()-width/2;
-        targetY = obj.getY()-height/2;
+        targetX = obj.getX()*zoom-width/2;
+        targetY = obj.getY()*zoom-height/2;
 
         cameraIsMoving = true;
         hasNotReachedTarget = true;
@@ -117,5 +119,9 @@ public class Camera {
 
     public boolean isMoving() {
         return cameraIsMoving;
+    }
+
+    public void setZoom(float size){
+        this.zoom = size;
     }
 }
