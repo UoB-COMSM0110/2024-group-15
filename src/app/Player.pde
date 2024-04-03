@@ -15,7 +15,7 @@ public class Player extends Entity {
     int planetAngle;
    
 
-    int health = 10;
+    int health = maxHP;
     HealthBar healthBar;
 
     private boolean hasUsedShop = false;

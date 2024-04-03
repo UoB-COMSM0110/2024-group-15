@@ -65,6 +65,8 @@ int maxDistanceBetweenPlanets = 800;
 // For debugging purpose
 int arrowCount = 2;
 
+int maxHP = 3;
+
 boolean isDoubleStrikeActive = false;
 boolean isPathFinderActive = false;
 
