@@ -17,19 +17,7 @@ public class Pathfinder extends Entity {
     }
 
     void getLocations(){
-        //save locations
-        // int numberOfMovements = 200;
-        // float lengthOfPathfinder = maxLengthOfPathfinder;
-        // while(maxLengthOfPathfinder > 0 && numberOfMovements > 0){
-        //     move();
-        //     lengthOfPathfinder -= dist(locationX.get(locationX.size() - 1), 
-        //                                 locationY.get(locationY.size() - 1),
-        //                                 x,
-        //                                 y);
-        //     locationX.add(x);
-        //     locationY.add(y);
-        //     numberOfMovements--;
-        // }
+        
         int numberOfMovements = 200;
         for(int i = 0; i < numberOfMovements; i++){
             move();

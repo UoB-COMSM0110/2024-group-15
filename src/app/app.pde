@@ -9,6 +9,7 @@ import java.io.File;
 enum GameState {
   STARTPAGE,
   GAME,
+  EASYGAMESET,
   EASYGAME,
   POPMENU, 
   SHOP,
@@ -182,6 +183,10 @@ public void draw()
                 }
             }
             break;
+        case EASYGAMESET:
+            camera.setZoom(0.65F);//zoom out
+            gameState = GameState.EASYGAME;
+            return;
         case EASYGAME:
             isPathFinderActive = true; //easy game with a default pathFinder
             break;
