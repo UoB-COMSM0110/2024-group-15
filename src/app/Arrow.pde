@@ -87,8 +87,20 @@ public class Arrow extends Entity {
         return normalizedY;
     }
 
+    public float getHitBoxX() {
+        return normalizedX;
+    }
+
+    public float getHitBoxY() {
+        return normalizedY;
+    }
+
     @Override
     public boolean isCollidingWith(Entity e) {
         return cannotBeCollidedWith ? false : super.isCollidingWith(e);
+    }
+
+    public boolean isMoving() {
+        return isMoving;
     }
 }

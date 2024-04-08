@@ -41,12 +41,12 @@ class StartMenu {
 
         easyMode = new Button("Easy", width/2, height/2+100, 30, () -> {
             gameSettings.put("difficulty", Settings.EASY);
-            gameState = GameState.GAME;
+            gameInit();
         });
 
         hardMode = new Button("Hard", width/2, height/2+200, 30, () -> {
             gameSettings.put("difficulty", Settings.HARD);
-            gameState = GameState.GAME;
+            gameInit();
         });
     }
     

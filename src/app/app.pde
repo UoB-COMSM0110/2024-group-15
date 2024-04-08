@@ -49,11 +49,15 @@ ArrayList<Arrow> spentArrows = new ArrayList<>();
 Player[] players = new Player[2];
 Player activePlayer;
 
+private int minDistanceBetweenPlanets;
+private int maxXDistanceBetweenPlanets;
+private int maxYDistanceBetweenPlanets;
+
 ShopInterface shopMenu;
 
-int planetRadius = 1000;
-int minDistanceBetweenPlanets = 700;
-int maxDistanceBetweenPlanets = 800;
+
+private int planetRadius = 1000;
+
 
 
 public void settings() {
@@ -63,12 +67,20 @@ public void settings() {
 }
 
 
+void loadIntoImages(String fileName) {
+    imgs.put(fileName, loadImage(ASSETS_PATH+fileName+".png"));
+}
 
 // Use this method for loading images (stored in the `game-assets` folder)
 public void loadAssets() {
-    imgs.put("arrow", loadImage(ASSETS_PATH+"arrow.png"));
-    imgs.put("planet1", loadImage(ASSETS_PATH+"planet2.png"));
-    imgs.put("planet2", loadImage(ASSETS_PATH+"planet3.gif"));
+    loadIntoImages("arrow");
+    loadIntoImages("planet1");
+    loadIntoImages("planet2");
+    loadIntoImages("player-idle");
+    loadIntoImages("player-draw");
+    loadIntoImages("player-hit");
+    loadIntoImages("space1");
+    loadIntoImages("transparent-stars");
 }
 
 
@@ -87,57 +99,44 @@ public void setup()
 
     camera = new Camera();
 
-
-    //fixed positions
-    planets.add(new Planet(100, screenHeight-100, 1000,true));
-    planets.add(new Planet(500, 100, planetRadius,false));
-    randomisePlanetLocations();
-
-
-
-//        camera.updateZoom(0.5F);
-    backgroundImage = loadImage("./art-img/space1-1.png");
-    transparentStars = loadImage("./art-img/transparent-stars.png");
     
-    
-    
-    //add planets in random locations inside the screen
-
-    
-
-
-    //generate random locations of planets
-    // for(Planet p : planets){
-    //     generateRandomLocations(p);
-    // }
-
-    
-
-    Collections.sort(planets, (p1, p2) -> Float.compare(p1.getX(), p2.getX()));
-
-    //set the left and right planet
-    // Planet leftPlanet, rightPlanet;
-    // if(planets.get(0).x < planets.get(1).x){
-    //     leftPlanet = planets.get(0);
-    //     rightPlanet = planets.get(1);
-    // } else {
-    //     leftPlanet = planets.get(1);
-    //     rightPlanet = planets.get(0);
-    // }
-
 
     startMenu = new StartMenu();
     
+   
+
+    shopMenu = new ShopInterface();
+
+
+
+}
+
+public void gameInit() {
+    
+    
+    if (gameSettings.get("difficulty") == Settings.EASY) {
+        minDistanceBetweenPlanets = 200;
+        maxXDistanceBetweenPlanets = 600;
+        maxYDistanceBetweenPlanets = 300;
+    }
+    else {
+        minDistanceBetweenPlanets = 400;
+        maxXDistanceBetweenPlanets = 900;
+        maxYDistanceBetweenPlanets = 500;
+    }
+   
+    planets.add(new Planet(0, 0, planetRadius, imgs.get("planet1")));
+    planets.add(new Planet(0, 0, planetRadius, imgs.get("planet2")));
+
+    randomisePlanetLocations();
+
+    Collections.sort(planets, (p1, p2) -> Float.compare(p1.getX(), p2.getX()));
+
     players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
     players[1] = new Player(planets.get(1), 250, PlayerNum.TWO);
     activePlayer = players[0];
 
-
-
-    shopMenu = new ShopInterface();
-
-    // modeSelection = new ModeSelectionInterface();
-
+    gameState = GameState.GAME;
 }
 
 
@@ -148,27 +147,25 @@ public void draw()
 
     float backgroundImageX = width/2 - (camera.getX()*0.3);
     float backgroundImageY = height/2 - (camera.getY()*0.3);
-    image(backgroundImage, backgroundImageX, backgroundImageY);
+    image(imgs.get("space1"), backgroundImageX, backgroundImageY);
 
-    image(backgroundImage, backgroundImageX-width, backgroundImageY);
-    image(backgroundImage, backgroundImageX-width, backgroundImageY-height);
-    image(backgroundImage, backgroundImageX, backgroundImageY-height);
-    image(backgroundImage, backgroundImageX+width, backgroundImageY-height);
-    image(backgroundImage, backgroundImageX+width, backgroundImageY);
-    image(backgroundImage, backgroundImageX+width, backgroundImageY+height);
-    image(backgroundImage, backgroundImageX, backgroundImageY+height);
-    image(backgroundImage, backgroundImageX-width, backgroundImageY+height);
+    image(imgs.get("space1"), backgroundImageX-width, backgroundImageY);
+    image(imgs.get("space1"), backgroundImageX-width, backgroundImageY-height);
+    image(imgs.get("space1"), backgroundImageX, backgroundImageY-height);
+    image(imgs.get("space1"), backgroundImageX+width, backgroundImageY-height);
+    image(imgs.get("space1"), backgroundImageX+width, backgroundImageY);
+    image(imgs.get("space1"), backgroundImageX+width, backgroundImageY+height);
+    image(imgs.get("space1"), backgroundImageX, backgroundImageY+height);
+    image(imgs.get("space1"), backgroundImageX-width, backgroundImageY+height);
 
 
-    image(transparentStars, backgroundImageX*1.2, backgroundImageY*1.2, width*3, height*3);
-    // background(backgroundImage);
+    image(imgs.get("transparent-stars"), backgroundImageX*1.1, backgroundImageY*1.1, width*2, height*2);
+    image(imgs.get("transparent-stars"), backgroundImageX*1.2, backgroundImageY*1.2, width*3, height*3);
 
     switch (gameState) {
         case STARTPAGE:
             startMenu.draw();
             return;
-        case GAME:
-            break;
     }
 
     camera.apply();
@@ -273,50 +270,24 @@ public void randomisePlanetLocations() {
     boolean areSuitableLocations = false;
 
     while (!areSuitableLocations) {
-        boolean hasUnsuitableLocations = false;
         // generate random positions
         for (Planet p: planets) {
             p.setX(random(width));
             p.setY(random(height));
         }
-        // Test whether this position will be duplicated by other planets' positions
         for (Planet p: planets) {
             Planet nextPlanet = planets.get((planets.indexOf(p)+1) % planets.size());
 
-            float distance = sqrt( 
-                    (p.getX() - nextPlanet.getX()) * (p.getX() - nextPlanet.getX()) +
-                    (p.getY() -nextPlanet.getY()) * (p.getY() - nextPlanet.getY()));
-            
-            if( distance <= (p.getRadius() + nextPlanet.getRadius() + minDistanceBetweenPlanets) ||          //The distance should not be less than minDistance 
-                distance > (p.getRadius() + nextPlanet.getRadius() + maxDistanceBetweenPlanets)) {           //or not be larger than maxDistance
-                hasUnsuitableLocations = true;
+            float dx = abs(p.getX()-nextPlanet.getX());
+            float dy = abs(p.getY()-nextPlanet.getY());
+            if (dx > maxXDistanceBetweenPlanets || dy > maxYDistanceBetweenPlanets) {
                 break;
             }
-        }
-        //no unsuitable locations -> setting the areSuitableLocations to true (end the loop)
-        if(!hasUnsuitableLocations){
+            float distance = sqrt((dx*dx)+(dy*dy));
+            if (distance <= (p.getRadius() + nextPlanet.getRadius() + minDistanceBetweenPlanets)) {
+                break;
+            }
             areSuitableLocations = true;
         }
     }
-
-
-    // while(true) {
-    //      boolean isSuitableLocation = true;
-         
-    //      float x = (float)(Math.random()*width);
-    //      float y = (float)(Math.random()*height);
-         
-    //      for(Planet p : planets){
-    //          float distance = (float)Math.sqrt((p.x - x) * (p.x - x) + (p.y -y) * (p.y - y));
-    //          if(distance <= (p.r + planet.r + minDistanceBetweenPlanets) || distance > (p.r + planet.r + maxDistanceBetweenPlanets)){
-    //              isSuitableLocation = false;
-    //              break;
-    //          }
-    //      }
-    //      if(isSuitableLocation){
-    //          planet.x = x;
-    //          planet.y = y;
-    //          break;
-    //      }
-    // }
 }
