@@ -4,6 +4,11 @@ enum PlayerStatus {
     HIT,
 }
 
+enum PlayerItem {
+    PATHFINDER,
+    HITSKIP,
+}
+
 
 public class Player extends Entity {
     PlayerNum playerNum;
@@ -15,12 +20,13 @@ public class Player extends Entity {
     Sprite hitSprite;
     PlayerStatus status = PlayerStatus.IDLE; 
     int planetAngle;
-   
+
+    Pathfinder pf;
+    List<PlayerItem> items = new ArrayList<>();
 
     int health = maxHealth;
     HealthBar healthBar;
     
-
 
     Player(Planet planet, int planetAngle, PlayerNum playerNum) {
         super(planet.x, planet.y, 30, 60);   // TODO this will change when we use an image instead of a rect
@@ -51,39 +57,53 @@ public class Player extends Entity {
         hitSprite = new Sprite(this, imgs.get("player-hit"), 102, 64, 6, AnimationType.FIRSTLAST);
     }
 
-void draw() {
-    if (this == activePlayer) {
-        if (arrow.isMoving) arrow.move();
-        aimer.update();
-    }
+    void move() {
+        if (this == activePlayer) {
+            arrow.move();
+            aimer.update();
+        }
 
-    pushStyle();
+        for (PlayerItem i: items) {
+            switch (i) {
+                case PATHFINDER:
+                    if (aimer.aiming) {
+                        pf = new Pathfinder(arrow.x, arrow.y, new PVector(aimer.x1-mouseX, aimer.y1-mouseY));
+                        pf.draw();
+                    }
+                    break;
 
-    switch(status) {
-        case IDLE:
-            idleSprite.draw();
-            break;
-        case DRAW:
-            drawSprite.draw();
-            break;
-        case HIT:
-            hitSprite.draw();
-            if (hitSprite.animationHasFinished()) {
-                setSprite(PlayerStatus.IDLE);
             }
-            break;
+        }
     }
 
-    // rect(getHitBoxX(), getHitBoxY(), hitBoxWidth, hitBoxHeight);
+    void draw() {
+        pushStyle();
 
-    popStyle();
+        switch(status) {
+            case IDLE:
+                idleSprite.draw();
+                break;
+            case DRAW:
+                drawSprite.draw();
+                break;
+            case HIT:
+                hitSprite.draw();
+                if (hitSprite.animationHasFinished()) {
+                    setSprite(PlayerStatus.IDLE);
+                }
+                break;
+        }
 
-    if (this == activePlayer) {
-        arrow.draw();
+        // rect(getHitBoxX(), getHitBoxY(), hitBoxWidth, hitBoxHeight);
+
+        popStyle();
+
+        if (this == activePlayer) {
+            arrow.draw();
+        }
+
+        healthBar.draw();
     }
-
-    healthBar.draw();
-}
 
     Arrow getArrow() {
         return arrow;
@@ -121,5 +141,9 @@ void draw() {
     }
     public float getHitBoxY() {
         return y-hitBoxHeight/2+12;
+    }
+
+    public void addShopItem(PlayerItem i) {
+        items.add(i);
     }
 }

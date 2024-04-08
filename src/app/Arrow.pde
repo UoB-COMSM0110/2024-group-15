@@ -42,7 +42,6 @@ public class Arrow extends Entity {
             cannotBeCollidedWith = false;
         }
 
-
         // collision detection
         for (Planet planet : planets) {
             if (planet.isCollidingWith(this)) {     // call overrided method in Planet

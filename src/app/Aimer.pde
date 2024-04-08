@@ -7,12 +7,13 @@ public class Aimer {
     Arrow arrow;
     Player player;
 
+    float x1, y1;
+    boolean aiming = false;
+
     Aimer(Player player, Arrow arrow) {
         this.arrow = arrow;
         this.player = player;
     }
-    float x1, y1;
-    boolean aiming = false;
 
     void update() {
         if (arrow.isMoving() || camera.isMoving()) {                //  if moving arrow OR camera is moving skip 
@@ -83,10 +84,5 @@ public class Aimer {
 
         popStyle();
         camera.apply();
-
-
-        // PATHFINDER TEST
-        // Pathfinder path = new Pathfinder(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
-        // path.draw();
     }
 }

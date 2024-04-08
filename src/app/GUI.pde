@@ -34,34 +34,49 @@ class GUIComponent extends Obj {
     }
 }
 
+enum ButtonState {
+    NONE,
+    HOVERING,
+    DOWN,
+    CLICK,
+}
+
 class Button extends GUIComponent {
     final int YPAD = 10;
     Runnable callback;
-    boolean mouseDownOnButton;
+
+    ButtonState state = ButtonState.NONE;
+
 
     Button(String name, int x, int y, int fontSize, Runnable callback){
         super(name, x, y, fontSize);
         this.callback = callback;
     }
 
-    private void checkForHoverAndClick() {
+
+    private void updateState() {
         if (!mouseHovering()) {
-            if (mousePressed) mouseDownOnButton = false;
-            noFill();
-            return;
+            this.state = ButtonState.NONE;
         }
-        fill(100, 100, 100);
-        if (mousePressed) {
-            mouseDownOnButton = true;
+        else if (mousePressed) {
+            this.state = ButtonState.DOWN;
         }
-        else if (mouseDownOnButton) {
+        else if (!mousePressed && this.state == ButtonState.DOWN) {
             callback.run();
+            this.state = ButtonState.NONE;
+        }
+        else {
+            this.state = ButtonState.HOVERING;
         }
     }
 
     void draw() {
-        checkForHoverAndClick();
+        updateState();
+
         stroke(255);
+        if (this.state == ButtonState.NONE) noFill();
+        else fill(100, 100, 100);
+
         if (center) {
            rect(x-objWidth/2, y-objHeight, objWidth, objHeight+YPAD);
         }

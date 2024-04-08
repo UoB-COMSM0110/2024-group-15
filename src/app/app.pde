@@ -54,6 +54,9 @@ private int minDistanceBetweenPlanets;
 private int maxXDistanceBetweenPlanets;
 private int maxYDistanceBetweenPlanets;
 
+
+
+int shopX, shopY, shopWidth, shopHeight;
 Shop shop;
 
 
@@ -101,6 +104,12 @@ public void setup()
 
     camera = new Camera();
     startMenu = new StartMenu();
+
+    shopWidth = 400;
+    shopHeight = 80;
+    shopX = width/2-shopWidth;
+    shopY = height/2-shopHeight;
+
     shop = new Shop();
 }
 
@@ -173,7 +182,12 @@ public void draw()
     for (Planet p : planets) {
         p.draw();
     }
+
     for (Player p: players) {
+        if (!shop.isOpen()) {
+            p.move();
+        } else p.arrow.isMoving = false;
+
         p.draw();
     }
 
@@ -242,6 +256,8 @@ public void finishPlayerTurn()
     }
 
     activePlayer.getArrow().cannotBeCollidedWith = true;
+
+    activePlayer.items.clear();
 
     activePlayer = getOtherPlayer(activePlayer);
     camera.animateCenterOnObject(activePlayer, frameWait);
