@@ -27,7 +27,7 @@ class StartMenu {
 
 
     StartMenu() {
-        gameTitle = new StartMenuComponent("BOWMAN", 70*2, 70);
+        gameTitle = new StartMenuComponent("BOWMAN", 350, 100);
 
         vsHuman = new Button("vs Human", width/2, height/2+100, 30, () -> {
             gameSettings.put("player_mode", Settings.VSHUMAN);
@@ -54,7 +54,7 @@ class StartMenu {
     void draw() {
         pushStyle();
 
-        fill(0, 255, 255);
+        fill(255, 255, 255);
         gameTitle.draw();
 
         switch(state) {
@@ -101,7 +101,7 @@ class StartMenuComponent extends Obj {
 
     public void draw() {
         stroke(0);
-        fill(0, 255, 255);
+        fill(255, 255, 255);
         textFont(f);
         text(content, x-objWidth/2, y);
     }
