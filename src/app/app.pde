@@ -153,6 +153,8 @@ public void gameInit() {
 
     randomisePlanetLocations();
 
+    camera.setXY((planets.get(0).x+planets.get(1).x)/2, (planets.get(0).y+planets.get(1).y)/2);
+
     Collections.sort(planets, (p1, p2) -> Float.compare(p1.getX(), p2.getX()));
 
     players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
@@ -160,9 +162,7 @@ public void gameInit() {
     activePlayer = players[0];
 
     gameState = GameState.GAME;
-
     gameOverPage = new GameOverPage();
-
     tutorial = new Tutorial();
 }
 
@@ -237,8 +237,6 @@ public void draw()
 
     camera.apply();
 
-    tutorial.draw();        //The help message during gameplay
-
     for (Arrow a : spentArrows) {
         a.draw();
     }
@@ -255,6 +253,8 @@ public void draw()
     }
 
     shop.draw();
+
+    tutorial.draw();        //The help message during gameplay
 
     // debugging code which removes health when pressing R
     // if (frameCount % (60*3) == 0) {
