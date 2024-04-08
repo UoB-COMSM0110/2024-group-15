@@ -6,41 +6,41 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 
 ![](assets/Group%20Photo.png)
 
-# Requirements
+## Introduction
+
+Our game is a two-player game based on a flash game *Bowman*. 
+Normally, the game-play is that players drag the mouse to pull back the bow and shoot, then a camera will follow the arrow to check whether you have shot the target.
+We've transformed the game into a space-themed version by introducing a gravity engine to calculate gravity between planets as well as special functions like pathfinder to enhance the original game-play.
+[add more things]
+
+## Requirements
+
+### Ideation Process
+
+We have two game ideas at the beginning proposed by two of our team members, which are the two-player bowman game with camera movement and gravity physical engine, and a RPG-like two-player game with storyline, interactions with the envrionment and boss fights.
+We use paper prototype to mock the outline of these two game's workflow. Soon after the mock and dicussions, we collectively decided to pursue the *Bowman* game due to its more specified twists and requirements, and its solid gameplay foundation.
+
+[video attached]
+
+### User Storeies
+
+>"As a player, I want to have personalize choices at the start of the game so that I can choose the game's difficulty based on my preferences."
+>"As a player, I want to gain resources through some special behviours in the game, and these resources can be able to trade for special skills, so it is bit more fun."
+>"As a player, I want to know the force and the direction of my arrow, so I need a sign to acknowledge that."
+>"As a second player, I want to be able to play the game with my friends, so that I can have fun with two players other than play against the computer."
+>"As a player, I want to have cases or tutorial examples telling me some of special designs of the game."
+>"As a player, I want a skip function to skip the animation, so that I can get the result immediately."
+>"As a marker for this project, I want to see groups create engaging and well made games, with a strong process of development that utilises the techniques taught in this module."
+>"As a future group for this module, we want to see good examples of games which will inspire us when creating our own game."
 
 
-## Stakeholders
 
-* Users of the game
-* The friends of the users of the game
-* The markers of the project
-* Future groups next year
-* 
-## User Storeies
 
-"As a player, I want to have personalize choices at the start of the game so that I can choose the game's difficulty based on my preferences."
-
-"As a player, I want to gain resources through some special behviours in the game, and these resources can be able to trade for special skills, so it is bit more fun."
-
-"As a player, I want to know the force and the direction of my arrow, so I need a sign to acknowledge that."
-
-"As a second player, I want to be able to play the game with my friends, so that I can have fun with two players other than play against the computer."
-
-"As a player, I want to have cases or tutorial examples telling me some of special designs of the game."
-
-"As a player, I want a skip function to skip the animation, so that I can get the result immediately."
-
-"As a marker for this project, I want to see groups create engaging and well made games, with a strong process of development that utilises the techniques taught in this module."
-
-"As a future group for this module, we want to see good examples of games which will inspire us when creating our own game."
-
-## Use-case diagram
+### Use-case diagram
 
 ![Diagram Image](assets/game-idea-imgs/Diagram%202024-02-19%2004-26-53.png)
 
-
-
-## Use-case specifications
+### Use-case specifications
 
 **Use-Case Specification**
 
@@ -89,8 +89,39 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 |                                         | 3. Back to Basic Flow 5.                    |                                                                                                                 |
 =======
 
+### Early Stage Design
 
-## Heuristic Analysis (First week)
+We sat down and brainstormed about additional content ideas beyond the original concept, as well as any technical requirements that might arise during the early stages of game development. Then we discussed about what to implement and used Kanban Board to assign tasks and track the progress of our work and timely updated them into our chat group.
+
+#### Core Gameplay
+
+The core game flow will be, the game starts and players can choose from whether this is "VS Computer" mode or "VS Human" mode, and self-defined the rounds and HP that each player should have.
+Then the players click and drag mouse to control the bow's tension and direction, and then release the mouse to fire. The camera will then focus on the arrow until it shot on any bounding shape.
+Additionally, we want to introduced a points collection system to raise a shop system where players can buy some one-time skills. the gravity works was also being discussed, there are proposals like whether to do a half and half screen where one side has negative gravity or use the escape velocity formula for planets, we choosed the latter eventually.
+
+#### Obstacles
+
+The first obstabcle that might occur is the gravity calculation methods that involes physics. So we should take a look into the escape velocity formula for planets, luckily we only have two planets and one object to model.
+Another barrier is the camera zoom in or zoom out function. The core design is that the other player's position is invisible in this player's turn. So the camera should keep this player at the center of the screen and move follows the arrow after firing.
+[AI player???]
+
+#### TODO list
+
+After putting all the designs and concerns on the table, we wrote a TODO list to guide the step-by-step development of the whole game.
+The highest priority tasks include implementing the physics engine to calculate gravity and 2D bounding collision detection, and the camera movements as well. Then we will add the shop system, the HP detection, and any other things.
+
+## Design
+### Class diagram
+ ![](assets/game-idea-imgs/file.png)
+### Modelling behaviour: Communication diagrams
+![](assets/game-idea-imgs/CD.png)
+
+## Implementation
+
+
+## Evaluation
+
+### Heuristic Analysis (First week)
 
 | Interface        | Issue                                                                               | Heuristic(s) | Frequency (0-4) | Impact (0-4, easy-difficult) | Persistence (0-4, once-repeated) | Severity=AVG(Freq+Impact+Persistence) |
 |------------------|-------------------------------------------------------------------------------------|--------------|-----------------|------------------------------|----------------------------------|---------------------------------------|
@@ -100,47 +131,18 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 | Camera           | Camera movement with arrow keys doesn't make sense                                  | 3, 4, 10     | 1               | 4                            | 1                                | 2                                     |
 
 
-## Heuristic Analysis (Second week)
-
-TODO
+### Heuristic Analysis (Second week)
 
 
-* vs Human or vs Computer
-
-* then settings screen
-    * choose how many rounds you want to play
-    * how much health each player should have
-    * the number of planets
-
-* Points system + shop
-* Gravity planets; choosing between moon, mars, earth, etc.
-* Interactive terrain (destroyable by certain items in the shop ? )
-* solar wind ? like in TANKS, raft wars
-* black holes ?
-
-* shooting stars mechanics
-    * probabilities to do certain things
-    * turn into a planet/black hole (which can be turned off in the settings)
-    * gaining points etc
-
-* camera zooms in on the following of an arrow
-* whether to do a half and half screen where one side has negative gravity, or multiple planets completely visible on the screen
-
-* player can move around the planet rather than shoot for a move
-* moving to other planets ? maybe an item in the shop
-* HP bars and blood
-* Targets on other planets which give points when shot
-
-* Final screen: player X wins
 
 
-# Design
-## Class diagram
- ![](assets/game-idea-imgs/file.png)
-## Modelling behaviour: Communication diagrams
-![](assets/game-idea-imgs/CD.png)
 
 
+## Process
+
+## Conclusion
+
+---
 # Game idea
 ## Game idea 1 - 2 player cooperative game
 
