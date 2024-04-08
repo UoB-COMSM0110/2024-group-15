@@ -27,8 +27,10 @@ public class Aimer {
             aiming = false;
             return;
         }
+
         if (!mousePressed) {                                        // stop aiming and fire
             arrow.isMoving = true;
+            //arrow.showBow=false;
             aiming = false;
             camera.pushZoom();
 

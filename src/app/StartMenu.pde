@@ -55,7 +55,7 @@ class StartMenu {
     void draw() {
         pushStyle();
 
-        fill(0, 255, 255);
+        fill(255, 255, 255);
         gameTitle.draw();
 
         switch(state) {

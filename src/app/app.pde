@@ -88,7 +88,11 @@ public void settings() {
 
 
 void loadIntoImages(String fileName) {
-    imgs.put(fileName, loadImage(ASSETS_PATH+fileName+".png"));
+    loadIntoImages(fileName, "png");
+}
+
+void loadIntoImages(String fileName, String fileExtension) {
+    imgs.put(fileName, loadImage(ASSETS_PATH+fileName+"."+fileExtension));
 }
 
 // Use this method for loading images (stored in the `game-assets` folder)
@@ -101,6 +105,8 @@ public void loadAssets() {
     loadIntoImages("player-hit");
     loadIntoImages("space1");
     loadIntoImages("transparent-stars");
+    loadIntoImages("planet3", "gif");
+    loadIntoImages("bow");
 }
 
 
@@ -162,7 +168,7 @@ public void gameInit() {
 
 
 public void draw()
-{    
+{
     background(0);      // background 0 makes text a bit sharper
     imageMode(CENTER);
 

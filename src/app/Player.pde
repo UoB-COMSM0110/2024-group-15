@@ -125,7 +125,7 @@ public class Player extends Entity {
         if (status != PlayerStatus.HIT) {
             setSprite(PlayerStatus.HIT);
         }
-    } 
+    }
 
     public void setSprite(PlayerStatus status) {
         this.status = status;
