@@ -1,11 +1,11 @@
 class GameOverPage {
   
-    StartMenuComponent winTitle;
+    GUIComponent winTitle;
     Button exitButton;
     
     GameOverPage() {
         
-        winTitle = new StartMenuComponent("", width / 2 - 50, height / 2 - 50, 30);
+        winTitle = new GUIComponent("", width / 2 - 50, height / 2 - 50, 30);
 
         exitButton = new Button("Exit", width / 2, height / 2 + 100, 30, () -> {
             // reset game state

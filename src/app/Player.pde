@@ -1,25 +1,34 @@
+enum PlayerStatus {
+    IDLE,
+    DRAW,
+    HIT,
+}
+
+enum PlayerItem {
+    PATHFINDER,
+    HITSKIP,
+}
+
 
 public class Player extends Entity {
     PlayerNum playerNum;
-
-
-
-  
-  
-
     Arrow arrow;
     Aimer aimer;
     Planet planet;
-    Animation animation;
-    //int playerStatus; 
+    Sprite idleSprite;
+    Sprite drawSprite;
+    Sprite hitSprite;
+    PlayerStatus status = PlayerStatus.IDLE;
     int planetAngle;
-   
 
-    int health = maxHP;
+    Pathfinder pf;
+    List<PlayerItem> items = new ArrayList<>();
+
+    int health = maxHealth;
+
     HealthBar healthBar;
 
     private boolean hasUsedShop = false;
-
 
     Player(Planet planet, int planetAngle, PlayerNum playerNum) {
         super(planet.x, planet.y, 30, 60);   // TODO this will change when we use an image instead of a rect
@@ -28,7 +37,7 @@ public class Player extends Entity {
 
         this.playerNum = playerNum;
 
-        //this.playerstatus=STANDBY;
+        setHitBox(getHitBoxWidth()-10, getHitBoxHeight()-15);
 
 
         double radians = Math.toRadians(planetAngle);
@@ -43,71 +52,59 @@ public class Player extends Entity {
 
 
         healthBar = new HealthBar(this, playerNum);
-        animation = new Animation(AnimationStatus.IDLE);
+
+
+        idleSprite = new Sprite(this, imgs.get("player-idle"), 102, 64, 13, AnimationType.LOOP);
+        drawSprite = new Sprite(this, imgs.get("player-draw"), 102, 64, 8, AnimationType.FIRSTLAST);
+        hitSprite = new Sprite(this, imgs.get("player-hit"), 102, 64, 6, AnimationType.FIRSTLAST);
     }
 
-//     void draw() {
-//         if (this == activePlayer) {
-//             if (arrow.isMoving) arrow.move();
-//             aimer.update();
-//         }
-//         pushStyle();
-//         fill(255, 255, 255);
-//         rect(x, y, objWidth, objHeight);
-//         popStyle();
-
-//         if (this == activePlayer) {
-//             arrow.draw();
-//         }
-// =======
-//         setDimensions(30, 60);      // TODO placeholder until actual player sprite
-
-//         healthBar = new HealthBar(this, heathBarPosition);
-//         animation = new Animation(1);
-// >>>>>>> Ada
-
-
-//     }
-
-void draw() {
-    if (this == activePlayer) {
-        if (arrow.isMoving) arrow.move();
-        aimer.update();
-        // if (animation.status != AnimationStatus.DRAW) {
-        //     animation.status = AnimationStatus.DRAW;
-        //     animation.loadImages();
-        // }
-        animation.playAnimationStatic(this);
-    } else {
-        if (animation.status != AnimationStatus.IDLE) {
-            animation.status = AnimationStatus.IDLE;
-            animation.loadImages();
+    void move() {
+        if (this == activePlayer) {
+            arrow.move();
+            aimer.update();
         }
-        animation.playAnimationLoop(this);
-        // TODO play standby status;
-    }
 
-    pushStyle();
-    //player standby
-    //fill(255, 255, 255);
-    //rect(x, y, objWidth, objHeight);
-    if (animation.status == AnimationStatus.IDLE) {
-           // animation.loadImages();
-            animation.playAnimationLoop(this);
+        for (PlayerItem i: items) {
+            switch (i) {
+                case PATHFINDER:
+                    if (aimer.aiming) {
+                        pf = new Pathfinder(arrow.x, arrow.y, new PVector(aimer.x1-mouseX, aimer.y1-mouseY));
+                        pf.draw();
+                    }
+                    break;
+            }
         }
-    else{
-         // animation.loadImages();
-        animation.playAnimationStatic(this);
     }
 
-    popStyle();
+    void draw() {
+        pushStyle();
 
-    if (this == activePlayer) {
-        arrow.draw();
+        switch(status) {
+            case IDLE:
+                idleSprite.draw();
+                break;
+            case DRAW:
+                drawSprite.draw();
+                break;
+            case HIT:
+                hitSprite.draw();
+                if (hitSprite.animationHasFinished()) {
+                    setSprite(PlayerStatus.IDLE);
+                }
+                break;
+        }
+
+        // rect(getHitBoxX(), getHitBoxY(), hitBoxWidth, hitBoxHeight);
+
+        popStyle();
+
+        if (this == activePlayer) {
+            arrow.draw();
+        }
+
+        healthBar.draw();
     }
-
-    healthBar.draw();
-}
 
     Arrow getArrow() {
         return arrow;
@@ -122,18 +119,34 @@ void draw() {
     }
 
     public void removeHeart() {
-      //TODO play a hit animation.
-      animation.status=AnimationStatus.HIT;
         health--;
         healthBar.animateHealthBarLoss();
+
+        if (status != PlayerStatus.HIT) {
+            setSprite(PlayerStatus.HIT);
+        }
     }
 
-    // TODO temporary overrides until we use an actual image
-    public float getX() {
-        return x;
+    public void setSprite(PlayerStatus status) {
+        this.status = status;
+        switch(status) {
+            case HIT:
+                hitSprite.resetToFirstFrame();
+                break;
+            case DRAW:
+                drawSprite.resetToFirstFrame();
+                break;
+        }
     }
-    public float getY() {
-        return y;
+    public float getHitBoxX() {
+        return x-hitBoxWidth/2;
+    }
+    public float getHitBoxY() {
+        return y-hitBoxHeight/2+12;
+    }
+
+    public void addShopItem(PlayerItem i) {
+        items.add(i);
     }
 
     public boolean hasUsedShop() {

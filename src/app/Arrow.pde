@@ -32,23 +32,23 @@ public class Arrow extends Entity {
     finishPlayerTurn();
   }
 
-  void move() {
-    if (!isMoving) {
-      startedMoving = false;
-      return;
-    }
-    if (startedMoving == false) {   // first frame of movement
-      startX = x;
-      startY = y;
-      startedMoving = true;
-      cannotBeCollidedWith = true;
-      //showBow = true;
-    } else if (cannotBeCollidedWith && abs(startX-x) > 30 && abs(startY-y) > 60) {    // if arrow has moved out of player hitbox, start collisions
-      cannotBeCollidedWith = false;
-      //bowSprite = null;
-      //showBow = false;
-    }
-
+    void move() {
+        if (!isMoving) {
+            startedMoving = false;
+            return;
+        }
+        if (startedMoving == false) {   // first frame of movement
+            startX = x;
+            startY = y;
+            startedMoving = true;
+            cannotBeCollidedWith = true;
+            // showBow = true;
+        }
+        else if (cannotBeCollidedWith && abs(startX-x) > 30 && abs(startY-y) > 60) {    // if arrow has moved out of player hitbox, start collisions
+            cannotBeCollidedWith = false;
+            // bowSprite = null;
+            // showBow = false;
+        }
 
         // collision detection
         for (Planet planet : planets) {
@@ -66,9 +66,9 @@ public class Arrow extends Entity {
                 stopMovingAndFinishTurn();
                 return;
             }
-        }        
+        }
         super.move();
-        camera.updateXY(x-width/2, y-height/2);
+        camera.setXY(x, y);
     }
 
   void draw() {
@@ -81,7 +81,7 @@ public class Arrow extends Entity {
     rotate(angleRadians);
     imageMode(CENTER);
     image(sprite, 0, 0, objWidth, objHeight);
-    //if (showBow) { 
+    //if (showBow) {
     //  image(bowSprite, 0, 0, objWidth, objHeight);
     //}
     //image(bowSprite, 0, 0, objWidth, objHeight);
@@ -101,8 +101,21 @@ public class Arrow extends Entity {
     return normalizedY;
   }
 
-  @Override
+
+    public float getHitBoxX() {
+        return normalizedX;
+    }
+
+    public float getHitBoxY() {
+        return normalizedY;
+    }
+
+    @Override
     public boolean isCollidingWith(Entity e) {
-    return cannotBeCollidedWith ? false : super.isCollidingWith(e);
-  }
+        return cannotBeCollidedWith ? false : super.isCollidingWith(e);
+    }
+
+    public boolean isMoving() {
+        return isMoving;
+    }
 }

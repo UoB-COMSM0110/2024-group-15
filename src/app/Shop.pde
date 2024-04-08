@@ -1,37 +1,103 @@
-class ShopPage {
+class ShopItemRow extends Obj {
 
-    StartMenuComponent shopTitle;
-    Button optionButton1;
-    Button optionButton2;
+    int ROW_GAP = 150;
 
-    ShopPage() {
-        shopTitle = new StartMenuComponent("SHOP", width / 2, 70, 40);
-        int buttonYStart = height / 2 - 50;
-        int buttonSpacing = 100;
+    Button button;
+    GUIComponent description;
+    Runnable callback;
 
-        optionButton1 = new Button("Path Finder", width / 2, buttonYStart, 30, () -> {
-        println("Selected Path Finder");
-        isPathFinderActive = true;
-        gameState = GameState.GAME;
-        camera.centerOnObject(activePlayer);
-        });
+    ShopItemRow(int buttonIdx, String name, String description, Runnable callback) {
+        super(shopX, shopY+buttonIdx*60, shopWidth, 60);
 
-        optionButton2 = new Button("Double Strike", width / 2, buttonYStart + buttonSpacing, 30, () -> {
-        println("Selected Double Strike");
-        gameState = GameState.GAME;
-        doubleStrike();
-        });
+        this.button = new Button(
+            name,
+            (int)x,
+            (int)y,
+            24,
+            callback
+        );
+        button.center = false;
+
+        this.description = new GUIComponent(
+            description,
+            (int)x + ROW_GAP,
+            (int)y,
+            20
+        );
+        this.description.center = false;
     }
 
-     void draw() {
+    void draw() {
+        this.button.draw();
+        this.description.draw();
+    }
+}
 
-         shopTitle.draw();
-         optionButton1.draw();
-         optionButton2.draw();
 
-     }
 
-     void doubleStrike() {
+class Shop extends Obj {
+
+
+    boolean isOpen = false;
+
+    Button shopOpenButton = new Button("SHOP", width-40, 40, 20, () -> { isOpen = true; });
+
+    Button shopCloseButton;
+
+    List<ShopItemRow> shopItemRows = new ArrayList<>();
+
+    Shop() {
+
+        super(shopX, shopY, shopWidth, shopHeight);
+
+        shopItemRows.add(new ShopItemRow(
+            0,
+            "Pathfinder",
+            "lets you see a path to where you're firing.",
+            () -> activePlayer.addShopItem(PlayerItem.PATHFINDER)
+        ));
+        shopItemRows.add(new ShopItemRow(
+            1,
+            "Hit and Skip",
+            "the next time you hit the enemy, you'll get another shot.",
+            null
+        ));
+
+        shopCloseButton = new Button(
+            " X ",
+            shopX+shopWidth+120,
+            shopY-50,
+            24,
+            () -> { isOpen = false; }
+        );
+        shopCloseButton.center = false;
+    }
+
+
+
+    void draw() {
+        resetMatrix();
+        pushStyle();
+
+        if (!isOpen) {
+            shopOpenButton.draw();
+            return;
+        }
+        for (ShopItemRow item: shopItemRows) {
+            item.draw();
+        }
+        shopCloseButton.draw();
+        popStyle();
+        camera.apply();
+
+    }
+
+    boolean isOpen() {
+        return this.isOpen;
+    }
+
+    // TODO implement this
+    void doubleStrike() {
          Player currentActivePlayer = activePlayer;
          isDoubleStrikeActive = true;
          boolean playerHit = updatePlayerHealths();
@@ -40,7 +106,7 @@ class ShopPage {
              updatePlayerHealths();
          }
 
-         camera.centerOnObject(activePlayer);
+         camera.setXY(activePlayer.getX(), activePlayer.getY());
          gameState = GameState.GAME;
          isDoubleStrikeActive = false;
      }

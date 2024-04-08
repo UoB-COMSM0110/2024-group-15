@@ -1,24 +1,25 @@
 /*
 *  handles the mouse aim tool and changes the velocity of the arrow
 */
-int maxPower = 200;
 
 public class Aimer {
+    private final static int MAXPOWER = 200;
     Arrow arrow;
     Player player;
+
+    float x1, y1;
+    boolean aiming = false;
 
     Aimer(Player player, Arrow arrow) {
         this.arrow = arrow;
         this.player = player;
     }
-    float x1, y1;
-    boolean aiming = false;
 
     void update() {
-        if (arrow.isMoving || camera.isMoving()) {  //  if moving arrow OR camera is moving skip    TODO these should be a getters
+        if (arrow.isMoving() || camera.isMoving()) {                //  if moving arrow OR camera is moving skip
             return;
         }
-        if (!(mousePressed && mouseButton == LEFT) && !aiming) {     // skip if left mouse not pressed and not aiming
+        if (!(mousePressed && mouseButton == LEFT) && !aiming) {    // skip if left mouse not pressed and not aiming
             return;
         }
         //stop aiming if right click the mouse
@@ -26,32 +27,32 @@ public class Aimer {
             aiming = false;
             return;
         }
-        if (!mousePressed) {           // stop aiming and fire
+
+        if (!mousePressed) {                                        // stop aiming and fire
             arrow.isMoving = true;
             //arrow.showBow=false;
             aiming = false;
             camera.pushZoom();
 
-            isPathFinderActive = false;
+            player.setSprite(PlayerStatus.IDLE); // TODO really this should be firing animation
             return;
         }
         float x2 = mouseX;
         float y2 = mouseY;
 
-        if (!aiming) {                      // start aiming
+
+        if (!aiming) {                                              // start aiming
             arrow.x = player.x;
             arrow.y = player.y;
 
-            player.animation.status = AnimationStatus.DRAW;
-            player.animation.loadImages();
-            player.animation.currentFrame = 0;
+            player.setSprite(PlayerStatus.DRAW);
 
             x1 = mouseX;
             y1 = mouseY;
 
             arrow.isMoving = false;
             aiming = true;
-            camera.centerOnObject(player);
+            camera.setXY(player.x, player.y);
             camera.popZoom();
         }
 
@@ -60,10 +61,10 @@ public class Aimer {
         //float angleRadians = (float)Math.atan2(arrow.velocity.y, arrow.velocity.x);
 
         // stop the line from growing in length past 200
-        if (lengthOfLine > maxPower) {
-            lengthOfLine = maxPower;
-            x2 = x1 - maxPower * (float)Math.cos(angleRadians);
-            y2 = y1 - maxPower * (float)Math.sin(angleRadians);
+        if (lengthOfLine > MAXPOWER) {
+            lengthOfLine = MAXPOWER;
+            x2 = x1 - MAXPOWER * (float)Math.cos(angleRadians);
+            y2 = y1 - MAXPOWER * (float)Math.sin(angleRadians);
         }
 
         // get the vector of the 2 points made by mouse press
@@ -87,15 +88,5 @@ public class Aimer {
 
         popStyle();
         camera.apply();
-
-
-        // PATHFINDER TEST
-        // Pathfinder path = new Pathfinder(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
-        // path.draw();
-        if (isPathFinderActive) {
-            Pathfinder path = new Pathfinder(arrow.x, arrow.y, new PVector(x1-x2, y1-y2));
-            path.draw();
-        }
-
     }
 }

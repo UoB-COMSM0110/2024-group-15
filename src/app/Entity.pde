@@ -31,10 +31,10 @@ abstract class Entity extends Obj {
     public boolean isCollidingWith(Entity e)
     {
         // for rectangles
-        return  getX() + getHitBoxWidth() >= e.getX()       &&
-                e.getX() + e.getHitBoxWidth() >= getX()     &&
-                getY() + getHitBoxHeight() >= e.getY()      &&
-                e.getY() + e.getHitBoxHeight() >= getY();
+        return  getHitBoxX() + getHitBoxWidth() >= e.getHitBoxX()       &&
+                e.getHitBoxX() + e.getHitBoxWidth() >= getHitBoxX()     &&
+                getHitBoxY() + getHitBoxHeight() >= e.getHitBoxY()      &&
+                e.getHitBoxY() + e.getHitBoxHeight() >= getHitBoxY();
     }
 
     public float getHitBoxWidth() {
@@ -42,6 +42,12 @@ abstract class Entity extends Obj {
     }
     public float getHitBoxHeight() {
         return hitBoxHeight;
+    }
+    public float getHitBoxX() {
+        return x;
+    }
+    public float getHitBoxY() {
+        return y;
     }
 
     void move() {

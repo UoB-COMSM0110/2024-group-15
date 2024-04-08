@@ -11,7 +11,9 @@ public class HealthBar {
 
     HealthBar(Player player, PlayerNum playerNum) {
         this.player = player;
-        this.x = playerNum == PlayerNum.ONE ? 20 : width-20*maxHP;
+
+        this.x = playerNum == PlayerNum.ONE ? 20 : width-20*maxHealth;
+
         this.y = 20;
         this.playerNum = playerNum;
     }
@@ -35,18 +37,24 @@ public class HealthBar {
         pushStyle();
 
         noStroke();
-        
 
-        for (int i=0; i<maxHP; i++) {
-            if (playerNum == PlayerNum.ONE && player.getHealth() > i) {
-                fill(255, 100, 70);
-            } else if (playerNum == PlayerNum.TWO && player.getHealth() > maxHP-i-1){
+        for (int i=0; i<maxHealth; i++) {
+            int threshold = playerNum == PlayerNum.ONE ? i : maxHealth-i-1;
+
+            if (player.getHealth() > threshold) {
                 fill(255, 100, 70);
             }
             else {
                 if (animationFrame > 0 && player.getHealth() == i) {
-                    fill(255, 255, 255);
+
+                    float normal = (1/(float)120)*animationFrame;
+
+                    color fade = lerpColor(color(100, 100, 100), color(255, 255, 255), normal);
+
+                    fill(fade);
                     animationFrame--;
+                    // scale(normal+1);
+                    // translate(20*normal, -10*(1+normal));
                 }
                 else {
                     fill(100, 100, 100);
@@ -65,6 +73,5 @@ public class HealthBar {
 
     public void animateHealthBarLoss() {
         animationFrame = 120;
-
     }
 }
