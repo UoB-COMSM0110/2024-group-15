@@ -4,6 +4,7 @@
 
 import java.util.HashMap;
 import java.util.Collections;
+import java.util.List;
 import java.io.File;
 
 enum GameState {
@@ -53,7 +54,7 @@ private int minDistanceBetweenPlanets;
 private int maxXDistanceBetweenPlanets;
 private int maxYDistanceBetweenPlanets;
 
-ShopInterface shopMenu;
+Shop shop;
 
 
 private int planetRadius = 1000;
@@ -100,10 +101,7 @@ public void setup()
 
     camera = new Camera();
     startMenu = new StartMenu();
-    shopMenu = new ShopInterface();
-
-
-
+    shop = new Shop();
 }
 
 public void gameInit() {
@@ -137,7 +135,7 @@ public void gameInit() {
 
 public void draw()
 {    
-    background(0);
+    background(0);      // background 0 makes text a bit sharper
     imageMode(CENTER);
 
     float backgroundImageX = width/2 - (camera.getX()*0.3);
@@ -179,7 +177,7 @@ public void draw()
         p.draw();
     }
 
-    // shopMenu.draw();
+    shop.draw();
 
     // debugging code which removes health when pressing R
     // if (frameCount % (60*3) == 0) {
