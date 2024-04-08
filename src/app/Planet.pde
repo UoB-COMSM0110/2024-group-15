@@ -4,8 +4,14 @@ class Planet extends Entity {
     float mass;
     float r;
     PImage  sprite;
+    int numberOfArrowsOnMe;      // used to count the number of arrows (cheating mode)
 
     Planet(int x, int y, int mass, PImage sprite) {
+// =======
+
+
+//     Planet(int x, int y, int mass) {
+// >>>>>>> main
         super(x, y);
         this.mass = mass;
         this.r = mass/10F;
@@ -19,12 +25,29 @@ class Planet extends Entity {
         image(sprite, 0, 0, realWidth, realHeight);
 */
 
+        numberOfArrowsOnMe = 0;
     }
 
     Planet(int x, int y, int mass, int radius) {
         this(x, y, mass, imgs.get("planet1"));
         this.r = radius;
     }
+
+    public void increaseNumberOfArrowsHit(){   //(cheating point related)
+        ++numberOfArrowsOnMe;
+        //if (numberOfArrowOnMe == 10){ // Enter shop mode when arrow count reaches 10
+        //    enterShopMode();
+        //}
+    }
+
+    public int getNumberOfArrowsOnMe() {
+        return numberOfArrowsOnMe;
+    }
+
+
+
+
+// >>>>>>> main
 
     void move() { /* planets don't move at the moment */ }
 
@@ -69,4 +92,5 @@ class Planet extends Entity {
 
         return direction;
     }
+
 }

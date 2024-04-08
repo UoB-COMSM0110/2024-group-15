@@ -10,6 +10,8 @@ import java.io.File;
 enum GameState {
   STARTPAGE,
   GAME,
+  EASYGAMESET,
+  EASYGAME,
   POPMENU, 
   SHOP,
   GAMEOVER,
@@ -45,10 +47,12 @@ HashMap<Integer, Boolean> keys = new HashMap<>();
 
 Camera camera;
 StartMenu startMenu;
+Tutorial tutorial;
 ArrayList<Planet> planets = new ArrayList<>();
 ArrayList<Arrow> spentArrows = new ArrayList<>();
 Player[] players = new Player[2];
 Player activePlayer;
+GameOverPage gameOverPage;
 
 private int minDistanceBetweenPlanets;
 private int maxXDistanceBetweenPlanets;
@@ -64,6 +68,17 @@ private int planetRadius = 1000;
 
 int maxHealth = 3;
 
+
+
+// The exact number is not final
+//int arrowCount = 10;
+// For debugging purpose
+int arrowCount = 2;
+
+int maxHP = 3;
+
+boolean isDoubleStrikeActive = false;
+boolean isPathFinderActive = false;
 
 public void settings() {
     size(screenWidth, screenHeight);
@@ -114,8 +129,8 @@ public void setup()
 }
 
 public void gameInit() {
-    
-    
+
+
     if (gameSettings.get("difficulty") == Settings.EASY) {
         minDistanceBetweenPlanets = 200;
         maxXDistanceBetweenPlanets = 600;
@@ -126,7 +141,7 @@ public void gameInit() {
         maxXDistanceBetweenPlanets = 900;
         maxYDistanceBetweenPlanets = 500;
     }
-   
+
     planets.add(new Planet(0, 0, planetRadius, imgs.get("planet1")));
     planets.add(new Planet(0, 0, planetRadius, imgs.get("planet2")));
 
@@ -139,6 +154,10 @@ public void gameInit() {
     activePlayer = players[0];
 
     gameState = GameState.GAME;
+
+    gameOverPage = new GameOverPage();
+
+    tutorial = new Tutorial();
 }
 
 
@@ -172,9 +191,47 @@ public void draw()
 
     if (keys.get(R)) {
         camera.setZoom(camera.zoom + 0.1);
+// =======
+//         case GAME:
+
+//             //Shop
+//             for (Planet p : planets) {
+//                 if (p.getNumberOfArrowsOnMe() >= arrowCount) {
+//                     for (Player player : players) {
+//                         if (player.planet.equals(p)
+//                             && !player.equals(activePlayer)
+//                             // Assuming each player can use this mode once for the time being
+//                             && !player.hasUsedShop()) {
+//                             gameState = GameState.SHOP;
+//                             player.markAsUsedShop();
+//                             break;
+//                         }
+//                     }
+//                 }
+//                 if (gameState == GameState.SHOP) {
+//                     break;
+//                 }
+//             }
+//             break;
+//         case EASYGAMESET:
+//             //camera.setZoom(0.65F);//zoom out
+//             gameState = GameState.EASYGAME;
+//             return;
+//         case EASYGAME:
+//             isPathFinderActive = true; //easy game with a default pathFinder
+//             break;
+//         case GAMEOVER:
+//             gameOverPage.draw();
+//             return;
+//         case SHOP:
+//             shopPage.draw();
+//             return;
+// >>>>>>> main
     }
 
     camera.apply();
+
+    tutorial.draw();        //The help message during gameplay
 
     for (Arrow a : spentArrows) {
         a.draw();
@@ -203,7 +260,7 @@ public void draw()
 public void keyPressed()
 {
     if (keys.containsKey(keyCode)) keys.put(keyCode, true);
-    
+
 }
 public void keyReleased()
 {
@@ -213,9 +270,9 @@ public void keyReleased()
 
 private Player getOtherPlayer(Player p) {
     switch (p.getPlayerNum()) {
-        case ONE: 
+        case ONE:
             return players[1];
-        case TWO: 
+        case TWO:
             return players[0];
         default:
             return null;
@@ -227,31 +284,66 @@ public Player checkForPlayerDeaths() {
     for (Player p: players) {
         if (p.getHealth() <= 0) {
             return p;
-        } 
+        }
     }
     return null;
 }
 
 
+// public boolean updatePlayerHealths() {
+//     for (Player p: players) {
+//         if (activePlayer.getArrow().isCollidingWith(p)) {
+//             p.removeHeart();
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
 public boolean updatePlayerHealths() {
-    for (Player p: players) {
+    boolean playerHit = false;
+
+    for (Player p : players) {
         if (activePlayer.getArrow().isCollidingWith(p)) {
             p.removeHeart();
-            return true;
+            if (isDoubleStrikeActive) {
+                p.removeHeart();
+                isDoubleStrikeActive = false;
+            }
+            playerHit = true;
+            break;
         }
     }
-    return false;
+    return playerHit;
 }
+
+
+//public boolean updatePlayerHealths(boolean cheatMode) {
+//    for (Player p : players) {
+//        if (activePlayer.getArrow().isCollidingWith(p)) {
+//            if (cheatMode) {
+//                p.removeHeart();
+//                p.removeHeart();
+//            } else {
+//                p.removeHeart();
+//            }
+//            return true;
+//        }
+//    }
+//    return false;
+//}
+
 
 public void finishPlayerTurn()
 {
     int frameWait = updatePlayerHealths() ? 120 : 60;
-
+    // int frameWait = updatePlayerHealths(false) ? 120 : 60;
     spentArrows.add(new Arrow(activePlayer.getArrow()));
 
     Player deadPlayer = checkForPlayerDeaths();
     if (deadPlayer != null) {
         setWinnerAndGameOver(getOtherPlayer(deadPlayer));
+
         return;
     }
 
@@ -271,10 +363,12 @@ public void setWinnerAndGameOver(Player p)
      *      Show winner screen (PLAYER X WINS!)
      *      Play again button? exit button? etc.
     */
+    gameState = GameState.GAMEOVER;
+    gameOverPage.setWinner(p.getPlayerNum() == PlayerNum.ONE ? "1" : "2");
+
     camera.animateCenterOnObject(p, 60);
     println("PLAYER" + (p.getPlayerNum() == PlayerNum.ONE ? "1 " : "2 ") +"WINS!");
 }
-
 
 
 

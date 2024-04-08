@@ -18,15 +18,17 @@ public class Player extends Entity {
     Sprite idleSprite;
     Sprite drawSprite;
     Sprite hitSprite;
-    PlayerStatus status = PlayerStatus.IDLE; 
+    PlayerStatus status = PlayerStatus.IDLE;
     int planetAngle;
 
     Pathfinder pf;
     List<PlayerItem> items = new ArrayList<>();
 
     int health = maxHealth;
+
     HealthBar healthBar;
-    
+
+    private boolean hasUsedShop = false;
 
     Player(Planet planet, int planetAngle, PlayerNum playerNum) {
         super(planet.x, planet.y, 30, 60);   // TODO this will change when we use an image instead of a rect
@@ -71,7 +73,6 @@ public class Player extends Entity {
                         pf.draw();
                     }
                     break;
-
             }
         }
     }
@@ -120,6 +121,7 @@ public class Player extends Entity {
     public void removeHeart() {
         health--;
         healthBar.animateHealthBarLoss();
+
         if (status != PlayerStatus.HIT) {
             setSprite(PlayerStatus.HIT);
         }
@@ -134,7 +136,7 @@ public class Player extends Entity {
             case DRAW:
                 drawSprite.resetToFirstFrame();
                 break;
-        }   
+        }
     }
     public float getHitBoxX() {
         return x-hitBoxWidth/2;
@@ -145,5 +147,13 @@ public class Player extends Entity {
 
     public void addShopItem(PlayerItem i) {
         items.add(i);
+    }
+
+    public boolean hasUsedShop() {
+        return this.hasUsedShop;
+    }
+
+    public void markAsUsedShop() {
+        this.hasUsedShop = true;
     }
 }

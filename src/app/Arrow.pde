@@ -46,6 +46,9 @@ public class Arrow extends Entity {
         for (Planet planet : planets) {
             if (planet.isCollidingWith(this)) {     // call overrided method in Planet
                 stopMovingAndFinishTurn();
+                
+                planet.increaseNumberOfArrowsHit();      //When the arrow hit the planet, increasing the number
+                
                 return;
             }
         }

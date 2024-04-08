@@ -1,5 +1,3 @@
-
-
 class ShopItemRow extends Obj {
 
     int ROW_GAP = 150;
@@ -97,4 +95,19 @@ class Shop extends Obj {
     boolean isOpen() {
         return this.isOpen;
     }
+
+    // TODO implement this
+    void doubleStrike() {
+         Player currentActivePlayer = activePlayer;
+         isDoubleStrikeActive = true;
+         boolean playerHit = updatePlayerHealths();
+
+         if (playerHit) {
+             updatePlayerHealths();
+         }
+
+         camera.setXY(activePlayer.getX(), activePlayer.getY());
+         gameState = GameState.GAME;
+         isDoubleStrikeActive = false;
+     }
 }

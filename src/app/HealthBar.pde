@@ -11,7 +11,9 @@ public class HealthBar {
 
     HealthBar(Player player, PlayerNum playerNum) {
         this.player = player;
+
         this.x = playerNum == PlayerNum.ONE ? 20 : width-20*maxHealth;
+
         this.y = 20;
         this.playerNum = playerNum;
     }
@@ -35,6 +37,7 @@ public class HealthBar {
         pushStyle();
 
         noStroke();
+
         for (int i=0; i<maxHealth; i++) {
             int threshold = playerNum == PlayerNum.ONE ? i : maxHealth-i-1;
 
