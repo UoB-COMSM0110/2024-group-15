@@ -33,9 +33,6 @@ We use paper prototype to mock the outline of these two game's workflow. Soon af
 >"As a marker for this project, I want to see groups create engaging and well made games, with a strong process of development that utilises the techniques taught in this module."
 >"As a future group for this module, we want to see good examples of games which will inspire us when creating our own game."
 
-
-
-
 ### Use-case diagram
 
 ![Diagram Image](assets/game-idea-imgs/Diagram%202024-02-19%2004-26-53.png)
@@ -112,11 +109,25 @@ The highest priority tasks include implementing the physics engine to calculate 
 
 ## Design
 ### Class diagram
+
+We use the class diagram to help us understand the structures of the system at the very first stage. During the later development process some methods and class might be added or deleted but the main idea remains to our final stage.
+We defined the *App* class as the main class that initialization and constantly called during the whole game progress. Also, we used the *Obj* class as the parent class of *Arrow*, *Pathfinder*, *Planet*, *Player* and so on as they share the same postition at some point.
+
  ![](assets/game-idea-imgs/file.png)
+
 ### Modelling behaviour: Communication diagrams
+To more clarify the relationships between the classes of the system, we use the communication diagram to help us specify the interactions between classes. This diagram has gived us more detailed insights how classes communicate.
+Normally, after the mouse drag and release, the *Amier* will update the tension and direction to *Arrow*, then the *Camera* will move to follow wherever the arrow goes. Also, the positoin and movement of the arrow will update the *Planet* to calculate the gravity of the arrow to define its movement in next frame. Ultimately all the information will be updated in the *App*, the main class to detect any further movements.
+
 ![](assets/game-idea-imgs/CD.png)
 
+### Design Conclusion
+
+Although the final product may differ from our design, we still find it really useful to introduce these two diagrams to help us understand the whole system. Furthermore, this design prototype help us to focus on one function to implement, one class to code at a time, greatly simplify the progress of coding and debugging. 
+
 ## Implementation
+
+
 
 
 ## Evaluation
@@ -139,6 +150,9 @@ The highest priority tasks include implementing the physics engine to calculate 
 
 
 ## Process
+
+
+
 
 ## Conclusion
 
