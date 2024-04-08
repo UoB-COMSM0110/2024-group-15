@@ -47,7 +47,7 @@ public class Aimer {
 
             arrow.isMoving = false;
             aiming = true;
-            camera.centerOnObject(player);
+            camera.setXY(player.x, player.y);
             camera.popZoom();
         }
        

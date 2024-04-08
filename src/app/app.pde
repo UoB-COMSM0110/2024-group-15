@@ -58,6 +58,7 @@ ShopInterface shopMenu;
 
 private int planetRadius = 1000;
 
+int maxHealth = 3;
 
 
 public void settings() {
@@ -98,13 +99,7 @@ public void setup()
     keys.put(S, false);
 
     camera = new Camera();
-
-    
-
     startMenu = new StartMenu();
-    
-   
-
     shopMenu = new ShopInterface();
 
 
@@ -166,6 +161,10 @@ public void draw()
         case STARTPAGE:
             startMenu.draw();
             return;
+    }
+
+    if (keys.get(R)) {
+        camera.setZoom(camera.zoom + 0.1);
     }
 
     camera.apply();

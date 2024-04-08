@@ -7,11 +7,13 @@ public class HealthBar {
     int x, y;
     Player player;
     int animationFrame = 0;
+    PlayerNum playerNum;
 
     HealthBar(Player player, PlayerNum playerNum) {
         this.player = player;
-        this.x = playerNum == PlayerNum.ONE ? 20 : width-200;
+        this.x = playerNum == PlayerNum.ONE ? 20 : width-20*maxHealth;
         this.y = 20;
+        this.playerNum = playerNum;
     }
 
     private void drawHeart(int x) {
@@ -33,9 +35,10 @@ public class HealthBar {
         pushStyle();
 
         noStroke();
-        for (int i=0; i<10; i++) {
-            // resetMatrix();
-            if (player.getHealth() > i) {
+        for (int i=0; i<maxHealth; i++) {
+            int threshold = playerNum == PlayerNum.ONE ? i : maxHealth-i-1;
+
+            if (player.getHealth() > threshold) {
                 fill(255, 100, 70);
             }
             else {
