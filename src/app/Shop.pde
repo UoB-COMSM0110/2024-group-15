@@ -1,5 +1,4 @@
 class ShopItemRow extends Obj {
-
     int ROW_GAP = 150;
 
     Button button;
@@ -34,20 +33,13 @@ class ShopItemRow extends Obj {
 }
 
 
-
 class Shop extends Obj {
-
-
     boolean isOpen = false;
-
     Button shopOpenButton = new Button("SHOP", width-40, 40, 20, () -> { isOpen = true; });
-
     Button shopCloseButton;
-
     List<ShopItemRow> shopItemRows = new ArrayList<>();
 
     Shop() {
-
         super(shopX, shopY, shopWidth, shopHeight);
 
         shopItemRows.add(new ShopItemRow(
@@ -73,8 +65,6 @@ class Shop extends Obj {
         shopCloseButton.center = false;
     }
 
-
-
     void draw() {
         resetMatrix();
         pushStyle();
@@ -99,7 +89,7 @@ class Shop extends Obj {
     // TODO implement this
     void doubleStrike() {
          Player currentActivePlayer = activePlayer;
-         isDoubleStrikeActive = true;
+         // isDoubleStrikeActive = true;
          boolean playerHit = updatePlayerHealths();
 
          if (playerHit) {
@@ -108,6 +98,6 @@ class Shop extends Obj {
 
          camera.setXY(activePlayer.getX(), activePlayer.getY());
          gameState = GameState.GAME;
-         isDoubleStrikeActive = false;
+         // isDoubleStrikeActive = false;
      }
 }

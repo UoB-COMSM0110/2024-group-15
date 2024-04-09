@@ -9,19 +9,24 @@ public class Arrow extends Entity {
   float startX, startY;
 
   boolean startedMoving = false;
+  boolean spentArrow = false;
+
+  float angleRadians = 0;
+
+  float previousAngle = 0;
+  float rotationAmount = 0;
 
   Arrow(float x, float y) {
     super(x, y);
     sprite = imgs.get("arrow");
-    //bowSprite = imgs.get("bow");
     float scale = 1.5;
     setDimensions(sprite.width*scale, sprite.height*scale);
-    //setDimensions(bowSprite.width*1.05, bowSprite.height*1.05);
     setHitBox(1, 1);
   }
 
   Arrow(Arrow a) {
     this(a.x, a.y);
+    this.spentArrow = true;
     velocity.x = a.velocity.x;
     velocity.y = a.velocity.y;
   }
@@ -42,6 +47,7 @@ public class Arrow extends Entity {
             startY = y;
             startedMoving = true;
             cannotBeCollidedWith = true;
+            rotationAmount = 0;
             // showBow = true;
         }
         else if (cannotBeCollidedWith && abs(startX-x) > 30 && abs(startY-y) > 60) {    // if arrow has moved out of player hitbox, start collisions
@@ -55,7 +61,7 @@ public class Arrow extends Entity {
             if (planet.isCollidingWith(this)) {     // call overrided method in Planet
                 stopMovingAndFinishTurn();
                 
-                planet.increaseNumberOfArrowsHit();      //When the arrow hit the planet, increasing the number
+                planet.increaseNumberOfArrowsHit();      // When the arrow hit the planet, increasing the number
                 
                 return;
             }
@@ -71,28 +77,37 @@ public class Arrow extends Entity {
         camera.setXY(x, y);
     }
 
-  void draw() {
-    float angleRadians = (float)Math.atan2(velocity.x, -velocity.y);
+    void draw() {
+        angleRadians = (float)Math.atan2(velocity.x, -velocity.y);
 
-    pushMatrix();
+        if (!isMoving && !spentArrow) return;
 
-    translate(x, y);
-    rotate(radians(270));
-    rotate(angleRadians);
-    imageMode(CENTER);
-    image(sprite, 0, 0, objWidth, objHeight);
-    //if (showBow) {
-    //  image(bowSprite, 0, 0, objWidth, objHeight);
-    //}
-    //image(bowSprite, 0, 0, objWidth, objHeight);
+        pushMatrix();
 
-    popMatrix();
+        translate(x, y);
+        rotate(radians(270));
+        rotate(angleRadians);
+        imageMode(CENTER);
+        image(sprite, 0, 0, objWidth, objHeight);
 
-    float arrowHeadRadius = (objWidth/2)*0.8;
+        popMatrix();
 
-    normalizedX = x+arrowHeadRadius*cos(radians(270)+angleRadians);
-    normalizedY = y+arrowHeadRadius*sin(radians(270)+angleRadians);
-  }
+        float arrowHeadRadius = (objWidth/2)*0.8;
+
+        normalizedX = x+arrowHeadRadius*cos(radians(270)+angleRadians);
+        normalizedY = y+arrowHeadRadius*sin(radians(270)+angleRadians);
+
+        // if (!isMoving) return;
+        float degrees = degrees(angleRadians);
+        if (!cannotBeCollidedWith) {
+            rotationAmount += Math.abs(degrees-previousAngle);
+        }
+        previousAngle = degrees;
+    }
+
+    public float getAmountRotated() {
+        return rotationAmount;
+    }
 
   public float getX() {
     return normalizedX;
