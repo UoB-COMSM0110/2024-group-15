@@ -8,8 +8,9 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 
 ## Introduction
 
-Our game is a two-player game based on a flash game *Bowman*. 
+Our game is a two-player game based on a flash game *Bowman*.
 Normally, the game-play is that players drag the mouse to pull back the bow and shoot, then a camera will follow the arrow to check whether you have shot the target.
+
 We've transformed the game into a space-themed version by introducing a gravity engine to calculate gravity between planets as well as special functions like pathfinder to enhance the original game-play.
 [add more things]
 
@@ -18,9 +19,10 @@ We've transformed the game into a space-themed version by introducing a gravity 
 ### Ideation Process
 
 We have two game ideas at the beginning proposed by two of our team members, which are the two-player bowman game with camera movement and gravity physical engine, and a RPG-like two-player game with storyline, interactions with the envrionment and boss fights.
-We use paper prototype to mock the outline of these two game's workflow. Soon after the mock and dicussions, we collectively decided to pursue the *Bowman* game due to its more specified twists and requirements, and its solid gameplay foundation.
 
-[video attached]
+We used paper prototype to mock the outline of these two game's workflow in class to grasp concepts of each. Soon after the mock and dicussions, we collectively decided to pursue the *Bowman* game due to its more specified enhancement and requirements, and its solid gameplay foundation.
+
+[![](./assets/thumbnails/Game2_pic.png)](https://drive.google.com/file/d/1X9CZkVwlnULj-P8qy6iIerfCmLlt9J-E/view?usp=sharing )
 
 ### User Storeies
 
@@ -88,47 +90,81 @@ We use paper prototype to mock the outline of these two game's workflow. Soon af
 
 ### Early Stage Design
 
-We sat down and brainstormed about additional content ideas beyond the original concept, as well as any technical requirements that might arise during the early stages of game development. Then we discussed about what to implement and used Kanban Board to assign tasks and track the progress of our work and timely updated them into our chat group.
+We sat down and brainstormed about additional content ideas beyond the original concept, as well as any potential problems that might arise during the  game development progress.
+
+Then we discussed about what to implement and used Kanban Board to assign tasks and track the progress of our work and timely updated information into our chat group.
 
 #### Core Gameplay
 
 The core game flow will be, the game starts and players can choose from whether this is "VS Computer" mode or "VS Human" mode, and self-defined the rounds and HP that each player should have.
+
 Then the players click and drag mouse to control the bow's tension and direction, and then release the mouse to fire. The camera will then focus on the arrow until it shot on any bounding shape.
-Additionally, we want to introduced a points collection system to raise a shop system where players can buy some one-time skills. the gravity works was also being discussed, there are proposals like whether to do a half and half screen where one side has negative gravity or use the escape velocity formula for planets, we choosed the latter eventually.
+
+Additionally, we want to introduced a points collection system to raise a shop system where players can buy some one-time skills. How the gravity works was also being discussed. There are proposals like whether to do a half and half screen where one side has negative gravity or use the escape velocity formula for planets, we choosed the latter eventually.
 
 #### Obstacles
 
 The first obstabcle that might occur is the gravity calculation methods that involes physics. So we should take a look into the escape velocity formula for planets, luckily we only have two planets and one object to model.
+
 Another barrier is the camera zoom in or zoom out function. The core design is that the other player's position is invisible in this player's turn. So the camera should keep this player at the center of the screen and move follows the arrow after firing.
 [AI player???]
 
 #### TODO list
 
 After putting all the designs and concerns on the table, we wrote a TODO list to guide the step-by-step development of the whole game.
+
 The highest priority tasks include implementing the physics engine to calculate gravity and 2D bounding collision detection, and the camera movements as well. Then we will add the shop system, the HP detection, and any other things.
 
 ## Design
+
 ### Class diagram
 
 We use the class diagram to help us understand the structures of the system at the very first stage. During the later development process some methods and class might be added or deleted but the main idea remains to our final stage.
-We defined the *App* class as the main class that initialization and constantly called during the whole game progress. Also, we used the *Obj* class as the parent class of *Arrow*, *Pathfinder*, *Planet*, *Player* and so on as they share the same postition at some point.
+
+We defined the *App* class as the main class that initialization and constantly being called and updated during the whole game progress. Also, we used the *Obj* class as the parent class of *Arrow*, *Pathfinder*, *Planet*, *Player* and so on as they share the same postition at some point.
 
  ![](assets/game-idea-imgs/file.png)
 
 ### Modelling behaviour: Communication diagrams
+
 To more clarify the relationships between the classes of the system, we use the communication diagram to help us specify the interactions between classes. This diagram has gived us more detailed insights how classes communicate.
-Normally, after the mouse drag and release, the *Amier* will update the tension and direction to *Arrow*, then the *Camera* will move to follow wherever the arrow goes. Also, the positoin and movement of the arrow will update the *Planet* to calculate the gravity of the arrow to define its movement in next frame. Ultimately all the information will be updated in the *App*, the main class to detect any further movements.
+
+Normally, after the mouse drag and release, the *Amier* will update the tension and direction to *Arrow*, then the *Camera* will move to follow wherever the arrow goes. Also, the positoin and movement of the arrow will update the *Planet* to calculate the gravity of the arrow to define its movement in next frame. Ultimately all the information will be updated in the *App*, the main class to puruse any further movements.
 
 ![](assets/game-idea-imgs/CD.png)
 
 ### Design Conclusion
 
-Although the final product may differ from our design, we still find it really useful to introduce these two diagrams to help us understand the whole system. Furthermore, this design prototype help us to focus on one function to implement, one class to code at a time, greatly simplify the progress of coding and debugging. 
+Although the final product might be slightly different from our original design, we still find it really useful to introduce these two diagrams to help us understand the relationships and interactions of the entire system.
+
+Furthermore, these design prototypes help us to focus on one function to implement, one class to code at a time, greatly simplify the progress of coding and debugging in later development.
 
 ## Implementation
 
+[three areas of challenging]
 
+1. Camera movement:
+  In bowman and raft wars, the camera moves with the projectile so the shooting player cannot see exactly where they need to hit.
+  So the camera should act like:
+     1. Display the whole scene when entering the game to let the players know the approximate position of each other.
+     2. Then place the player at the center of the screen in this person's turn. After firing, the camera should stick to the arrow until it hit any bounding shape.
+     3. Set the other player at the center of the screen as it is this player's turn.
+   
+  The first movement is easy to implement, just set the camera at the center of the two randomly-generated planets' positions. Then the camera will apply to the player's center position.
 
+  For the second step we used the status to track if the arrow is fired or not, if it is, the camera will update with the position of the arrow until the collision detection is true.
+
+  We also implemented zoom functions to dynamically adjust the camera's scale based on the game status. Also, we use *Linear Interpolation* to make the camera's movements smoother.
+
+  After that, the camera will moved to the stored postion of the other player as this player's turn is done.
+[214 words]
+[demonstration video]
+
+2. Gravity engine:
+  Gravity mechanics would need to be implemented for this idea (if it is set in space) and the balance between realism and difficulty would need to be found.
+
+  Also, we need to set hit boxes to detect collision and change further status.
+  
 
 ## Evaluation
 
