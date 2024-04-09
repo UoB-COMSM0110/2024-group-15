@@ -7,11 +7,6 @@ class Planet extends Entity {
     int numberOfArrowsOnMe;      // used to count the number of arrows (cheating mode)
 
     Planet(int x, int y, int mass, PImage sprite) {
-// =======
-
-
-//     Planet(int x, int y, int mass) {
-// >>>>>>> main
         super(x, y);
         this.mass = mass;
         this.r = mass/10F;
@@ -19,11 +14,6 @@ class Planet extends Entity {
         setDimensions(r*2, r*2);
         setHitBox(r*2, r*2);
         this.sprite=sprite;
-
-/*
-        imageMode(CENTER);
-        image(sprite, 0, 0, realWidth, realHeight);
-*/
 
         numberOfArrowsOnMe = 0;
     }
@@ -44,20 +34,13 @@ class Planet extends Entity {
         return numberOfArrowsOnMe;
     }
 
-
-
-
-// >>>>>>> main
-
-    void move() { /* planets don't move at the moment */ }
-
+    void move() { /* planets don't move */ }
 
     void draw() {
         imageMode(CENTER);
         image(this.sprite, x, y, r * 2, r * 2);
     }
    
-
     public float getRadius() {
         return r;
     }
@@ -75,7 +58,7 @@ class Planet extends Entity {
         return false;
     }
 
-    // Calculate gravitational force exerted by the planet on an object (maths which no one understands)
+    // maths which no one understands
     PVector calculateGravity(Obj obj) {
         float G = 0.1F;
         PVector direction = new PVector(x-obj.x, y-obj.y);
@@ -92,5 +75,4 @@ class Planet extends Entity {
 
         return direction;
     }
-
 }

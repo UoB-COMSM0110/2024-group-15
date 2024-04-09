@@ -4,9 +4,7 @@ class GameOverPage {
     Button exitButton;
     
     GameOverPage() {
-        
         winTitle = new GUIComponent("", width / 2 - 50, height / 2 - 50, 30);
-
         exitButton = new Button("Exit", width / 2, height / 2 + 100, 30, () -> {
             // reset game state
             gameState = GameState.STARTPAGE;
