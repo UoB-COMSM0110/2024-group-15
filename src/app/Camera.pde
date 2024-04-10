@@ -14,6 +14,7 @@ public class Camera {
     private boolean hasNotReachedTarget = false;
     int waitFrames;
     float interpolationAmount = 0.02;   // speed with which the camera moves at
+    Runnable animationFinishCallback = null;
 
     Camera() {
         this.x = 0;
@@ -29,11 +30,15 @@ public class Camera {
             if (waitFrames > 0) {
                 waitFrames--;
             }
-            else if (x != targetX || y != targetY) {
+            else if (!cameraEffectivelyAtTarget(1)) {       // these are floating points, so cant directly compare.
                 setXY(lerp(x, targetX, interpolationAmount), lerp(y, targetY, interpolationAmount));
             }
             else {
                 hasNotReachedTarget = false;
+            }
+            if (cameraEffectivelyAtTarget(20) && animationFinishCallback != null) {
+                    animationFinishCallback.run();
+                    animationFinishCallback = null;
             }
             if (cameraIsMoving && cameraEffectivelyAtTarget()) {
                 cameraIsMoving = false;
@@ -61,34 +66,22 @@ public class Camera {
 
     public void animateCenterOnObject(Obj obj, int waitFrames)
     {
-        targetX = obj.getX();
-        targetY = obj.getY();
+        animateCenterOnXY(obj.getX(), obj.getY(), waitFrames);
+    }
+
+    public void animateCenterOnXY(float x, float y, int waitFrames) {
+        targetX = x;
+        targetY = y;
 
         cameraIsMoving = true;
         hasNotReachedTarget = true;
         this.waitFrames = waitFrames;
     }
 
-    // public void keyMove() {
-    //     if (keys.get(LEFT)) {
-    //         setXY(x-2, y);
-    //     }
-    //     else if (keys.get(RIGHT)) {
-    //         setXY(x+2, y);
-    //     }
-    //     else if (keys.get(UP)) {
-    //         setXY(x, y-2);
-    //     }
-    //     else if (keys.get(DOWN)) {
-    //         setXY(x, y+2);
-    //     }
-    //     else if (keys.get(W)) {
-    //         setZoom(zoom+0.01F);
-    //     }
-    //     else if (keys.get(S)) {
-    //         setZoom(zoom-0.01F);
-    //     }
-    // }
+    public void animateCenterOnObject(Obj obj, int waitFrames, Runnable callback) {
+        animateCenterOnObject(obj, waitFrames);
+        animationFinishCallback = callback;
+    }
 
     public void pushZoom() {
         zoomStack.push(zoom);
@@ -111,6 +104,18 @@ public class Camera {
     }
 
     private boolean cameraEffectivelyAtTarget() {
-        return abs(x-targetX) < ARRIVAL_THRESHOLD && abs(y-targetY) < ARRIVAL_THRESHOLD;
+        return cameraEffectivelyAtTarget(ARRIVAL_THRESHOLD);
+    }
+
+    private boolean cameraEffectivelyAtTarget(int threshold) {
+        return abs(x-targetX) < threshold && abs(y-targetY) < threshold;
+    }
+
+    public float getRealMouseX() {
+        return mouseX+x-width/2;
+    }
+
+    public float getRealMouseY() {
+        return mouseY+y-height/2;
     }
 }

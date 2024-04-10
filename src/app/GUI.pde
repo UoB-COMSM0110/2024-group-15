@@ -1,14 +1,22 @@
 class GUIComponent extends Obj {
     protected String content;
     protected int fontSize;
-    PFont f;
+    PFont font;
     boolean center = true;
 
     GUIComponent(String content, float x, float y, int fontSize) {
         super(x, y);
         this.content = content;
         this.fontSize = fontSize;
-        this.f = createFont(ASSETS_PATH+"OpenSans-Regular.ttf", fontSize);
+        this.font = createFont(ASSETS_PATH+"OpenSans-Regular.ttf", fontSize);
+        this.updateDimensions();
+    }
+
+    GUIComponent(String content, float x, float y, PFont font) {
+        super(x, y);
+        this.content = content;
+        this.fontSize = font.getSize();
+        this.font = font;
         this.updateDimensions();
     }
 
@@ -26,16 +34,21 @@ class GUIComponent extends Obj {
 
     private void updateDimensions() {
         pushStyle();
-        textFont(f);
+        textFont(font);
         textSize(fontSize);
         setDimensions(textWidth(content), fontSize);
         popStyle();
     }
 
+    public void setFont(PFont font) {
+        this.font = font;
+        updateDimensions();
+    }
+
     public void draw() {
         stroke(0);
         fill(0, 255, 255);
-        textFont(f);
+        textFont(font);
         if (center) {
             text(content, x-objWidth/2, y);
         }
@@ -45,48 +58,40 @@ class GUIComponent extends Obj {
     }
 }
 
-enum ButtonState {
-    NONE,
-    HOVERING,
-    DOWN,
-    CLICK,
-}
-
 class Button extends GUIComponent {
+
     final int YPAD = 10;
     Runnable callback;
-    ButtonState state = ButtonState.NONE;
+    boolean realPositioning = false;
 
-    Button(String name, int x, int y, int fontSize, Runnable callback){
+    boolean active = false;
+    boolean mouseDownOnButton = false;
+
+    Button(String name, float x, float y, int fontSize, Runnable callback){
         super(name, x, y, fontSize);
         this.callback = callback;
     }
 
-    private void updateState() {
-        if (!mouseHovering()) {
-            this.state = ButtonState.NONE;
-        }
-        else if (mousePressed) {
-            this.state = ButtonState.DOWN;
-        }
-        else if (!mousePressed && this.state == ButtonState.DOWN) {
+    Button(String name, float x, float y, PFont font, Runnable callback) {
+        super(name, x, y, font);
+        this.callback = callback;
+    }
+
+    public void handleClick() {
+        if (!mousePressed && mouseHovering()) {
             callback.run();
-            this.state = ButtonState.NONE;
-        }
-        else {
-            this.state = ButtonState.HOVERING;
         }
     }
 
     void draw() {
-        updateState();
+        if (!active) return;
 
         stroke(255);
-        if (this.state == ButtonState.NONE) noFill();
+        if (!mouseHovering()) noFill();
         else fill(100, 100, 100);
 
         if (center) {
-           rect(x-objWidth/2, y-objHeight, objWidth, objHeight+YPAD);
+           rect(x-objWidth/2-4, y-objHeight, objWidth+7, objHeight+YPAD);
         }
         else {
             rect(x, y-objHeight, objWidth, objHeight+YPAD);
@@ -94,12 +99,35 @@ class Button extends GUIComponent {
         super.draw();
     }
 
-    private boolean mouseHovering() {
+    boolean mouseHovering() {
+        float mX = realPositioning ? camera.getRealMouseX() : mouseX;
+        float mY = realPositioning ? camera.getRealMouseY() : mouseY;
+
         if (center) {
-            return (mouseX > x-objWidth/2 && mouseX < x+objWidth/2 && mouseY > y-objHeight && mouseY < y+YPAD);
+            return (mX > x-objWidth/2 && mX < x+objWidth/2 && mY > y-objHeight && mY < y+YPAD);
         }
         else {
-            return (mouseX > x && mouseX < x+objWidth && mouseY > y-objHeight && mouseY < y+YPAD);
+            return (mX > x && mX < x+objWidth && mY > y-objHeight && mY < y+YPAD);
         }
     }
+
+    public void realPositioning(boolean val) {
+        this.realPositioning = val;
+    }
+
+    public void show() {
+        active = true;
+        activeButtons.add(this);
+    }
+
+    public void show(boolean active) {
+        if (active) show();
+        else hide();
+    }
+
+    public void hide() {
+        active = false;
+        activeButtons.remove(this);
+    }
+
 }

@@ -17,7 +17,7 @@ enum StartMenuState {
 *   the start menu class (holds buttons, text etc.)
 */
 class StartMenu {
-    StartMenuState state = StartMenuState.VS;
+    StartMenuState state;
     GUIComponent gameTitle;
     Button vsHuman;
     Button vsComputer;
@@ -29,26 +29,30 @@ class StartMenu {
     StartMenu() {
         gameTitle = new GUIComponent("BOWMAN", 70*2, 70);
 
-        vsHuman = new Button("vs Human", width/2, height/2+100, 30, () -> {
+        vsHuman = new Button("vs Human", width/2, height/2+100, SFPro, () -> {
             gameSettings.put("player_mode", Settings.VSHUMAN);
-            state = StartMenuState.DIFFICULTY; 
+            setState(StartMenuState.DIFFICULTY);
         });
 
-        vsComputer = new Button("vs Computer", width/2, height/2+200, 30, () -> {
+        vsComputer = new Button("vs Computer", width/2, height/2+200, SFPro, () -> {
             gameSettings.put("player_mode", Settings.VSCOMPUTER);
-            state = StartMenuState.DIFFICULTY;
+            setState(StartMenuState.DIFFICULTY);
         });
 
         easyMode = new Button("Easy", width/2, height/2+100, 30, () -> {
             gameSettings.put("difficulty", Settings.EASY);
+            close();
             gameInit();
 
         });
 
         hardMode = new Button("Hard", width/2, height/2+200, 30, () -> {
             gameSettings.put("difficulty", Settings.HARD);
+            close();
             gameInit();
         });
+
+        setState(StartMenuState.VS);
     }
     
 
@@ -58,16 +62,11 @@ class StartMenu {
         fill(255, 255, 255);
         gameTitle.draw();
 
-        switch(state) {
-            case VS:
-                vsHuman.draw();
-                vsComputer.draw();
-                break;
-            case DIFFICULTY:
-                easyMode.draw();
-                hardMode.draw();
-                break;
-        }
+        vsHuman.draw();
+        vsComputer.draw();
+        easyMode.draw();
+        hardMode.draw();
+
         
         // DEBUG draw cross for centering
         // stroke(255);
@@ -75,5 +74,20 @@ class StartMenu {
         // line(0, height/2, width, height/2);
 
         popStyle();
+    }
+
+    void setState(StartMenuState s) {
+        boolean active = s == StartMenuState.VS;
+        vsHuman.show(active);
+        vsComputer.show(active);
+        easyMode.show(!active);
+        hardMode.show(!active);
+    }
+
+    void close() {
+        vsHuman.show(false);
+        vsComputer.show(false);
+        easyMode.show(false);
+        hardMode.show(false);
     }
 }

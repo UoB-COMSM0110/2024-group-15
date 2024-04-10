@@ -4,8 +4,8 @@ class PointsSplash {
     GUIComponent pointsText, multiplierText;
 
     PointsSplash() {
-        pointsText = new GUIComponent("", width/2+30, height/2+30, 30);
-        multiplierText = new GUIComponent("", width/2+60, height/2+60, 30);
+        pointsText = new GUIComponent("", width/2+30, height/2+30, SFPro);
+        multiplierText = new GUIComponent("", width/2+60, height/2+60, SFPro);
         this.pointsText.center = false;
         this.multiplierText.center = false;
     }

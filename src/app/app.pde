@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.Collections;
 import java.util.List;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 enum GameState {
   STARTPAGE,
   GAME,
-  POPMENU, 
   SHOP,
   GAMEOVER,
 }
@@ -29,47 +30,42 @@ enum PlayerNum {
 
 static final int screenWidth = 1024;
 static final int screenHeight = 767;
-
 static final String ASSETS_PATH = "../../game-assets/".replace("/", File.separator);
 static final int SPACE=32, R=82, W=87, S=83;
+
+static final private int planetRadius = 1000;
+private int minDistanceBetweenPlanets;
+private int maxXDistanceBetweenPlanets;
+private int maxYDistanceBetweenPlanets;
+static final int maxHealth = 3;
 
 GameState gameState = GameState.STARTPAGE;
 HashMap<String, Settings> gameSettings = new HashMap<>();
 HashMap<String, PImage> imgs = new HashMap<>();
 HashMap<Integer, Boolean> keys = new HashMap<>();
+static final Set<Button> activeButtons = new HashSet<>();
+
+PGraphics pg0;
+PShape HEART_SHAPE;
+PFont SFPro; // TODO put the other ones here as well
 
 Camera camera;
 StartMenu startMenu;
+Shop shop;
 Tutorial tutorial;
-ArrayList<Planet> planets = new ArrayList<>();
-ArrayList<Arrow> spentArrows = new ArrayList<>();
+PointsSplash pointsSplash;
+ArrayList<Planet> planets;
+ArrayList<Arrow> spentArrows;
 Player[] players = new Player[2];
 Player activePlayer;
+Player winningPlayer;
 GameOverPage gameOverPage;
+PlayerMover playerMover;
+GameMenu gameMenu;
+OptionsMenu optionsMenu;
 
-private int minDistanceBetweenPlanets;
-private int maxXDistanceBetweenPlanets;
-private int maxYDistanceBetweenPlanets;
+int shopX, shopY, shopWidth, shopHeight;    // TODO idk about this
 
-PImage spaceBG, spaceTransparentBG;
-
-int shopX, shopY, shopWidth, shopHeight;
-Shop shop;
-
-PointsSplash pointsSplash;
-
-
-private int planetRadius = 1000;
-
-int maxHealth = 3;
-
-
-PShape HEART_SHAPE;
-
-// The exact number is not final
-//int arrowCount = 10;
-// For debugging purpose
-int arrowCount = 2;
 
 public void settings() {
     size(screenWidth, screenHeight);    // P2D seems to be too slow
@@ -103,8 +99,7 @@ public void loadAssets() {
     loadIntoImages("manLEFT");
     loadIntoImages("manRIGHT");
 
-    spaceBG = imgs.get("space-tiled");
-    spaceTransparentBG = imgs.get("transparent-stars");
+    SFPro = createFont(ASSETS_PATH+"Pixellari.ttf", 24);
 }
 
 
@@ -112,6 +107,11 @@ public void setup()
 {
     frameRate(60);
     loadAssets();
+
+    pg0 = createGraphics(
+        width,
+        height
+    );
 
     keys.put(UP, false);
     keys.put(DOWN, false);
@@ -138,10 +138,10 @@ public void setup()
     camera = new Camera();
     startMenu = new StartMenu();
 
-    shopWidth = 400;
-    shopHeight = 80;
-    shopX = width/2-shopWidth;
-    shopY = height/2-shopHeight;
+    shopWidth = 600;
+    shopHeight = 400;
+    shopX = 200;
+    shopY = 250;
     shop = new Shop();
 }
 
@@ -156,6 +156,9 @@ public void gameInit() {
         maxXDistanceBetweenPlanets = 900;
         maxYDistanceBetweenPlanets = 500;
     }
+    resetMatrix();
+    planets = new ArrayList<>();
+    spentArrows = new ArrayList<>();
 
     planets.add(new Planet(0, 0, planetRadius, imgs.get("planet1")));
     planets.add(new Planet(0, 0, planetRadius, imgs.get("planet2")));
@@ -167,36 +170,65 @@ public void gameInit() {
     Collections.sort(planets, (p1, p2) -> Float.compare(p1.getX(), p2.getX()));
 
     players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
-    players[1] = new Player(planets.get(1), 250, PlayerNum.TWO);
+    players[1] = new Player(planets.get(1), 270, PlayerNum.TWO);
     activePlayer = players[0];
 
     gameState = GameState.GAME;
     gameOverPage = new GameOverPage();
     tutorial = new Tutorial();
     pointsSplash = new PointsSplash();
+
+    playerMover = new PlayerMover();
+    gameMenu = new GameMenu();
+    gameMenu.open();
+
+    optionsMenu = new OptionsMenu();
+
+    players[0].points = 10000;
+    players[1].points = 10000;
+
 }
 
 float backgroundImageX, backgroundImageY;
 float stars1X, stars1Y;
 float stars2X, stars2Y;
-int prevCamX, prevCamY;
-public void drawBackground() {
-    int camX = (int)camera.getX();
-    int camY = (int)camera.getY();
-    if (prevCamX != camX || prevCamY != camY) {
-        backgroundImageX = width/2 - (camera.getX()*0.3);
-        backgroundImageY = height/2 - (camera.getY()*0.3);
-        stars1X = backgroundImageX*1.1;
-        stars1Y = backgroundImageY*1.1;
-        stars2X = backgroundImageX*1.2;
-        stars2Y = backgroundImageY*1.2;
-        prevCamX = camX;
-        prevCamY = camY;
-    }
+float prevCamX, prevCamY;
 
-    image(spaceBG, backgroundImageX, backgroundImageY);
-    image(spaceTransparentBG, stars1X, stars1Y, width*2, height*2);
-    image(spaceTransparentBG, stars2X, stars2Y, width*3, height*3);
+boolean haveCachedRecently = false;
+boolean cacheNextDraw = true;
+public void drawBackground() {
+    float camX = camera.getX();
+    float camY = camera.getY();
+    if (cacheNextDraw) {
+        pg0.beginDraw();
+        pg0.imageMode(CENTER);
+        pg0.image(imgs.get("space-tiled"), backgroundImageX, backgroundImageY);
+        pg0.image(imgs.get("transparent-stars"), stars1X, stars1Y, width*2, height*2);
+        pg0.image(imgs.get("transparent-stars"), stars2X, stars2Y, width*3, height*3);
+        pg0.endDraw();
+        haveCachedRecently = true;
+        cacheNextDraw = false;
+    }
+    if (prevCamX == camX && prevCamY == camY) {
+        if (haveCachedRecently) {
+            image(pg0, width/2, height/2);
+            return;
+        }
+        cacheNextDraw = true;
+    }
+    haveCachedRecently = false;
+    backgroundImageX = width/2 - (camera.getX()*0.3);
+    backgroundImageY = height/2 - (camera.getY()*0.3);
+    stars1X = backgroundImageX*1.1;
+    stars1Y = backgroundImageY*1.1;
+    stars2X = backgroundImageX*1.2;
+    stars2Y = backgroundImageY*1.2;
+    image(imgs.get("space-tiled"), backgroundImageX, backgroundImageY);
+    image(imgs.get("transparent-stars"), stars1X, stars1Y, width*2, height*2);
+    image(imgs.get("transparent-stars"), stars2X, stars2Y, width*3, height*3);
+    prevCamX = camX;
+    prevCamY = camY;
+
 }
 
 
@@ -206,53 +238,23 @@ public void draw()
     imageMode(CENTER);
     drawBackground();
 
-    switch (gameState) {
-        case STARTPAGE:
-            startMenu.draw();
-            return;
-    }
-
-    if (keys.get(R)) {
-        camera.setZoom(camera.zoom + 0.1);
-// =======
-//         case GAME:
-
-//             //Shop
-//             for (Planet p : planets) {
-//                 if (p.getNumberOfArrowsOnMe() >= arrowCount) {
-//                     for (Player player : players) {
-//                         if (player.planet.equals(p)
-//                             && !player.equals(activePlayer)
-//                             // Assuming each player can use this mode once for the time being
-//                             && !player.hasUsedShop()) {
-//                             gameState = GameState.SHOP;
-//                             player.markAsUsedShop();
-//                             break;
-//                         }
-//                     }
-//                 }
-//                 if (gameState == GameState.SHOP) {
-//                     break;
-//                 }
-//             }
-//             break;
-//         case EASYGAMESET:
-//             //camera.setZoom(0.65F);//zoom out
-//             gameState = GameState.EASYGAME;
-//             return;
-//         case EASYGAME:
-//             isPathFinderActive = true; //easy game with a default pathFinder
-//             break;
-//         case GAMEOVER:
-//             gameOverPage.draw();
-//             return;
-//         case SHOP:
-//             shopPage.draw();
-//             return;
-// >>>>>>> main
+    if (gameState == GameState.STARTPAGE) {
+        startMenu.draw();
+        return;
     }
 
     camera.apply();
+
+     if (gameState == GameState.GAMEOVER && camera.cameraEffectivelyAtTarget(100)) {
+        pushStyle();
+        textFont(SFPro);
+        String content = "LOUIS WINS";
+
+        if (!optionsMenu.isOpen) optionsMenu.open(winningPlayer);
+
+        text(content, winningPlayer.x-(textWidth(content)/2), winningPlayer.y-220);
+        popStyle();
+    }
 
     for (Arrow a : spentArrows) {
         a.draw();
@@ -276,23 +278,53 @@ public void draw()
 
     tutorial.draw();        //The help message during gameplay
 
+    playerMover.draw();
+
+    gameMenu.draw();
+    optionsMenu.draw();
+
     // debugging code which removes health when pressing R
     // if (frameCount % (60*3) == 0) {
-      // activePlayer.removeHeart();
+    //   activePlayer.removeHeart();
     // }
 }
 
 // Key press handling
-public void keyPressed()
-{
+public void keyPressed() {
     if (keys.containsKey(keyCode)) keys.put(keyCode, true);
 
 }
-public void keyReleased()
-{
+public void keyReleased() {
     if (keys.containsKey(keyCode)) keys.put(keyCode, false);
 }
 
+
+void mousePressed() {
+    if (handleButtonClick()) return;
+    if (gameState != GameState.GAME) return;
+    if (playerMover.handleClick()) return;
+    activePlayer.getAimer().handleMouseDown();
+}
+void mouseReleased() {
+    if (handleButtonClick()) return;
+    if (gameState != GameState.GAME) return;
+    activePlayer.getAimer().handleMouseUp();
+}
+
+void mouseDragged() {
+    if (gameState != GameState.GAME) return;
+    activePlayer.getAimer().handleMouseMove();
+}
+
+boolean handleButtonClick() {
+    for (Button b: activeButtons) {
+        if (b.mouseHovering()) {
+            b.handleClick();
+            return true;
+        }
+    }
+    return false;
+}
 
 private Player getOtherPlayer(Player p) {
     switch (p.getPlayerNum()) {
@@ -315,28 +347,15 @@ public Player checkForPlayerDeaths() {
     return null;
 }
 
-
-// public boolean updatePlayerHealths() {
-//     for (Player p: players) {
-//         if (activePlayer.getArrow().isCollidingWith(p)) {
-//             p.removeHeart();
-//             return true;
-//         }
-//     }
-//     return false;
-// }
-
 public boolean updatePlayerHealths() {
     boolean playerHit = false;
 
     for (Player p : players) {
-        if (activePlayer.getArrow().isCollidingWith(p)) {
+        if (p.isCollidingWith(activePlayer.getArrow())) {
             p.removeHeart();
-            // TODO!!!
-            // if (isDoubleStrikeActive) {
-            //     p.removeHeart();
-            //     isDoubleStrikeActive = false;
-            // }
+            if (activePlayer.items.contains(PlayerItem.DOUBLESTRIKE)) {
+                p.removeHeart();
+            }
             playerHit = true;
 
             // if the player hits themself, they lose the amount they gained
@@ -365,22 +384,16 @@ public void finishPlayerTurn()
     activePlayer.roundPoints = 0;
 
     activePlayer = getOtherPlayer(activePlayer);
-    camera.animateCenterOnObject(activePlayer, frameWait);
+    camera.animateCenterOnObject(activePlayer, frameWait, () -> gameMenu.open());
 }
 
 
 public void setWinnerAndGameOver(Player p)
 {
-    /** TODO
-     *      New game state
-     *      Show winner screen (PLAYER X WINS!)
-     *      Play again button? exit button? etc.
-    */
     gameState = GameState.GAMEOVER;
     gameOverPage.setWinner(p.getPlayerNum() == PlayerNum.ONE ? "1" : "2");
-
-    camera.animateCenterOnObject(p, 60);
-    println("PLAYER" + (p.getPlayerNum() == PlayerNum.ONE ? "1 " : "2 ") +"WINS!");
+    winningPlayer = p;
+    camera.animateCenterOnXY(p.getX(), p.getY()-90, 60);
 }
 
 
@@ -410,3 +423,4 @@ public void randomisePlanetLocations() {
         }
     }
 }
+
