@@ -14,6 +14,10 @@ public class Arrow extends Entity {
   float previousAngle = 0;
   float rotationAmount = 0;
 
+  boolean speedIsChecked;
+  int speedAboveThresholdCount;
+  int startFrameCount;
+
   Arrow(float x, float y) {
     super(x, y);
     sprite = imgs.get("arrow");
@@ -29,11 +33,6 @@ public class Arrow extends Entity {
     velocity.y = a.velocity.y;
   }
 
-  void stopMovingAndFinishTurn() {
-    isMoving = false;
-    finishPlayerTurn();
-  }
-
     void move() {
         if (!isMoving) {
             startedMoving = false;
@@ -45,6 +44,9 @@ public class Arrow extends Entity {
             startedMoving = true;
             cannotBeCollidedWith = true;
             rotationAmount = 0;
+            speedAboveThresholdCount = 0;
+            startFrameCount = 0;
+            speedIsChecked = false;
         }
         else if (cannotBeCollidedWith && abs(startX-x) > 30 && abs(startY-y) > 60) {    // if arrow has moved out of player hitbox, start collisions
             cannotBeCollidedWith = false;
@@ -62,24 +64,40 @@ public class Arrow extends Entity {
         previousAngle = degrees;
 
 
+        // speed threshold
+        if (!speedIsChecked) {
+            startFrameCount += 1;
+            if (startFrameCount > 240) {
+                finishInvalidPlayerTurn();
+                return;
+            }
+            float speed = sqrt((velocity.x*velocity.x)+(velocity.y*velocity.y));
+            if (speed > 4) {
+                speedAboveThresholdCount += 1;
+                if (speedAboveThresholdCount > 20) {
+                    speedIsChecked = true;
+                }
+            }
+        }
+
+
+
+        // collision detection
+
         if (!cannotBeCollidedWith) {
             for (Player p: players) {
                 if (p.isCollidingWith(this)) {      // call overrided method in Arrow (this)
-                    stopMovingAndFinishTurn();
+                    finishPlayerTurn();
                     return;
                 }
             }
         }
 
 
-        // collision detection
+
         for (Planet planet : planets) {
             if (planet.isCollidingWith(this)) {     // call overrided method in Planet
-
-                stopMovingAndFinishTurn();
-                
-                // planet.increaseNumberOfArrowsHit();      // When the arrow hit the planet, increasing the number
-                
+                finishPlayerTurn();
                 return;
             }
         }

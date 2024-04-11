@@ -40,7 +40,7 @@ class OptionsMenu extends Obj {
 
         // rect(x-20, y-40, shopWidth+20, shopHeight);
 
-        playAgainButton.draw();
+        if (!tutorialActive) playAgainButton.draw();
         mainMenuButton.draw();
         exitButton.draw();
 

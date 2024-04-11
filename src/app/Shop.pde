@@ -89,6 +89,8 @@ class Shop extends Obj {
         }
         shopCloseButton.show(val);
         gameState = val ? GameState.SHOP : GameState.GAME;
+
+        if (tutorialActive) tutorial.nextMessage();
     }
 
     private void addShopItems() {

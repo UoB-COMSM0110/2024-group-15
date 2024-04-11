@@ -4,6 +4,7 @@ class PlayerMover {
     Player player;
     Planet planet;
     boolean isMoving;
+    boolean selecting;
 
     float targetAngle;
     boolean animationStarted = false;
@@ -15,23 +16,30 @@ class PlayerMover {
         isMoving = true;
         this.player = p;
         this.planet = p.planet;
+        selecting = true;
     }
 
     void draw() {
         if (!isMoving) return;
         if (animationStarted) {
             player.movePlayerOnPlanet(lerp(player.planetAngle, targetAngle, 0.04));
-            println(player.planetAngle);
+            camera.animateCenterOnObject(player, 0);
+            camera.cameraIsMoving = false;
             if (Math.abs(player.planetAngle-targetAngle) < 1) {
                 animationStarted = false;
                 isMoving = false;
+                if (tutorialActive) {
+                    tutorial.nextMessage();
+                    gameMenu.open();
+                    gameMenu.playerMoveButton.hide();
+                }
             }
             return;
         }
         pushStyle();
         noFill();
         stroke(255);
-        strokeWeight(6);
+        strokeWeight(4);
         ellipse(planet.x, planet.y, planet.r*2 + 20, planet.r*2 + 20);
 
         if (!mouseIsOverSelector()) {
@@ -55,11 +63,12 @@ class PlayerMover {
         float counterclockwiseDistance = 2 * PI - clockwiseDistance;
 
         targetAngle = degrees(angle);
-        updatePlayerHitBox(targetAngle);
+        // updatePlayerHitBox(targetAngle);
         if (clockwiseDistance > counterclockwiseDistance) {
             targetAngle += 360;
         }
         animationStarted = true;
+        selecting = false;
         return true;
     }
 
@@ -68,21 +77,5 @@ class PlayerMover {
         float realMouseY = camera.getRealMouseY();
         float distanceToCenter = sqrt(pow(realMouseX - planet.x, 2) + pow(realMouseY - planet.y, 2));
         return distanceToCenter <= planet.r+40;
-    }
-
-
-    private void updatePlayerHitBox(float angle) {
-        if (angle > -135 && angle <= -45) {
-            // player.hitboxWidth =
-            // player.hitBoxHeight =
-        } else if (angle > -45 && angle >= 45 ) {
-
-        } else if (angle > 45 && angle >= 135 ) {
-
-        } else if (angle > 135 && angle >=  123) {
-
-        } else if (angle > 135 || angle <= -135) {
-
-        }
     }
 }

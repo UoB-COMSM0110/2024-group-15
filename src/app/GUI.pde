@@ -1,8 +1,14 @@
 class GUIComponent extends Obj {
+    final int YPAD = 10;
+
     protected String content;
     protected int fontSize;
     PFont font;
     boolean center = true;
+    boolean useStroke = false;
+    boolean fillBackground = false;
+    boolean useBackground = false;
+    color textColor = color(255, 255, 255);
 
     GUIComponent(String content, float x, float y, int fontSize) {
         super(x, y);
@@ -36,7 +42,7 @@ class GUIComponent extends Obj {
         pushStyle();
         textFont(font);
         textSize(fontSize);
-        setDimensions(textWidth(content), fontSize);
+        setDimensions(textWidth(content), fontSize*(1+countNewLines()));
         popStyle();
     }
 
@@ -45,9 +51,28 @@ class GUIComponent extends Obj {
         updateDimensions();
     }
 
+    private int countNewLines() {
+        int count = 0;
+        for (int i=0; i<content.length(); i++) {
+            if (content.charAt(i) == '\n') count++;
+        }
+        return count;
+    }
+
     public void draw() {
-        stroke(0);
-        fill(0, 255, 255);
+        stroke(useStroke ? 255 : 0);
+        if (fillBackground) fill(255);
+
+        if (useBackground) {
+            if (center) {
+               rect(x-objWidth/2-4, y-fontSize, objWidth+7, objHeight+YPAD);
+            }
+            else {
+                rect(x, y-fontSize, objWidth, objHeight+YPAD);
+            }
+        }
+
+        fill(textColor);
         textFont(font);
         if (center) {
             text(content, x-objWidth/2, y);
@@ -59,8 +84,6 @@ class GUIComponent extends Obj {
 }
 
 class Button extends GUIComponent {
-
-    final int YPAD = 10;
     Runnable callback;
     boolean realPositioning = false;
 
@@ -70,11 +93,15 @@ class Button extends GUIComponent {
     Button(String name, float x, float y, int fontSize, Runnable callback){
         super(name, x, y, fontSize);
         this.callback = callback;
+        useStroke = true;
+        useBackground = true;
     }
 
     Button(String name, float x, float y, PFont font, Runnable callback) {
         super(name, x, y, font);
         this.callback = callback;
+        useStroke = true;
+        useBackground = true;
     }
 
     public void handleClick() {
@@ -90,12 +117,6 @@ class Button extends GUIComponent {
         if (!mouseHovering()) noFill();
         else fill(100, 100, 100);
 
-        if (center) {
-           rect(x-objWidth/2-4, y-objHeight, objWidth+7, objHeight+YPAD);
-        }
-        else {
-            rect(x, y-objHeight, objWidth, objHeight+YPAD);
-        }
         super.draw();
     }
 
@@ -130,4 +151,104 @@ class Button extends GUIComponent {
         activeButtons.remove(this);
     }
 
+}
+
+
+class TextBox extends Button {
+    boolean inFocus;
+    boolean active;
+    String typed = "";
+
+    TextBox(String content, float x, float y, PFont font) {
+        super(content, x, y, font, null);
+
+        pushStyle();
+        textFont(font);
+        textSize(fontSize);
+        setDimensions(textWidth(content)+124, fontSize);
+        popStyle();
+    }
+
+    public String get() {
+        return typed;
+    }
+
+
+    public void draw() {
+        if (!active) return;
+            // if (center) {
+            //    rect(x-objWidth/2-4, y-fontSize, objWidth+7, objHeight+YPAD);
+            // }
+            // else {
+            //     rect(x, y-fontSize, objWidth, objHeight+YPAD);
+            // }
+
+        fill(textColor);
+        textFont(font);
+        if (center) {
+            text(content, x-objWidth/2, y);
+        }
+        else {
+            text(content, x, y);
+        }
+
+        if (inFocus) fill(255, 255, 255);
+        else noFill();
+        stroke(255);
+        rect(x+textWidth(content)-objWidth/2+10, y-fontSize, 120, objHeight+YPAD);
+        fill(inFocus ? 0 : 255);
+        text(typed, x+textWidth(content)-objWidth/2+18, y);
+    }
+
+    public void handleClick() {
+        if (mouseHovering()) {
+            inFocus = true;
+            println("true");
+        }
+        else {
+            println("flase");
+            inFocus = false;
+        }
+    }
+
+    boolean inFocus() {
+        return inFocus && active;
+    }
+
+    public void handleKey() {
+        if (keyCode == 8) {
+            if (typed.length() == 0) return;
+            typed = typed.substring(0, typed.length()-1);
+        }
+        if (!Character.isLetter(key)) return;
+        typed += Character.toUpperCase(key);
+    }
+
+    public void show(boolean active) {
+        if (active) show();
+        else hide();
+    }
+
+    public void show() {
+        active = true;
+        activeButtons.add(this);
+    }
+
+    public void hide() {
+        active = false;
+        activeButtons.remove(this);
+    }
+
+
+    boolean mouseHovering() {
+        float mX = realPositioning ? camera.getRealMouseX() : mouseX;
+        float mY = realPositioning ? camera.getRealMouseY() : mouseY;
+
+        if (center) {
+            return (mX > x-objWidth/2 && mX < x+objWidth/2 && mY > y-objHeight && mY < y+YPAD);
+        }
+        else {
+            return (mX > x && mX < x+objWidth && mY > y-objHeight && mY < y+YPAD);
+        }
+    }
 }

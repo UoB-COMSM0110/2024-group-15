@@ -1,43 +1,88 @@
 class Tutorial {
-    TutorialComponent helpMessage;
+    List<GUIComponent> messages = new ArrayList<>();
+    int currentMessage = 0;
+    boolean hide = false;
     
     Tutorial() {
-        helpMessage = new TutorialComponent("Fire: (L)Mouse; Cancel: (R)Mouse", 10, height, 27);      //Help message: content, x, y, fontsize
+        messages.add(new GUIComponent("Click and drag to aim (press 'C' to cancel aim)", 100, 100, SFPro));
+        messages.add(new GUIComponent("Release to fire", 100, 100, SFPro));
+        messages.add(new GUIComponent("Click 'MOVE' to move around the planet", 100, 100, SFPro));
+        messages.add(new GUIComponent("Click on the planet at the desired location", 100, 100, SFPro));
+        messages.add(new GUIComponent("Click 'SHOP' to open the shop", 100, 100, SFPro));
+        messages.add(new GUIComponent("Click the cost to buy an item", 100, 100, SFPro));
+        messages.add(new GUIComponent("You gain points when you shoot.\n              Kill the enemy!", 100, 100, SFPro));
+        for (GUIComponent msg: messages) {
+            msg.fillBackground = true;
+            msg.useBackground = true;
+            msg.textColor = color(0);
+        }
+    }
+
+    void enable() {
+        currentMessage = 0;
+        tutorialActive = true;
+        gameSettings.put("difficulty", Settings.EASY);
+        hide = false;
+    }
+
+    void setXY(float x, float y, int offset) {
+        for (GUIComponent msg: messages) {
+            msg.setXY(x, y-offset);
+        }
+    }
+
+    boolean canFire() {
+        return currentMessage == 0 || currentMessage == 1 || currentMessage == 6;
+    }
+
+    void handleClick() {
+        if (mousePressed && currentMessage == 0) nextMessage();
+    }
+
+    void handleFinishTurn() {
+        camera.animateCenterOnObject(activePlayer, 120, () -> {
+            nextMessage();
+            if (currentMessage == 2) {
+                gameMenu.open();
+                gameMenu.shopOpenButton.hide();
+            }
+            else if (currentMessage == 6) {
+                gameMenu.open();
+            }
+        });
+        // give the player pathfinder
+        if (currentMessage == 6) activePlayer.items.add(PlayerItem.PATHFINDER);
+    }
+
+    void nextMessage() {
+        if (currentMessage >= messages.size()-1) {
+            return;
+        }
+        currentMessage++;
     }
     
     void draw() {
-        resetMatrix();      //reset other camera moving so that the tutorial can be print on the lfet-button of the window
+        if (!tutorialActive || hide) return;
+        int offset = currentMessage == 5 ? 300 : 150;
+        setXY(activePlayer.x, activePlayer.y, offset);
         pushStyle();
 
         fill(0, 255, 255);
-        helpMessage.draw();
+        messages.get(currentMessage).draw();
 
         popStyle();
-        resetMatrix();
-        camera.apply();
     }
 }
 
-class TutorialComponent extends Obj {
-    protected String content;
-    protected int fontSize;
-    PFont f;
 
-    TutorialComponent(String content, float x, float y, int fontSize) {
-        super(x, y);
-        this.content = content;
-        this.fontSize = fontSize;
-        this.f = createFont(ASSETS_PATH+"OpenSans-Regular.ttf", fontSize);
-
-        textFont(f);
-        textSize(fontSize);
-        setDimensions(textWidth(content), fontSize);
+class AnimatedArrow extends Obj {
+    AnimatedArrow() {
+        super(0, 0);
     }
 
-    public void draw() {
-        stroke(0);
-        fill(255, 255, 255);      //change tutorial's colour
-        textFont(f);
-        text(content, x, y - fontSize);
+    void moveTo(float x, float y) {
+
     }
+
+    void draw() { }
 }

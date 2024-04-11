@@ -10,7 +10,7 @@ public class Camera {
     Stack<Float> zoomStack = new Stack<>();
 
     private final int ARRIVAL_THRESHOLD = 4; // The distance (in pixels) from the target when isMoving is changed to false
-    private boolean cameraIsMoving = false;
+    boolean cameraIsMoving = false;
     private boolean hasNotReachedTarget = false;
     int waitFrames;
     float interpolationAmount = 0.02;   // speed with which the camera moves at
@@ -40,7 +40,7 @@ public class Camera {
                     animationFinishCallback.run();
                     animationFinishCallback = null;
             }
-            if (cameraIsMoving && cameraEffectivelyAtTarget()) {
+            if (cameraIsMoving && cameraEffectivelyAtTarget(10)) {
                 cameraIsMoving = false;
             }
         }

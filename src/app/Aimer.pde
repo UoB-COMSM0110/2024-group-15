@@ -18,9 +18,10 @@ public class Aimer {
     }
 
     void handleMouseDown() {
-        if (arrow.isMoving() || camera.isMoving()) {                //  if moving arrow OR camera is moving skip
-            return;
-        }
+        if (tutorialActive && !tutorial.canFire()) return;
+        if (arrow.isMoving() || camera.isMoving()) return;          //  if moving arrow OR camera is moving skip
+        if (playerMover.selecting) return;
+
         // TODO reimpement below
         // if (!(mousePressed && mouseButton == LEFT) && !aiming) {    // skip if left mouse not pressed and not aiming
         //     return;

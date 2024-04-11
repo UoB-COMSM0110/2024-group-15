@@ -11,6 +11,9 @@ class GameMenu extends Obj {
         () -> {
             close();
             playerMover.startMove(activePlayer);
+            if (tutorialActive) {
+                tutorial.nextMessage();
+            }
         });
 
     GameMenu() {

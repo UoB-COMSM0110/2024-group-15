@@ -11,6 +11,7 @@ NOTES
 enum StartMenuState {
     VS,
     DIFFICULTY,
+    NAMES,
 }
 
 /*
@@ -21,8 +22,12 @@ class StartMenu {
     GUIComponent gameTitle;
     Button vsHuman;
     Button vsComputer;
+    Button tutorialButton;
     Button easyMode;
     Button hardMode;
+    Button startButton;
+    TextBox p1Text;
+    TextBox p2Text;
     // PImage backgroundImage = loadImage("./start-menu-idea/background.jpg");
 
 
@@ -39,18 +44,31 @@ class StartMenu {
             setState(StartMenuState.DIFFICULTY);
         });
 
-        easyMode = new Button("Easy", width/2, height/2+100, 30, () -> {
+        tutorialButton = new Button("TUTORIAL", width/2, height/2+300, SFPro, () -> {
+            tutorial.enable();
+            gameInit();
+        });
+
+        easyMode = new Button("Easy", width/2, height/2+100, SFPro, () -> {
             gameSettings.put("difficulty", Settings.EASY);
-            close();
-            gameInit();
+            setState(StartMenuState.NAMES);
 
         });
 
-        hardMode = new Button("Hard", width/2, height/2+200, 30, () -> {
+        hardMode = new Button("Hard", width/2, height/2+200, SFPro, () -> {
             gameSettings.put("difficulty", Settings.HARD);
+            setState(StartMenuState.NAMES);
+        });
+
+        startButton = new Button("START", width/2, height/2+200, SFPro, () -> {
+            player1Name = p1Text.get();
+            player2Name = p2Text.get();
             close();
             gameInit();
         });
+
+        p1Text = new TextBox("Player 1: ", width/2, height/2-100, SFPro);
+        p2Text = new TextBox("Player 2: ", width/2, height/2, SFPro);
 
         setState(StartMenuState.VS);
     }
@@ -66,6 +84,10 @@ class StartMenu {
         vsComputer.draw();
         easyMode.draw();
         hardMode.draw();
+        tutorialButton.draw();
+        p1Text.draw();
+        p2Text.draw();
+        startButton.draw();
 
         
         // DEBUG draw cross for centering
@@ -77,17 +99,36 @@ class StartMenu {
     }
 
     void setState(StartMenuState s) {
-        boolean active = s == StartMenuState.VS;
-        vsHuman.show(active);
-        vsComputer.show(active);
-        easyMode.show(!active);
-        hardMode.show(!active);
+        close();
+        switch (s) {
+            case VS:
+                tutorialActive = false;
+                vsHuman.show();
+                vsComputer.show();
+                tutorialButton.show();
+                break;
+            case DIFFICULTY:
+                easyMode.show();
+                hardMode.show();
+                break;
+            case NAMES:
+                p1Text.content = "";
+                p2Text.content = "";
+                p1Text.show();
+                p2Text.show();
+                startButton.show();
+                break;
+        }
     }
 
     void close() {
         vsHuman.show(false);
         vsComputer.show(false);
+        tutorialButton.show(false);
         easyMode.show(false);
         hardMode.show(false);
+        p1Text.show(false);
+        p2Text.show(false);
+        startButton.show(false);
     }
 }

@@ -37,9 +37,14 @@ static final private int planetRadius = 1000;
 private int minDistanceBetweenPlanets;
 private int maxXDistanceBetweenPlanets;
 private int maxYDistanceBetweenPlanets;
+float planetCenterX;
+float planetCenterY;
 static final int maxHealth = 3;
+String player1Name = "";
+String player2Name = "";
 
 GameState gameState = GameState.STARTPAGE;
+boolean tutorialActive;
 HashMap<String, Settings> gameSettings = new HashMap<>();
 HashMap<String, PImage> imgs = new HashMap<>();
 HashMap<Integer, Boolean> keys = new HashMap<>();
@@ -137,6 +142,8 @@ public void setup()
 
     camera = new Camera();
     startMenu = new StartMenu();
+    tutorial = new Tutorial();
+    optionsMenu = new OptionsMenu();
 
     shopWidth = 600;
     shopHeight = 400;
@@ -165,28 +172,38 @@ public void gameInit() {
 
     randomisePlanetLocations();
 
-    camera.setXY((planets.get(0).x+planets.get(1).x)/2, (planets.get(0).y+planets.get(1).y)/2);
+    planetCenterX = (planets.get(0).x+planets.get(1).x)/2;
+    planetCenterY = (planets.get(0).y+planets.get(1).y)/2;
+
+    camera.setXY(planetCenterX, planetCenterY);
+
 
     Collections.sort(planets, (p1, p2) -> Float.compare(p1.getX(), p2.getX()));
 
-    players[0] = new Player(planets.get(0), 270, PlayerNum.ONE);
-    players[1] = new Player(planets.get(1), 270, PlayerNum.TWO);
+    players[0] = new Player(planets.get(0), -90, PlayerNum.ONE);
+    players[1] = new Player(planets.get(1), -90, PlayerNum.TWO);
+
+    camera.animateCenterOnObject(players[0], 120);
+
     activePlayer = players[0];
 
     gameState = GameState.GAME;
     gameOverPage = new GameOverPage();
-    tutorial = new Tutorial();
+
     pointsSplash = new PointsSplash();
 
     playerMover = new PlayerMover();
     gameMenu = new GameMenu();
-    gameMenu.open();
+    if (!tutorialActive) gameMenu.open();
 
-    optionsMenu = new OptionsMenu();
 
-    players[0].points = 10000;
-    players[1].points = 10000;
+    // players[0].points = 10000;
+    // players[1].points = 10000;
 
+
+    if (tutorialActive) {
+        players[0].updatePoints(150);
+    }
 }
 
 float backgroundImageX, backgroundImageY;
@@ -247,9 +264,15 @@ public void draw()
 
      if (gameState == GameState.GAMEOVER && camera.cameraEffectivelyAtTarget(100)) {
         pushStyle();
+        fill(255);
         textFont(SFPro);
-        String content = "LOUIS WINS";
-
+        String content = winningPlayer.playerNum == PlayerNum.ONE ? player1Name : player2Name;
+        if (content.length() == 0) {
+            content += "YOU WIN";
+        }
+        else {
+            content += " WINS";
+        }
         if (!optionsMenu.isOpen) optionsMenu.open(winningPlayer);
 
         text(content, winningPlayer.x-(textWidth(content)/2), winningPlayer.y-220);
@@ -276,25 +299,47 @@ public void draw()
 
     shop.draw();
 
-    tutorial.draw();        //The help message during gameplay
+    tutorial.draw();        // The help message during gameplay
 
     playerMover.draw();
 
     gameMenu.draw();
     optionsMenu.draw();
-
-    // debugging code which removes health when pressing R
-    // if (frameCount % (60*3) == 0) {
-    //   activePlayer.removeHeart();
-    // }
 }
 
 // Key press handling
 public void keyPressed() {
+    if (gameState == GameState.STARTPAGE) {
+        if (keyCode == 9) {
+            if (startMenu.p1Text.inFocus()) {
+                startMenu.p1Text.inFocus = false;
+                startMenu.p2Text.inFocus = true;
+            }
+            else if (startMenu.p2Text.inFocus()) {
+                startMenu.p2Text.inFocus = false;
+                startMenu.p1Text.inFocus = true;
+            }
+            else {
+                startMenu.p1Text.inFocus = true;
+            }
+        }
+        if (startMenu.p1Text.inFocus() || startMenu.p2Text.inFocus()) {
+            TextBox tb = startMenu.p1Text.inFocus() ? startMenu.p1Text : startMenu.p2Text;
+            tb.handleKey();
+        }
+    }
+    else if (key == 'c' && activePlayer != null && activePlayer.aimer.aiming) {
+        activePlayer.aimer.aiming = false;
+        activePlayer.setSprite(PlayerStatus.IDLE);
+        if (tutorialActive && tutorial.currentMessage == 1) tutorial.currentMessage = 0;
+        else gameMenu.open();
+    }
+
     if (keys.containsKey(keyCode)) keys.put(keyCode, true);
 
 }
 public void keyReleased() {
+
     if (keys.containsKey(keyCode)) keys.put(keyCode, false);
 }
 
@@ -304,11 +349,15 @@ void mousePressed() {
     if (gameState != GameState.GAME) return;
     if (playerMover.handleClick()) return;
     activePlayer.getAimer().handleMouseDown();
+
+    if (tutorialActive) tutorial.handleClick();
 }
 void mouseReleased() {
     if (handleButtonClick()) return;
     if (gameState != GameState.GAME) return;
     activePlayer.getAimer().handleMouseUp();
+
+     if (tutorialActive) tutorial.handleClick();
 }
 
 void mouseDragged() {
@@ -318,7 +367,10 @@ void mouseDragged() {
 
 boolean handleButtonClick() {
     for (Button b: activeButtons) {
-        if (b.mouseHovering()) {
+        if (b instanceof TextBox) {
+            b.handleClick();
+        }
+        else if (b.mouseHovering()) {
             b.handleClick();
             return true;
         }
@@ -359,11 +411,18 @@ public boolean updatePlayerHealths() {
             playerHit = true;
 
             // if the player hits themself, they lose the amount they gained
+            boolean hitThemself = p == activePlayer;
+
+            if (activePlayer.playerNum == PlayerNum.ONE) pointsSplash.animateLeft = true;
+            else pointsSplash.animateRight = true;
+            pointsSplash.c = hitThemself ? color(255, 80, 90) : color(80, 255, 90);
+
             int pointsToAdd = p == activePlayer ? -activePlayer.roundPoints : activePlayer.roundPoints;
             activePlayer.updatePoints(activePlayer.points+pointsToAdd);
             break;
         }
     }
+    if (!playerHit) pointsSplash.animateDown = true;
     return playerHit;
 }
 
@@ -371,6 +430,7 @@ public void finishPlayerTurn()
 {
     int frameWait = updatePlayerHealths() ? 120 : 60;
     spentArrows.add(new Arrow(activePlayer.getArrow()));
+    activePlayer.getArrow().isMoving = false;
 
     Player deadPlayer = checkForPlayerDeaths();
     if (deadPlayer != null) {
@@ -383,17 +443,28 @@ public void finishPlayerTurn()
 
     activePlayer.roundPoints = 0;
 
+    if (tutorialActive) {
+        tutorial.handleFinishTurn();
+        return;
+    }
+
     activePlayer = getOtherPlayer(activePlayer);
     camera.animateCenterOnObject(activePlayer, frameWait, () -> gameMenu.open());
 }
 
+public void finishInvalidPlayerTurn() {
+    println("[TODO] Arrow too slow!");
+    finishPlayerTurn();
+    spentArrows.remove(spentArrows.get(spentArrows.size()-1));
+}
 
-public void setWinnerAndGameOver(Player p)
-{
+
+public void setWinnerAndGameOver(Player p) {
     gameState = GameState.GAMEOVER;
     gameOverPage.setWinner(p.getPlayerNum() == PlayerNum.ONE ? "1" : "2");
     winningPlayer = p;
     camera.animateCenterOnXY(p.getX(), p.getY()-90, 60);
+    tutorial.hide = true;
 }
 
 

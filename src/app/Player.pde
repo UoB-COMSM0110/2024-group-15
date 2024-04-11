@@ -51,8 +51,7 @@ public class Player extends Entity {
         this.planet = planet;
 
         this.playerNum = playerNum;
-
-        setHitBox(getHitBoxWidth()-10, getHitBoxHeight()-15);
+        setHitBox(getHitBoxWidth()-10, getHitBoxHeight()-13);
 
         arrow = new Arrow(x, y);
         aimer = new Aimer(this, arrow);
@@ -138,11 +137,20 @@ public class Player extends Entity {
                 break;
         }
 
-
+        // if (frameCount % 2 == 0) {           // debug code to draw hitbox
+        // stroke(255);
+        // for (int x=0; x<width; x++) {
+        //         for (int y=0; y<height; y++) {
+        //             if (collidingWithTest(x, y)) {
+        //                 rect(x, y, 1, 1);
+        //             }
+        //         }
+        //     }
+        // }
 
         popStyle();
 
-        rect(getHitBoxX(), getHitBoxY(), hitBoxWidth, hitBoxHeight);
+        // rect(getHitBoxX(), getHitBoxY(), hitBoxWidth, hitBoxHeight);
 
         if (this == activePlayer) {
             arrow.draw();
@@ -206,7 +214,7 @@ public class Player extends Entity {
         return x-hitBoxWidth/2;
     }
     public float getHitBoxY() {
-        return y-hitBoxHeight/2+12;
+        return y-hitBoxHeight/2;
     }
 
     public void addShopItem(ShopItemRow item) {
@@ -217,5 +225,23 @@ public class Player extends Entity {
             items.add(item.playerItem);
             shop.open(false);
         }
+    }
+
+    public boolean collidingWithTest(int x, int y) {
+        float halfWidth = getHitBoxWidth()/2;
+        float halfHeight = getHitBoxHeight()/2;
+
+        float translated_x = x - this.x;
+        float translated_y = y - this.y;
+
+        float angle = radians(-planetAngle+90);
+
+        float rotated_x = translated_x * cos(angle) - translated_y * sin(angle);
+        float rotated_y = translated_x * sin(angle) + translated_y * cos(angle);
+
+        rotated_y += 10;
+        rotated_x -= 2;
+
+        return -halfWidth <= rotated_x && rotated_x <= halfWidth && -halfHeight <= rotated_y && rotated_y <= halfHeight;
     }
 }
