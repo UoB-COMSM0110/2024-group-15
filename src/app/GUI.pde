@@ -9,15 +9,27 @@ class GUIComponent extends Obj {
         this.content = content;
         this.fontSize = fontSize;
         this.f = createFont(ASSETS_PATH+"OpenSans-Regular.ttf", fontSize);
-
-        textFont(f);
-        textSize(fontSize);
-        setDimensions(textWidth(content), fontSize);
+        this.updateDimensions();
     }
 
     GUIComponent(String content, float y, int fontSize) {
         this(content, 0, y, fontSize);
         x = width/2;
+    }
+
+    public void setContent(String text) {
+        this.content = text;
+        this.updateDimensions();
+    }
+    public void setContent(int text) { setContent(String.valueOf(text)); }
+    public void setContent(float text) { setContent(String.valueOf(text)); }
+
+    private void updateDimensions() {
+        pushStyle();
+        textFont(f);
+        textSize(fontSize);
+        setDimensions(textWidth(content), fontSize);
+        popStyle();
     }
 
     public void draw() {
@@ -30,7 +42,6 @@ class GUIComponent extends Obj {
         else {
             text(content, x, y);
         }
-
     }
 }
 
@@ -44,15 +55,12 @@ enum ButtonState {
 class Button extends GUIComponent {
     final int YPAD = 10;
     Runnable callback;
-
     ButtonState state = ButtonState.NONE;
-
 
     Button(String name, int x, int y, int fontSize, Runnable callback){
         super(name, x, y, fontSize);
         this.callback = callback;
     }
-
 
     private void updateState() {
         if (!mouseHovering()) {

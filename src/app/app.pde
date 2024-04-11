@@ -10,8 +10,6 @@ import java.io.File;
 enum GameState {
   STARTPAGE,
   GAME,
-  EASYGAMESET,
-  EASYGAME,
   POPMENU, 
   SHOP,
   GAMEOVER,
@@ -29,19 +27,14 @@ enum PlayerNum {
     TWO,
 }
 
+static final int screenWidth = 1024;
+static final int screenHeight = 767;
+
 static final String ASSETS_PATH = "../../game-assets/".replace("/", File.separator);
 static final int SPACE=32, R=82, W=87, S=83;
 
 GameState gameState = GameState.STARTPAGE;
 HashMap<String, Settings> gameSettings = new HashMap<>();
-
-int screenWidth = 1024;
-int screenHeight = 767;
-
-
-PImage backgroundImage, transparentStars;
-
-
 HashMap<String, PImage> imgs = new HashMap<>();
 HashMap<Integer, Boolean> keys = new HashMap<>();
 
@@ -58,10 +51,12 @@ private int minDistanceBetweenPlanets;
 private int maxXDistanceBetweenPlanets;
 private int maxYDistanceBetweenPlanets;
 
-
+PImage spaceBG, spaceTransparentBG;
 
 int shopX, shopY, shopWidth, shopHeight;
 Shop shop;
+
+PointsSplash pointsSplash;
 
 
 private int planetRadius = 1000;
@@ -69,49 +64,53 @@ private int planetRadius = 1000;
 int maxHealth = 3;
 
 
+PShape HEART_SHAPE;
 
 // The exact number is not final
 //int arrowCount = 10;
 // For debugging purpose
 int arrowCount = 2;
 
-int maxHP = 3;
-
-boolean isDoubleStrikeActive = false;
-boolean isPathFinderActive = false;
-
 public void settings() {
-    size(screenWidth, screenHeight);
-    // Anti aliasing
-    smooth(8);
+    size(screenWidth, screenHeight);    // P2D seems to be too slow
+    smooth(8);                          // Anti aliasing
 }
-
 
 void loadIntoImages(String fileName) {
     loadIntoImages(fileName, "png");
 }
 
 void loadIntoImages(String fileName, String fileExtension) {
-    imgs.put(fileName, loadImage(ASSETS_PATH+fileName+"."+fileExtension));
+    imgs.put(fileName, requestImage(ASSETS_PATH+fileName+"."+fileExtension));
+}
+
+void hardLoadIntoImages(String fileName) {
+    imgs.put(fileName, loadImage(ASSETS_PATH+fileName+".png"));
 }
 
 // Use this method for loading images (stored in the `game-assets` folder)
 public void loadAssets() {
+    hardLoadIntoImages("space-tiled");
+    hardLoadIntoImages("transparent-stars");
     loadIntoImages("arrow");
     loadIntoImages("planet1");
     loadIntoImages("planet2");
     loadIntoImages("player-idle");
     loadIntoImages("player-draw");
     loadIntoImages("player-hit");
-    loadIntoImages("space1");
-    loadIntoImages("transparent-stars");
     loadIntoImages("planet3", "gif");
-    loadIntoImages("bow");
+    loadIntoImages("bow-export");
+    loadIntoImages("manLEFT");
+    loadIntoImages("manRIGHT");
+
+    spaceBG = imgs.get("space-tiled");
+    spaceTransparentBG = imgs.get("transparent-stars");
 }
 
 
 public void setup()
 {
+    frameRate(60);
     loadAssets();
 
     keys.put(UP, false);
@@ -123,6 +122,19 @@ public void setup()
     keys.put(W, false);
     keys.put(S, false);
 
+    HEART_SHAPE = createShape();
+    HEART_SHAPE.beginShape();
+    HEART_SHAPE.noStroke();
+    float a = 0.5;
+    float t = 0;
+    while (t < TWO_PI) {
+        float xCoord = (16 * pow(sin(t), 3)) * a;
+        float yCoord = (13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t)) * a;
+        HEART_SHAPE.vertex(xCoord, -yCoord);
+        t += 0.01;
+    }
+    HEART_SHAPE.endShape(CLOSE);
+
     camera = new Camera();
     startMenu = new StartMenu();
 
@@ -130,13 +142,10 @@ public void setup()
     shopHeight = 80;
     shopX = width/2-shopWidth;
     shopY = height/2-shopHeight;
-
     shop = new Shop();
 }
 
 public void gameInit() {
-
-
     if (gameSettings.get("difficulty") == Settings.EASY) {
         minDistanceBetweenPlanets = 200;
         maxXDistanceBetweenPlanets = 600;
@@ -164,6 +173,30 @@ public void gameInit() {
     gameState = GameState.GAME;
     gameOverPage = new GameOverPage();
     tutorial = new Tutorial();
+    pointsSplash = new PointsSplash();
+}
+
+float backgroundImageX, backgroundImageY;
+float stars1X, stars1Y;
+float stars2X, stars2Y;
+int prevCamX, prevCamY;
+public void drawBackground() {
+    int camX = (int)camera.getX();
+    int camY = (int)camera.getY();
+    if (prevCamX != camX || prevCamY != camY) {
+        backgroundImageX = width/2 - (camera.getX()*0.3);
+        backgroundImageY = height/2 - (camera.getY()*0.3);
+        stars1X = backgroundImageX*1.1;
+        stars1Y = backgroundImageY*1.1;
+        stars2X = backgroundImageX*1.2;
+        stars2Y = backgroundImageY*1.2;
+        prevCamX = camX;
+        prevCamY = camY;
+    }
+
+    image(spaceBG, backgroundImageX, backgroundImageY);
+    image(spaceTransparentBG, stars1X, stars1Y, width*2, height*2);
+    image(spaceTransparentBG, stars2X, stars2Y, width*3, height*3);
 }
 
 
@@ -171,23 +204,7 @@ public void draw()
 {
     background(0);      // background 0 makes text a bit sharper
     imageMode(CENTER);
-
-    float backgroundImageX = width/2 - (camera.getX()*0.3);
-    float backgroundImageY = height/2 - (camera.getY()*0.3);
-    image(imgs.get("space1"), backgroundImageX, backgroundImageY);
-
-    image(imgs.get("space1"), backgroundImageX-width, backgroundImageY);
-    image(imgs.get("space1"), backgroundImageX-width, backgroundImageY-height);
-    image(imgs.get("space1"), backgroundImageX, backgroundImageY-height);
-    image(imgs.get("space1"), backgroundImageX+width, backgroundImageY-height);
-    image(imgs.get("space1"), backgroundImageX+width, backgroundImageY);
-    image(imgs.get("space1"), backgroundImageX+width, backgroundImageY+height);
-    image(imgs.get("space1"), backgroundImageX, backgroundImageY+height);
-    image(imgs.get("space1"), backgroundImageX-width, backgroundImageY+height);
-
-
-    image(imgs.get("transparent-stars"), backgroundImageX*1.1, backgroundImageY*1.1, width*2, height*2);
-    image(imgs.get("transparent-stars"), backgroundImageX*1.2, backgroundImageY*1.2, width*3, height*3);
+    drawBackground();
 
     switch (gameState) {
         case STARTPAGE:
@@ -252,6 +269,9 @@ public void draw()
         p.draw();
     }
 
+    pointsSplash.draw();
+
+
     shop.draw();
 
     tutorial.draw();        //The help message during gameplay
@@ -312,50 +332,37 @@ public boolean updatePlayerHealths() {
     for (Player p : players) {
         if (activePlayer.getArrow().isCollidingWith(p)) {
             p.removeHeart();
-            if (isDoubleStrikeActive) {
-                p.removeHeart();
-                isDoubleStrikeActive = false;
-            }
+            // TODO!!!
+            // if (isDoubleStrikeActive) {
+            //     p.removeHeart();
+            //     isDoubleStrikeActive = false;
+            // }
             playerHit = true;
+
+            // if the player hits themself, they lose the amount they gained
+            int pointsToAdd = p == activePlayer ? -activePlayer.roundPoints : activePlayer.roundPoints;
+            activePlayer.updatePoints(activePlayer.points+pointsToAdd);
             break;
         }
     }
     return playerHit;
 }
 
-
-//public boolean updatePlayerHealths(boolean cheatMode) {
-//    for (Player p : players) {
-//        if (activePlayer.getArrow().isCollidingWith(p)) {
-//            if (cheatMode) {
-//                p.removeHeart();
-//                p.removeHeart();
-//            } else {
-//                p.removeHeart();
-//            }
-//            return true;
-//        }
-//    }
-//    return false;
-//}
-
-
 public void finishPlayerTurn()
 {
     int frameWait = updatePlayerHealths() ? 120 : 60;
-    // int frameWait = updatePlayerHealths(false) ? 120 : 60;
     spentArrows.add(new Arrow(activePlayer.getArrow()));
 
     Player deadPlayer = checkForPlayerDeaths();
     if (deadPlayer != null) {
         setWinnerAndGameOver(getOtherPlayer(deadPlayer));
-
         return;
     }
 
     activePlayer.getArrow().cannotBeCollidedWith = true;
-
     activePlayer.items.clear();
+
+    activePlayer.roundPoints = 0;
 
     activePlayer = getOtherPlayer(activePlayer);
     camera.animateCenterOnObject(activePlayer, frameWait);
@@ -375,7 +382,6 @@ public void setWinnerAndGameOver(Player p)
     camera.animateCenterOnObject(p, 60);
     println("PLAYER" + (p.getPlayerNum() == PlayerNum.ONE ? "1 " : "2 ") +"WINS!");
 }
-
 
 
 //random locations of planets

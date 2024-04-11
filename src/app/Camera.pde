@@ -69,26 +69,26 @@ public class Camera {
         this.waitFrames = waitFrames;
     }
 
-    public void keyMove() {
-        if (keys.get(LEFT)) {
-            setXY(x-2, y);
-        }
-        else if (keys.get(RIGHT)) {
-            setXY(x+2, y);
-        }
-        else if (keys.get(UP)) {
-            setXY(x, y-2);
-        }
-        else if (keys.get(DOWN)) {
-            setXY(x, y+2);
-        }
-        else if (keys.get(W)) {
-            setZoom(zoom+0.01F);
-        }
-        else if (keys.get(S)) {
-            setZoom(zoom-0.01F);
-        }
-    }
+    // public void keyMove() {
+    //     if (keys.get(LEFT)) {
+    //         setXY(x-2, y);
+    //     }
+    //     else if (keys.get(RIGHT)) {
+    //         setXY(x+2, y);
+    //     }
+    //     else if (keys.get(UP)) {
+    //         setXY(x, y-2);
+    //     }
+    //     else if (keys.get(DOWN)) {
+    //         setXY(x, y+2);
+    //     }
+    //     else if (keys.get(W)) {
+    //         setZoom(zoom+0.01F);
+    //     }
+    //     else if (keys.get(S)) {
+    //         setZoom(zoom-0.01F);
+    //     }
+    // }
 
     public void pushZoom() {
         zoomStack.push(zoom);
