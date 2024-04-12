@@ -26,14 +26,14 @@ We used paper prototype to mock the outline of these two game's workflow in clas
 
 ### User Storeies
 
->"As a player, I want to have personalize choices at the start of the game so that I can choose the game's difficulty based on my preferences."
->"As a player, I want to gain resources through some special behviours in the game, and these resources can be able to trade for special skills, so it is bit more fun."
->"As a player, I want to know the force and the direction of my arrow, so I need a sign to acknowledge that."
->"As a second player, I want to be able to play the game with my friends, so that I can have fun with two players other than play against the computer."
->"As a player, I want to have cases or tutorial examples telling me some of special designs of the game."
->"As a player, I want a skip function to skip the animation, so that I can get the result immediately."
->"As a marker for this project, I want to see groups create engaging and well made games, with a strong process of development that utilises the techniques taught in this module."
->"As a future group for this module, we want to see good examples of games which will inspire us when creating our own game."
+>"As a player, I want to have personalize choices at the start of the game so that I can choose the game's difficulty based on my preferences."  
+>"As a player, I want to gain resources through some special behviours in the game, and these resources can be able to trade for special skills, so it is bit more fun."  
+>"As a player, I want to know the force and the direction of my arrow, so I need a sign to acknowledge that."  
+>"As a second player, I want to be able to play the game with my friends, so that I can have fun with two players other than play against the computer."  
+>"As a player, I want to have cases or tutorial examples telling me some of special designs of the game."  
+>"As a player, I want a skip function to skip the animation, so that I can get the result immediately."  
+>"As a marker for this project, I want to see groups create engaging and well made games, with a strong process of development that utilises the techniques taught in this module."  
+>"As a future group for this module, we want to see good examples of games which will inspire us when creating our own game."  
 
 ### Use-case diagram
 
@@ -145,23 +145,19 @@ Furthermore, these design prototypes help us to focus on one function to impleme
 
 ## Implementation
 
-[three areas of challenging]
+[three areas of challenging]-[needed simplify to under 750 words...]
 
 ### 1. Camera movement:
   
 In bowman and raft wars, the camera moves with the projectile so the shooting player cannot see exactly where they need to hit.
-So the camera should act like:
-  1. Display the whole scene when entering the game to let the players know the approximate position of each other.
-  2. Then place the player at the center of the screen in this person's turn. After firing, the camera should stick to the arrow until it hit any bounding shape.
-  3. Set the other player at the center of the screen as it is this player's turn.
-   
-  The first movement is easy to implement, just set the camera at the center of the two randomly-generated planets' positions. Then the camera will apply to the player's center position.
 
-  For the second step we used the status to track if the arrow is fired or not, if it is, the camera will update with the position of the arrow until the collision detection is true.
+To display the whole scene when entering the game to let the players know the approximate position of each other, just set the camera at the center of the two randomly-generated planets' positions. Then the camera will apply to the player's center position.
 
-  We also implemented zoom functions to dynamically adjust the camera's scale based on the game status using stack to push and pop zoom scale which allows the camera to switch from any game status. We also used *Linear Interpolation* and frames related funciotns to make the camera's movements smoother.
+To place the player at the center of the screen in this person's turn, we used the status to track if the arrow is fired or not, if it is, the camera will update with the position of the arrow until the collision detection is true.
 
-  After that, the camera will move to the stored position of the other player as this player's turn is done. As bunded with the camera movements after firing, we added texts to display the distance that the arrow has flown and magnification related to the points system.
+We also implemented zoom functions to dynamically adjust the camera's scale based on the game status using stack to push and pop zoom scale which allows the camera to switch from any game status. We also used *Linear Interpolation* and frames related funciotns to make the camera's movements smoother.
+
+As bunded with the camera movements after firing, we added texts to display the distance that the arrow has flown and magnification related to the points system.
 
 [demonstration video]
 
@@ -169,17 +165,15 @@ So the camera should act like:
 
 Gravity mechanics would need to be implemented for this idea (as it is set in space) and the balance between realism and difficulty would need to be found. Also, we need to set hit boxes to detect collision and change further status.
 
-We used the *PVector* (a built-in class in Processing to handle operations on 2D and 3D dimensions' vectors) to handle the vector. In the *Planet* class we use the *Law of Universal Gravitation* to calculate the gravity vector of the arrow (with constraints avoiding any extreme situations). Then update the acceleration of each planets and added it to current velocity to modify any further movement of the arrow in the *Entity* class. The physics we are using mainly comes from Astrophysics and basic concepts of class physics(mass, velocity, acceleration, distance and so on).
+We used the *PVector* (a built-in class in Processing to handle operations on 2D and 3D dimensions' vectors) to handle the vector. In the *Planet* class the *Law of Universal Gravitation* is used to calculate the gravity vector of the arrow (with constraints avoiding any extreme situations), then update the acceleration of each planets and added it to current velocity to modify any further movement of the arrow in the *Entity* class.
 
 As for collision detection, we used self-defined hitboxes of planets, players and arrows and calculate the distance among objects to detect any collision.
 
 ### 3. AI enemey:
 
+[The gameplay additions can be the third challenges? ]
 
-
-[Maybe gameplay additions can be the third challenges?]
-[Or these contents can be added in the working process parts if AI enemy is implemented]
-### 4. Gameplay Additions:
+### 4. Gameplay additions:
 Other from the three main challenges, we also added some interesting functions that worth mentioning:
 
 1. Shops:  
@@ -190,10 +184,18 @@ Moreover, we further broadened the shop system by adding "Health Potion", "Doubl
 
 2. Points Systems:
   
-At the outset, we used the arrow numbers on planets as "points" for trading for skills in the shop.
+At the outset, we used the arrow numbers on planets as "points" to trade for skills in the shop.
+Then we thought about linked the magnification to the rotation of the arrow and multiple it to a score when the arrow hit the other player.
+
+To implement this, we defined the *rotationAmount* in the *Arrow* Class, and update the absolute value of current degree minus previous angle. Then we used the amount to calculate the magnification and updated it in every frame of the arrow's movements.
+
+Additionally, we added the *PointsSplash* to add visual effects. It will have a animation to right or left if the arrow is detected collision on players and adds to the current points, and move down if the arrow fail to hit anyone. This is implemented by setting the positions of magnificationText and pointsText.
 
 3. Moving around the planets:
 
+The *PlayerMover* class is added to let the player move around the planet.
+By clicking on the circular area with the same radius as the planet, we can then calculate the angle between the current and selected positions based on the mouse click.
+Then the angle is used for animating the player's movement to the selected position.
 
 4. Tutorials:
 
@@ -202,10 +204,6 @@ During the first heuristic analysis we have received complaints about being conf
 At first, we managed to add a tutorial content that is shown all the way during the gameplay at the left-down side of the screen.
 
 Then we extened the tutorial mode at the game main page. An Arraylist was used to store all the tutorial messages and each boxed was selected and printed to inform the player what to do, and we created a class named *GUI* to draw any GUI-related contents on the screen.
-
-
-
-  
 
 ## Evaluation
 
