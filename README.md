@@ -98,9 +98,13 @@ Then we discussed about what to implement and used Kanban Board to assign tasks 
 
 The core game flow will be, the game starts and players can choose from whether this is "VS Computer" mode or "VS Human" mode, and self-defined the rounds and HP that each player should have.
 
-Then the players click and drag mouse to control the bow's tension and direction, and then release the mouse to fire. The camera will then focus on the arrow until it shot on any bounding shape.
+Users' input mainly comes from mouse move and click, including aiming, selecting in the shops and so on. So when it becomes this player's turn:
 
-Additionally, we want to introduced a points collection system to raise a shop system where players can buy some one-time skills. How the gravity works was also being discussed. There are proposals like whether to do a half and half screen where one side has negative gravity or use the escape velocity formula for planets, we choosed the latter eventually.
+1. The player will select from *Move* and *Shop*. *Move* will allow the player to move around the whole planet, and *Shop* will provide skills like *pathfinder*, *double strike* for the player to select. 
+
+2. After that, the player click and drag mouse to control the bow's tension and direction, and then release the mouse to fire. The camera will then focus on the arrow until it shot on any bounding shape.
+
+Additionally, we want to introduced a points collection system to raise the shop system where players can buy some skills. How the gravity works was also being discussed. There are proposals like whether to do a half and half screen where one side has negative gravity or use the escape velocity formula for planets, we choosed the latter eventually.
 
 #### Obstacles
 
@@ -113,7 +117,7 @@ Another barrier is the camera zoom in or zoom out function. The core design is t
 
 After putting all the designs and concerns on the table, we wrote a TODO list to guide the step-by-step development of the whole game.
 
-The highest priority tasks include implementing the physics engine to calculate gravity and 2D bounding collision detection, and the camera movements as well. Then we will add the shop system, the HP detection, and any other things.
+The highest priority tasks include implementing the physics engine to calculate gravity and 2D bounding collision detection, and the camera movements as well. Then we will add the shop system, the HP detection, tutorials and any other things.
 
 ## Design
 
@@ -143,27 +147,64 @@ Furthermore, these design prototypes help us to focus on one function to impleme
 
 [three areas of challenging]
 
-1. Camera movement:
-  In bowman and raft wars, the camera moves with the projectile so the shooting player cannot see exactly where they need to hit.
-  So the camera should act like:
-     1. Display the whole scene when entering the game to let the players know the approximate position of each other.
-     2. Then place the player at the center of the screen in this person's turn. After firing, the camera should stick to the arrow until it hit any bounding shape.
-     3. Set the other player at the center of the screen as it is this player's turn.
+### 1. Camera movement:
+  
+In bowman and raft wars, the camera moves with the projectile so the shooting player cannot see exactly where they need to hit.
+So the camera should act like:
+  1. Display the whole scene when entering the game to let the players know the approximate position of each other.
+  2. Then place the player at the center of the screen in this person's turn. After firing, the camera should stick to the arrow until it hit any bounding shape.
+  3. Set the other player at the center of the screen as it is this player's turn.
    
   The first movement is easy to implement, just set the camera at the center of the two randomly-generated planets' positions. Then the camera will apply to the player's center position.
 
   For the second step we used the status to track if the arrow is fired or not, if it is, the camera will update with the position of the arrow until the collision detection is true.
 
-  We also implemented zoom functions to dynamically adjust the camera's scale based on the game status. Also, we use *Linear Interpolation* to make the camera's movements smoother.
+  We also implemented zoom functions to dynamically adjust the camera's scale based on the game status using stack to push and pop zoom scale which allows the camera to switch from any game status. We also used *Linear Interpolation* and frames related funciotns to make the camera's movements smoother.
 
-  After that, the camera will moved to the stored postion of the other player as this player's turn is done.
-[214 words]
+  After that, the camera will move to the stored position of the other player as this player's turn is done. As bunded with the camera movements after firing, we added texts to display the distance that the arrow has flown and magnification related to the points system.
+
 [demonstration video]
 
-2. Gravity engine:
-  Gravity mechanics would need to be implemented for this idea (if it is set in space) and the balance between realism and difficulty would need to be found.
+### 2. Gravity engine:
 
-  Also, we need to set hit boxes to detect collision and change further status.
+Gravity mechanics would need to be implemented for this idea (as it is set in space) and the balance between realism and difficulty would need to be found. Also, we need to set hit boxes to detect collision and change further status.
+
+We used the *PVector* (a built-in class in Processing to handle operations on 2D and 3D dimensions' vectors) to handle the vector. In the *Planet* class we use the *Law of Universal Gravitation* to calculate the gravity vector of the arrow (with constraints avoiding any extreme situations). Then update the acceleration of each planets and added it to current velocity to modify any further movement of the arrow in the *Entity* class. The physics we are using mainly comes from Astrophysics and basic concepts of class physics(mass, velocity, acceleration, distance and so on).
+
+As for collision detection, we used self-defined hitboxes of planets, players and arrows and calculate the distance among objects to detect any collision.
+
+### 3. AI enemey:
+
+
+
+[Maybe gameplay additions can be the third challenges?]
+[Or these contents can be added in the working process parts if AI enemy is implemented]
+### 4. Gameplay Additions:
+Other from the three main challenges, we also added some interesting functions that worth mentioning:
+
+1. Shops:  
+ 
+Initially, we made a pathfinder for debugging which provides a dotted curve line of the arrow's detected movements. It stored every X and Y positions at the maxium of 200 with pre-calculation of its movements with current velocity, mouse-controlled force and gravity vector of each planets, and printed them out with dots.
+
+Moreover, we further broadened the shop system by adding "Health Potion", "Double Strike", "Hit and Skip" functions and its detailed messages. These functions related to players' turn and HP bar so it's quite easy to implement.
+
+2. Points Systems:
+  
+At the outset, we used the arrow numbers on planets as "points" for trading for skills in the shop.
+
+3. Moving around the planets:
+
+
+4. Tutorials:
+
+During the first heuristic analysis we have received complaints about being confused of operations so we thought about adding some tutorial contents.
+
+At first, we managed to add a tutorial content that is shown all the way during the gameplay at the left-down side of the screen.
+
+Then we extened the tutorial mode at the game main page. An Arraylist was used to store all the tutorial messages and each boxed was selected and printed to inform the player what to do, and we created a class named *GUI* to draw any GUI-related contents on the screen.
+
+
+
   
 
 ## Evaluation
