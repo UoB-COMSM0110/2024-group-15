@@ -1,10 +1,8 @@
 public class Arrow extends Entity {
   boolean isMoving = false;  // this gets set by the Aimer class when you fire an arrow
   PImage sprite;
-  //PImage bowSprite;
   float normalizedX, normalizedY;
   boolean cannotBeCollidedWith = false;
-  //boolean showBow = true;
 
   float startX, startY;
 
@@ -15,6 +13,10 @@ public class Arrow extends Entity {
 
   float previousAngle = 0;
   float rotationAmount = 0;
+
+  boolean speedIsChecked;
+  int speedAboveThresholdCount;
+  int startFrameCount;
 
   Arrow(float x, float y) {
     super(x, y);
@@ -31,12 +33,6 @@ public class Arrow extends Entity {
     velocity.y = a.velocity.y;
   }
 
-  void stopMovingAndFinishTurn() {
-    isMoving = false;
-    //boolean showBow = false;
-    finishPlayerTurn();
-  }
-
     void move() {
         if (!isMoving) {
             startedMoving = false;
@@ -48,31 +44,64 @@ public class Arrow extends Entity {
             startedMoving = true;
             cannotBeCollidedWith = true;
             rotationAmount = 0;
-            // showBow = true;
+            speedAboveThresholdCount = 0;
+            startFrameCount = 0;
+            speedIsChecked = false;
         }
         else if (cannotBeCollidedWith && abs(startX-x) > 30 && abs(startY-y) > 60) {    // if arrow has moved out of player hitbox, start collisions
             cannotBeCollidedWith = false;
-            // bowSprite = null;
-            // showBow = false;
         }
 
+        float arrowHeadRadius = (objWidth/2)*0.8;
+
+        normalizedX = x+arrowHeadRadius*cos(radians(270)+angleRadians);
+        normalizedY = y+arrowHeadRadius*sin(radians(270)+angleRadians);
+
+        float degrees = degrees(angleRadians);
+        if (!cannotBeCollidedWith) {
+            rotationAmount += Math.abs(degrees-previousAngle);
+        }
+        previousAngle = degrees;
+
+
+        // speed threshold
+        if (!speedIsChecked) {
+            startFrameCount += 1;
+            if (startFrameCount > 240) {
+                finishInvalidPlayerTurn();
+                return;
+            }
+            float speed = sqrt((velocity.x*velocity.x)+(velocity.y*velocity.y));
+            if (speed > 4) {
+                speedAboveThresholdCount += 1;
+                if (speedAboveThresholdCount > 20) {
+                    speedIsChecked = true;
+                }
+            }
+        }
+
+
+
         // collision detection
+
+        if (!cannotBeCollidedWith) {
+            for (Player p: players) {
+                if (p.isCollidingWith(this)) {      // call overrided method in Arrow (this)
+                    finishPlayerTurn();
+                    return;
+                }
+            }
+        }
+
+
+
         for (Planet planet : planets) {
             if (planet.isCollidingWith(this)) {     // call overrided method in Planet
-                stopMovingAndFinishTurn();
-                
-                planet.increaseNumberOfArrowsHit();      // When the arrow hit the planet, increasing the number
-                
+                finishPlayerTurn();
                 return;
             }
         }
         
-        for (Player p: players) {
-            if (this.isCollidingWith(p)) {               // call overrided method in Arrow (this)
-                stopMovingAndFinishTurn();
-                return;
-            }
-        }
         super.move();
         camera.setXY(x, y);
     }
@@ -91,18 +120,6 @@ public class Arrow extends Entity {
         image(sprite, 0, 0, objWidth, objHeight);
 
         popMatrix();
-
-        float arrowHeadRadius = (objWidth/2)*0.8;
-
-        normalizedX = x+arrowHeadRadius*cos(radians(270)+angleRadians);
-        normalizedY = y+arrowHeadRadius*sin(radians(270)+angleRadians);
-
-        // if (!isMoving) return;
-        float degrees = degrees(angleRadians);
-        if (!cannotBeCollidedWith) {
-            rotationAmount += Math.abs(degrees-previousAngle);
-        }
-        previousAngle = degrees;
     }
 
     public float getAmountRotated() {
@@ -123,11 +140,6 @@ public class Arrow extends Entity {
 
     public float getHitBoxY() {
         return normalizedY;
-    }
-
-    @Override
-    public boolean isCollidingWith(Entity e) {
-        return cannotBeCollidedWith ? false : super.isCollidingWith(e);
     }
 
     public boolean isMoving() {

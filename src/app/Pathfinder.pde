@@ -3,7 +3,7 @@ public class Pathfinder extends Entity {
     ArrayList<Float> locationY;
     float initialX;
     float initialY;
-    float maxLengthOfPathfinder = screenWidth/2;
+    float maxLengthOfPathfinder = width/2;
     
 	 Pathfinder(float x, float y, PVector velocity) {
         super(x, y, 0, 0, velocity);
@@ -30,10 +30,14 @@ public class Pathfinder extends Entity {
     void draw() {
 
         getLocations();
+        pushStyle();
+        fill(255);
 
         for (int i=0; i<locationX.size(); i++) {	
             ellipse(locationX.get(i), locationY.get(i), 10, 10);
         }
+
+        popStyle();
 
         // for (int i=0; i<200; i++) {
         // 	move();

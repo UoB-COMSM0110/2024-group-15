@@ -4,20 +4,31 @@
 
 public class PointsBar extends GUIComponent {
     Player player;
-    int boxWidth = 10;
+    boolean isP1;
+
 
     PointsBar(Player player, PlayerNum playerNum) {
-        super("", 0, 50, 24);
-        setX(playerNum == PlayerNum.ONE ? 20 : width-20-boxWidth);
+        super("0", 0, 85, SFPro);
+        isP1 = player.playerNum == PlayerNum.ONE;
+        setX(isP1 ? 20 : width-textWidth(content));
+
         this.player = player;
         this.center = false;
     }
 
+    
+
     public void draw() {
         resetMatrix();
         pushStyle();
+
+        textFont(SFPro);
+        setX(isP1 ? 20 : width-textWidth(content)-20);
         
         super.draw();
+
+
+        text(isP1 ? player1Name : player2Name, isP1 ? x-1 : (x+textWidth(content))-textWidth(player2Name), y-25);
 
         popStyle();
         resetMatrix();

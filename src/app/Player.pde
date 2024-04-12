@@ -7,6 +7,16 @@ enum PlayerStatus {
 enum PlayerItem {
     PATHFINDER,
     HITSKIP,
+    DOUBLESTRIKE,
+    HEALTHPOTION,
+}
+
+class Point {
+    float x, y;
+    Point(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
 }
 
 
@@ -21,7 +31,7 @@ public class Player extends Entity {
     Sprite holdSprite;
     Sprite bowSprite;
     PlayerStatus status = PlayerStatus.IDLE;
-    int planetAngle;
+    float planetAngle;
 
     Pathfinder pf;
     List<PlayerItem> items = new ArrayList<>();
@@ -34,7 +44,6 @@ public class Player extends Entity {
     float multiplier = 1;
     PointsBar pointsBar;
 
-    private boolean hasUsedShop = false;
 
     Player(Planet planet, int planetAngle, PlayerNum playerNum) {
         super(planet.x, planet.y, 30, 60);
@@ -42,16 +51,7 @@ public class Player extends Entity {
         this.planet = planet;
 
         this.playerNum = playerNum;
-
-        setHitBox(getHitBoxWidth()-10, getHitBoxHeight()-15);
-
-
-        double radians = Math.toRadians(planetAngle);
-
-        // TODO placeholder name; this should be generalized within object
-        int valueThatShouldBeDependantUponSprite = 35;
-        x += (float) ((planet.r+valueThatShouldBeDependantUponSprite)*Math.cos(radians));
-        y += (float) ((planet.r+valueThatShouldBeDependantUponSprite)*Math.sin(radians));
+        setHitBox(getHitBoxWidth()-10, getHitBoxHeight()-13);
 
         arrow = new Arrow(x, y);
         aimer = new Aimer(this, arrow);
@@ -63,14 +63,35 @@ public class Player extends Entity {
         drawSprite = new Sprite(this, imgs.get("player-draw"), 102, 64, 8, AnimationType.FIRSTLAST);
         hitSprite = new Sprite(this, imgs.get("player-hit"), 102, 64, 6, AnimationType.FIRSTLAST);
         holdSprite = new Sprite(this, imgs.get("manLEFT"), 102, 64, 1, AnimationType.FIRSTLAST);
-
         bowSprite = new Sprite(this, imgs.get("bow-export"), 100, 39, 1, AnimationType.FIRSTLAST);
+
+        setPlayerAngleOnPlanet(planetAngle);
+
+    }
+
+
+    void setPlayerAngleOnPlanet(float planetAngle) {
+        this.planetAngle = planetAngle;
+        float radians = radians(planetAngle);
+        int playerHeight = 35;
+        x = planet.x+(planet.r+playerHeight)*cos(radians);
+        y = planet.y+(planet.r+playerHeight)*sin(radians);
+        idleSprite.setRotation(radians(planetAngle-180));
+        drawSprite.setRotation(radians(planetAngle-180));
+        hitSprite.setRotation(radians(planetAngle-180));
+        holdSprite.setRotation(radians(planetAngle-180));
+        bowSprite.setRotation(radians(planetAngle-180));
+
+    }
+
+    void movePlayerOnPlanet(float planetAngle) {
+        setPlayerAngleOnPlanet(planetAngle);
     }
 
     void move() {
         if (this == activePlayer) {
             arrow.move();
-            aimer.update();
+            // aimer.update();
             if (arrow.isMoving()) {
                 multiplier = 1+(arrow.getAmountRotated()/360);
                 roundPoints += (1*multiplier);
@@ -81,7 +102,7 @@ public class Player extends Entity {
             switch (i) {
                 case PATHFINDER:
                     if (aimer.aiming) {
-                        pf = new Pathfinder(arrow.x, arrow.y, new PVector(aimer.x1-mouseX, aimer.y1-mouseY));
+                        pf = new Pathfinder(x, y, new PVector(aimer.x1-mouseX, aimer.y1-mouseY));
                         pf.draw();
                     }
                     break;
@@ -97,15 +118,14 @@ public class Player extends Entity {
                 idleSprite.draw();
                 break;
             case DRAW:
-                float degs = degrees(arrow.angleRadians);
+                boolean flipDirection = ((degrees(aimer.angleRadians)+180) - planetAngle+360) % 360 - 180 > 0;
                 if (drawSprite.animationHasFinished()) {
-
-                    holdSprite.flip(degs > 0 ? true : false);
+                    holdSprite.flip(flipDirection);
                     holdSprite.draw();
-                    bowSprite.setRotation(arrow.angleRadians);
+                    bowSprite.setRotation(aimer.angleRadians+(PI/2));
                     bowSprite.draw();
-                } else{
-                    drawSprite.flip(degs < 0 ? true : false);
+                } else {
+                    drawSprite.flip(!flipDirection);
                     drawSprite.draw();
                 }
                 break;
@@ -117,12 +137,24 @@ public class Player extends Entity {
                 break;
         }
 
-        // rect(getHitBoxX(), getHitBoxY(), hitBoxWidth, hitBoxHeight);
+        // if (frameCount % 2 == 0) {           // debug code to draw hitbox
+        // stroke(255);
+        // for (int x=0; x<width; x++) {
+        //         for (int y=0; y<height; y++) {
+        //             if (collidingWithTest(x, y)) {
+        //                 rect(x, y, 1, 1);
+        //             }
+        //         }
+        //     }
+        // }
 
         popStyle();
 
+        // rect(getHitBoxX(), getHitBoxY(), hitBoxWidth, hitBoxHeight);
+
         if (this == activePlayer) {
             arrow.draw();
+            aimer.draw();
         }
 
         healthBar.draw();
@@ -131,6 +163,10 @@ public class Player extends Entity {
 
     Arrow getArrow() {
         return arrow;
+    }
+
+    Aimer getAimer() {
+        return aimer;
     }
 
     public int getHealth() {
@@ -178,18 +214,34 @@ public class Player extends Entity {
         return x-hitBoxWidth/2;
     }
     public float getHitBoxY() {
-        return y-hitBoxHeight/2+12;
+        return y-hitBoxHeight/2;
     }
 
-    public void addShopItem(PlayerItem i) {
-        items.add(i);
+    public void addShopItem(ShopItemRow item) {
+        if (item.cost > this.points) {
+            println("You don't have enough money to buy");
+        } else {
+            this.updatePoints(this.points-item.cost);
+            items.add(item.playerItem);
+            shop.open(false);
+        }
     }
 
-    public boolean hasUsedShop() {
-        return this.hasUsedShop;
-    }
+    public boolean collidingWithTest(int x, int y) {
+        float halfWidth = getHitBoxWidth()/2;
+        float halfHeight = getHitBoxHeight()/2;
 
-    public void markAsUsedShop() {
-        this.hasUsedShop = true;
+        float translated_x = x - this.x;
+        float translated_y = y - this.y;
+
+        float angle = radians(-planetAngle+90);
+
+        float rotated_x = translated_x * cos(angle) - translated_y * sin(angle);
+        float rotated_y = translated_x * sin(angle) + translated_y * cos(angle);
+
+        rotated_y += 10;
+        rotated_x -= 2;
+
+        return -halfWidth <= rotated_x && rotated_x <= halfWidth && -halfHeight <= rotated_y && rotated_y <= halfHeight;
     }
 }
