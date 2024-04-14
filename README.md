@@ -18,16 +18,16 @@ We've transformed the game into a space-themed version by introducing a gravity 
 
 ### Ideation Process
 
-We have two game ideas at the beginning proposed by two of our team members, which are the two-player bowman game with camera movement and gravity physical engine, and a RPG-like two-player game with storyline, interactions with the envrionment and boss fights.
+We have two game ideas at the beginning proposed by two of our team members, which are the two-player bowman game with camera movement and gravity physical engine, and a RPG-like two-player game with storyline, interactions with the environment and boss fights.
 
-We used paper prototype to mock the outline of these two game's workflow in class to grasp concepts of each. Soon after the mock and dicussions, we collectively decided to pursue the *Bowman* game due to its more specified enhancement and requirements, and its solid gameplay foundation.
+We used paper prototype to mock the outline of these two game's workflow in class to grasp concepts of each. Soon after the mock and discussions, we collectively decided to pursue the *Bowman* game due to its more specified enhancement and requirements, and its solid gameplay foundation.
 
 [![](./assets/thumbnails/Game2_pic.png)](https://drive.google.com/file/d/1X9CZkVwlnULj-P8qy6iIerfCmLlt9J-E/view?usp=sharing )
 
-### User Storeies
+### User Stories
 
 >"As a player, I want to have personalize choices at the start of the game so that I can choose the game's difficulty based on my preferences."  
->"As a player, I want to gain resources through some special behviours in the game, and these resources can be able to trade for special skills, so it is bit more fun."  
+>"As a player, I want to gain resources through some special behaviours in the game, and these resources can be able to trade for special skills, so it is bit more fun."  
 >"As a player, I want to know the force and the direction of my arrow, so I need a sign to acknowledge that."  
 >"As a second player, I want to be able to play the game with my friends, so that I can have fun with two players other than play against the computer."  
 >"As a player, I want to have cases or tutorial examples telling me some of special designs of the game."  
@@ -108,7 +108,7 @@ Additionally, we want to introduced a points collection system to raise the shop
 
 #### Obstacles
 
-The first obstabcle that might occur is the gravity calculation methods that involes physics. So we should take a look into the escape velocity formula for planets, luckily we only have two planets and one object to model.
+The first obstacle that might occur is the gravity calculation methods that involve physics. So we should take a look into the escape velocity formula for planets, luckily we only have two planets and one object to model.
 
 Another barrier is the camera zoom in or zoom out function. The core design is that the other player's position is invisible in this player's turn. So the camera should keep this player at the center of the screen and move follows the arrow after firing.
 [AI player???]
@@ -125,7 +125,7 @@ The highest priority tasks include implementing the physics engine to calculate 
 
 We use the class diagram to help us understand the structures of the system at the very first stage. During the later development process some methods and class might be added or deleted but the main idea remains to our final stage.
 
-We defined the *App* class as the main class that initialization and constantly being called and updated during the whole game progress. Also, we used the *Obj* class as the parent class of *Arrow*, *Pathfinder*, *Planet*, *Player* and so on as they share the same postition at some point.
+We defined the *App* class as the main class that initialization and constantly being called and updated during the whole game progress. Also, we used the *Obj* class as the parent class of *Arrow*, *Pathfinder*, *Planet*, *Player* and so on as they share the same position at some point.
 
  ![](assets/game-idea-imgs/file.png)
 
@@ -133,7 +133,7 @@ We defined the *App* class as the main class that initialization and constantly 
 
 To more clarify the relationships between the classes of the system, we use the communication diagram to help us specify the interactions between classes. This diagram has gived us more detailed insights how classes communicate.
 
-Normally, after the mouse drag and release, the *Amier* will update the tension and direction to *Arrow*, then the *Camera* will move to follow wherever the arrow goes. Also, the positoin and movement of the arrow will update the *Planet* to calculate the gravity of the arrow to define its movement in next frame. Ultimately all the information will be updated in the *App*, the main class to puruse any further movements.
+Normally, after the mouse drag and release, the *Amier* will update the tension and direction to *Arrow*, then the *Camera* will move to follow wherever the arrow goes. Also, the position and movement of the arrow will update the *Planet* to calculate the gravity of the arrow to define its movement in next frame. Ultimately all the information will be updated in the *App*, the main class to puruse any further movements.
 
 ![](assets/game-idea-imgs/CD.png)
 
@@ -155,7 +155,7 @@ To display the whole scene when entering the game to let the players know the ap
 
 To place the player at the center of the screen in this person's turn, we used the status to track if the arrow is fired or not, if it is, the camera will update with the position of the arrow until the collision detection is true.
 
-We also implemented zoom functions to dynamically adjust the camera's scale based on the game status using stack to push and pop zoom scale which allows the camera to switch from any game status. We also used *Linear Interpolation* and frames related funciotns to make the camera's movements smoother.
+We also implemented zoom functions to dynamically adjust the camera's scale based on the game status using stack to push and pop zoom scale which allows the camera to switch from any game status. We also used *Linear Interpolation* and frames related functions to make the camera's movements smoother.
 
 As bunded with the camera movements after firing, we added texts to display the distance that the arrow has flown and magnification related to the points system.
 
@@ -169,7 +169,7 @@ We used the *PVector* (a built-in class in Processing to handle operations on 2D
 
 As for collision detection, we used self-defined hitboxes of planets, players and arrows and calculate the distance among objects to detect any collision.
 
-### 3. AI enemey:
+### 3. AI enemy:
 
 [The gameplay additions can be the third challenges? ]
 
@@ -203,7 +203,7 @@ During the first heuristic analysis we have received complaints about being conf
 
 At first, we managed to add a tutorial content that is shown all the way during the gameplay at the left-down side of the screen.
 
-Then we extened the tutorial mode at the game main page. An Arraylist was used to store all the tutorial messages and each boxed was selected and printed to inform the player what to do, and we created a class named *GUI* to draw any GUI-related contents on the screen.
+Then we extended the tutorial mode at the game main page. An Arraylist was used to store all the tutorial messages and each boxed was selected and printed to inform the player what to do, and we created a class named *GUI* to draw any GUI-related contents on the screen.
 
 ## Evaluation
 
@@ -227,7 +227,7 @@ For this section, Heuristic Analysis was selected as the evaluation method. The 
 
 In our early development stage, we identified the visual clarity of the user interface as the most prominent issue. This included a lack of indication for Player 1 and Player 2, unclear instructions on gameplay, and the absence of a start page and navigation page essential for a comprehensive gaming experience. 
 
-Additionally, the unclearance in the game flow emerged as another significant issue. The player often get lost when learing how to play the game and the main cause of the issue is related to the UI design problem mentioned above. Both issues violated the principle of *visibility of system status*, *user control and freedom* and *help and documentation* in Heuristics Evaluation.
+Additionally, the unclearance in the game flow emerged as another significant issue. The player often get lost when learning how to play the game and the main cause of the issue is related to the UI design problem mentioned above. Both issues violated the principle of *visibility of system status*, *user control and freedom* and *help and documentation* in Heuristics Evaluation.
 
 Moreover, issues with arrow mechanics and camera functionality also impacted usability. Arrows occasionally passed through players without inflicting damage, indicating glitches in the arrow hitbox, categorized under the principles of match between system and real world and flexibility and efficiency of use. Additionally, the camera movement via arrow keys was unnecessary. In our initial design, the random positioning of planets in each game meant that players might not always see their opponent. Allowing users to control the camera with arrow keys violated the principle of *consistency and standards*, as it disrupted established norms within the game environment.
 
@@ -249,7 +249,7 @@ Overall, our experience with Heuristic Analysis proved invaluable to the develop
 
 ### 2. Quantitative Analysis 
 
-**NASA TLX** and **System Usablility Survey (SUS)** were conducted in this part. Each anaylsis was divided into stage 1 (18/03/24) and stage 2. For the NASA TLX, both the easy mode and hard mode were individually tested in each stage of development. However, for the SUS, we conducted only one test in each stage since there was minimal difference in the user interface between the two modes.
+**NASA TLX** and **System Usablility Survey (SUS)** were conducted in this part. Each analysis was divided into stage 1 (18/03/24) and stage 2. For the NASA TLX, both the easy mode and hard mode were individually tested in each stage of development. However, for the SUS, we conducted only one test in each stage since there was minimal difference in the user interface between the two modes.
 
 NASA TLX is a multi-dimensional rating tool used to measure the workload a person experienced when performing a task. On the other hand, SUS is a reliable tool used to measure usability.
 
@@ -508,6 +508,46 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
 ---
 ## Process
 
+### Teamwork
+
+Initially, we had a rough idea of our requirements but were unsure about all the features to be implemented. We adopted the Agile development methodology and followed some of the Agile principles in our game development process in that it allows for more flexibility and adaptability. It enhances the efficiency of the development and offers us many opportunities for idea validation and incremental improvement.
+
+We prioritise getting things done and delivering value, recognising that continuous improvement is better than striving for perfectionism. By breaking the development process into manageable parts, we develop each component of the game in short cycles. We continuously developed working features so that the codebase in the main branch always works. We then can receive timely feedback from the evaluators and make necessary adjustments to improve the quality of the game. Meanwhile, we followed a consistent coding standard and wrote meaningful comments. Therefore, the code is easy to understand for all of us.
+
+### Collaboration Tools and Techniques
+
+We utilised the following tools to facilitate effective collaboration and project management.
+
+Before each sprint, we used Kanban boards on GitHub to have a visual overview of all the tasks and their current status. We prefer to keep things simple and organised in a single workspace, so we do not use other project management platforms. It worked well for us. After each meeting, we updated the tasks on the Kanban board. The urgency of tasks differs, and we focused on the most critical tasks first. For instance, we implemented gravity calculation and camera movement before adding a tutorial and animation. We planned the workload we could commit to using story points to estimate the efforts. Once we reached a consensus and the sprint began, no additional tasks were added. It helps achieve manageable expectations and creates a less stressful and sustainable working pace. 
+
+<p align="center">
+	<img width="60%" src="assets/readme/process-1.png">
+	<br />
+	<em>Kanban board to keep track of all the tasks</em>
+</p>
+
+We primarily communicated through WhatsApp, which keeps everyone connected. We discussed ideas, shared updates and feedback, and sought assistance. Although daily stand-up meetings are part of the Agile development methodology, it is challenging to maintain that frequency. Instead, we opted for a more flexible approach. We held weekly meetings to discuss potential new features. Apart from that, we considered refactoring the code to make it more robust and maintainable, preventing issues and reducing potential bugs in an early stage. The highly effective code after refactoring facilitates a smoother integration of changes.
+
+GitHub serves as our central platform for developing the game collaboratively. We created a separate branch when implementing the features. We could work on the repository simultaneously and avoid breaking the code. After thorough testing, we submitted a pull request. It then might be viewed by other team members. If team members are satisfied with the code, it will get merged into the main branch.
+
+<p align="center">
+	<img width="60%" src="assets/readme/process-2.png">
+	<br />
+	<em>Graph of workflow on GitHub</em>
+</p>
+
+Though we worked separately on our feature branch most of the time, pair programming is an integral part of our development strategy. Whenever we had a face-to-face programming session, we worked in pairs. It is handy in dealing with code that involves adjustments in multiple classes. We fostered a deep understanding of the code and improved the quality of our code through mutual review.
+
+### Role Distribution
+
+Each group member voluntarily takes on a specific role. While we had separate tasks, everyone in the group was involved in all phases of the game development and was ready to help with other tasks as needed.
+- Ada contributed to the development of animation in the game. She focused on the game's aesthetics, which creates an appealing player experience.
+- Li-Hshin(Janet) designed the difficulty level and implemented the winning page of the game.
+- Louis contributed significantly to the game, handling code merges, coding the overall structure, and implementing crucial features such as camera movement and gravity engine.
+- Xinyu created the start menu, and fixed errors throughout the development process of the game.
+- Yining implemented the shop system in the game, which makes the game more engaging to play.
+
+Our team collaborated effectively and gained valuable insights using the Agile development methodology. We acknowledged several good practices during the development of the game. Use of the Kanban board, concise and meaningful documentation of code, creation of branches and pull requests in the version control system to coordinate tasks all lead to desirable outcomes.
 
 
 ---
