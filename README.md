@@ -282,224 +282,227 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
         >
 
    * Hard mode
-       > *Scores*
-          >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
-          >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
-          >| 1 | 65 | 40 | 20 | 65 | 70 | 30 |
-          >| 2 | 60 | 0 | 0 | 0 | 40 | 40 |
-          >| 3 | 75 | 25 | 10 | 90 | 60 | 75 |
-          >| 4 | 65 | 25 | 40 | 75 | 50 | 60 |
-          >| 5 | 45 | 15 | 25 | 0 | 5 | 0 |
-          >| 6 | 50 | 30 | 10 | 50 | 80 | 35 |
-          >| 7 | 50 | 50 | 10 | 60 | 60 | 55 |
-          >| 8 | 60 | 30 | 25 | 50 | 60 | 35 |
-          >| 9 | 60 | 50 | 10 | 70 | 70 | 30 |
-          >| 10 | 55 | 40 | 30 | 50 | 30 | 45 |
-          >
-      > 
+     > *Scores*  
+        >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
+        >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
+        >| 1 | 65 | 40 | 20 | 65 | 70 | 30 |
+        >| 2 | 60 | 0 | 0 | 0 | 40 | 40 |
+        >| 3 | 75 | 25 | 10 | 90 | 60 | 75 |
+        >| 4 | 65 | 25 | 40 | 75 | 50 | 60 |
+        >| 5 | 45 | 15 | 25 | 0 | 5 | 0 |
+        >| 6 | 50 | 30 | 10 | 50 | 80 | 35 |
+        >| 7 | 50 | 50 | 10 | 60 | 60 | 55 |
+        >| 8 | 60 | 30 | 25 | 50 | 60 | 35 |
+        >| 9 | 60 | 50 | 10 | 70 | 70 | 30 |
+        >| 10 | 55 | 40 | 30 | 50 | 30 | 45 |
+        >
+      >
        > *Final Scores*
         >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
         >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
         >| score | 48 | 23 | 56 | 53 | 15 | 43 | 48 | 43 | 48 | 43 |
         >
 
-  > **Analysis between easy and hard mode**
-  > During the game's development, we aimed to ensure users experienced noticeable differences between the easy and hard modes. To achieve this objective, we employed the Wilcoxon signed-rank test to determine whether the difference is significant or not. This tool allowed us to analyze the final scores of the NASA TLX in a rigorous and statistical manner. The decision to use the Wilcoxon signed-rank test was inspired by the approach adopted by the 2023-group-1 team.
-  >
-  > *Wilcoxon sign-ranked test*
-  >Step 1: calculate the difference between NASA TLX score
-    >| Easy Score | Hard Score | Difference (easy - hard)|
-    >| ----- | ----- | ----- |
-    >| 48 | 48 | 0 |
-    >| 50 | 23 | 27 |
-    >| 56 | 56 | 0 |
-    >| 53 | 53 | 0 |
-    >| 16 | 15 | 1 |
-    >| 40 | 43 | -3 |
-    >| 48 | 48 | 0 |
-    >| 39 | 43 | -4 |
-    >| 46 | 48 | -2 |
-    >| 34 | 43 | -9 |
-    >
+> **Analysis between easy and hard mode**
+> 
+> During the game's development, we aimed to ensure users experienced noticeable differences between the easy and hard modes. To achieve this objective, we employed the Wilcoxon signed-rank test to determine whether the difference is significant or not. This tool allowed us to analyze the final scores of the NASA TLX in a rigorous and statistical manner. The decision to use the Wilcoxon signed-rank test was inspired by the approach adopted by the 2023-group-1 team.
 >
-  >Step 2: sort and rank previous table by "difference"
-    >| Rank |  Difference | Rank (after) |
-    >| ---- | ---- | ---- |
-    >| 1 | 0 | 2.5 |
-    >| 2 | 0 | 2.5 |
-    >| 3 | 0 | 2.5 |
-    >| 4 | 0 | 2.5 |
-    >| 5 | 1 | 5 |
-    >| 6 | -2 | -6 |
-    >| 7 | -3 | -7 |
-    >| 8 | -4 | -8 |
-    >| 9 | -9 | -9 |
-    >| 10 | 27 | 10 |
-    >
-  > The sum of the positive signed rank is 25 and the absolute sum of negative signed rank is 30. We selected the smaller one, 25, as our 'W' to compare with critical value. Next, 0.1 was chosen as the "Two-Sided Test &alpha;" value. Referring to the critical values table provided [here](https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_nonparametric/BS704_Nonparametric6.html), our 'W' needed to be smaller than 11 to indicate a significant difference between the easy and hard modes. However, our 'W' was 25, which exceeded the threshold of 11. In essence, this suggests minimal difference between the easy and hard modes. Therefore, the outcome was not as anticipated, and we intend to address this in the next stage of development.
+> *Wilcoxon sign-ranked test*  
+>Step 1: calculate the difference between NASA TLX score
+  >| Easy Score | Hard Score | Difference (easy - hard)|
+  >| ----- | ----- | ----- |
+  >| 48 | 48 | 0 |
+  >| 50 | 23 | 27 |
+  >| 56 | 56 | 0 |
+  >| 53 | 53 | 0 |
+  >| 16 | 15 | 1 |
+  >| 40 | 43 | -3 |
+  >| 48 | 48 | 0 |
+  >| 39 | 43 | -4 |
+  >| 46 | 48 | -2 |
+  >| 34 | 43 | -9 |
+  >
+>
+>Step 2: sort and rank previous table by "difference"
+  >| Rank |  Difference | Rank (after) |
+  >| ---- | ---- | ---- |
+  >| 1 | 0 | 2.5 |
+  >| 2 | 0 | 2.5 |
+  >| 3 | 0 | 2.5 |
+  >| 4 | 0 | 2.5 |
+  >| 5 | 1 | 5 |
+  >| 6 | -2 | -6 |
+  >| 7 | -3 | -7 |
+  >| 8 | -4 | -8 |
+  >| 9 | -9 | -9 |
+  >| 10 | 27 | 10 |
+  >
+> The sum of the positive signed rank is 25 and the absolute sum of negative signed rank is 30. We selected the smaller one, 25, as our 'W' to compare with critical value. Next, 0.1 was chosen as the "Two-Sided Test &alpha;" value. Referring to the critical values table provided [here](https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_nonparametric/BS704_Nonparametric6.html), our 'W' needed to be smaller than 11 to indicate a significant difference between the easy and hard modes. However, our 'W' was 25, which exceeded the threshold of 11. In essence, this suggests minimal difference between the easy and hard modes. Therefore, the outcome was not as anticipated, and we intend to address this in the next stage of development.
 
   
 
 **2. SUS**
 
-  > *Scores*
-    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
-    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-    >| 1 | 4 | 1 | 4 | 2 | 5 | 1 | 4 | 1 | 4 | 1 |
-    >| 2 | 2 | 1 | 3 | 1 | 5 | 1 | 3 | 1 | 3 | 1 |
-    >| 3 | 3 | 5 | 2 | 5 | 4 | 2 | 2 | 4 | 1 | 3 |
-    >| 4 | 3 | 4 | 2 | 4 | 4 | 3 | 4 | 3 | 2 | 2 |
-    >| 5 | 5 | 1 | 5 | 2 | 5 | 1 | 4 | 1 | 5 | 1 |
-    >| 6 | 5 | 1 | 5 | 1 | 5 | 1 | 3 | 1 | 3 | 3 |
-    >| 7 | 3 | 1 | 1 | 2 | 5 | 1 | 4 | 1 | 4 | 2 |
-    >| 8 | 2 | 4 | 2 | 5 | 2 | 3 | 2 | 4 | 4 | 4 |
-    >| 9 | 3 | 3 | 1 | 2 | 3 | 3 | 2 | 4 | 4 | 3 |
-    >| 10 | 1 | 3 | 2 | 4 | 3 | 2 | 4 | 3 | 3 | 4 |
-    >
-  > *Score contribution*
-    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
-    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-    >| 1 | 3 | 4 | 3 | 3 | 4 | 4 | 3 | 4 | 3 | 4 |
-    >| 2 | 1 | 4 | 2 | 4 | 4 | 4 | 2 | 4 | 2 | 4 |
-    >| 3 | 2 | 0 | 1 | 0 | 3 | 3 | 1 | 1 | 0 | 2 |
-    >| 4 | 2 | 1 | 1 | 1 | 3 | 2 | 3 | 2 | 1 | 3 |
-    >| 5 | 4 | 4 | 4 | 3 | 4 | 4 | 3 | 4 | 4 | 4 |
-    >| 6 | 4 | 4 | 4 | 4 | 4 | 4 | 2 | 4 | 2 | 2 |
-    >| 7 | 2 | 4 | 0 | 3 | 4 | 4 | 3 | 4 | 3 | 3 |
-    >| 8 | 1 | 1 | 1 | 0 | 1 | 2 | 1 | 1 | 3 | 1 |
-    >| 9 | 2 | 2 | 0 | 3 | 2 | 2 | 1 | 1 | 3 | 2 |
-    >| 10 | 0 | 2 | 1 | 1 | 2 | 3 | 3 | 2 | 2 | 1 |
-    >
-  > *Final Scores*
-    >|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Avg. |
-    >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-    >| Score | 87.5 | 77.5 | 32.5 | 47.5 | 95 | 85 | 75 | 30 | 45 | 42.5 | 61.8
-    >
-
-  > **Analysis**
-  > Based on the five different SUS score interpretation methods outlined [here](https://measuringu.com/interpret-sus-score/), we opted for the "Adjective" method proposed by [Bangor et al](https://uxpajournal.org/determining-what-individual-sus-scores-mean-adding-an-adjective-rating-scale/). This approach categorizes SUS scores into seven adjective scales: worst imaginable, awful, poor, OK, good, excellent, and best imaginable. The SUS score of our system falls into the "OK" category. While this is an acceptable score for us, we would like to have further improvement in the next stage of development.
+ > *Scores*
+   >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
+   >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+   >| 1 | 4 | 1 | 4 | 2 | 5 | 1 | 4 | 1 | 4 | 1 |
+   >| 2 | 2 | 1 | 3 | 1 | 5 | 1 | 3 | 1 | 3 | 1 |
+   >| 3 | 3 | 5 | 2 | 5 | 4 | 2 | 2 | 4 | 1 | 3 |
+   >| 4 | 3 | 4 | 2 | 4 | 4 | 3 | 4 | 3 | 2 | 2 |
+   >| 5 | 5 | 1 | 5 | 2 | 5 | 1 | 4 | 1 | 5 | 1 |
+   >| 6 | 5 | 1 | 5 | 1 | 5 | 1 | 3 | 1 | 3 | 3 |
+   >| 7 | 3 | 1 | 1 | 2 | 5 | 1 | 4 | 1 | 4 | 2 |
+   >| 8 | 2 | 4 | 2 | 5 | 2 | 3 | 2 | 4 | 4 | 4 |
+   >| 9 | 3 | 3 | 1 | 2 | 3 | 3 | 2 | 4 | 4 | 3 |
+   >| 10 | 1 | 3 | 2 | 4 | 3 | 2 | 4 | 3 | 3 | 4 |
+   >
+ > *Score contribution*
+   >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
+   >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+   >| 1 | 3 | 4 | 3 | 3 | 4 | 4 | 3 | 4 | 3 | 4 |
+   >| 2 | 1 | 4 | 2 | 4 | 4 | 4 | 2 | 4 | 2 | 4 |
+   >| 3 | 2 | 0 | 1 | 0 | 3 | 3 | 1 | 1 | 0 | 2 |
+   >| 4 | 2 | 1 | 1 | 1 | 3 | 2 | 3 | 2 | 1 | 3 |
+   >| 5 | 4 | 4 | 4 | 3 | 4 | 4 | 3 | 4 | 4 | 4 |
+   >| 6 | 4 | 4 | 4 | 4 | 4 | 4 | 2 | 4 | 2 | 2 |
+   >| 7 | 2 | 4 | 0 | 3 | 4 | 4 | 3 | 4 | 3 | 3 |
+   >| 8 | 1 | 1 | 1 | 0 | 1 | 2 | 1 | 1 | 3 | 1 |
+   >| 9 | 2 | 2 | 0 | 3 | 2 | 2 | 1 | 1 | 3 | 2 |
+   >| 10 | 0 | 2 | 1 | 1 | 2 | 3 | 3 | 2 | 2 | 1 |
+   >
+ > *Final Scores*
+   >|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Avg. |
+   >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+   >| Score | 87.5 | 77.5 | 32.5 | 47.5 | 95 | 85 | 75 | 30 | 45 | 42.5 | 61.8
+   >
  
-
+ > **Analysis**
+>  
+ > Based on the five different SUS score interpretation methods outlined [here](https://measuringu.com/interpret-sus-score/), we opted for the "Adjective" method proposed by [Bangor et al](https://uxpajournal.org/determining-what-individual-sus-scores-mean-adding-an-adjective-rating-scale/). This approach categorizes SUS scores into seven adjective scales: worst imaginable, awful, poor, OK, good, excellent, and best imaginable. The SUS score of our system falls into the "OK" category. While this is an acceptable score for us, we would like to have further improvement in the next stage of development.
+ 
+ 
 
 #### Stage 2 (?)
 
 **1. NASA TLX**
 
-* Easy mode
+ * Easy mode
     > *Scores*
-        >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
-        >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
-        >| 1 |  |  |  |  |  |  |
-        >| 2 |  |  |  |  |  |  |
-        >| 3 |  |  |  |  |  |  |
-        >| 4 |  |  |  |  |  |  |
-        >| 5 |  |  |  |  |  |  |
-        >| 6 |  |  |  |  |  |  |
-        >| 7 |  |  |  |  |  |  |
-        >| 8 |  |  |  |  |  |  |
-        >| 9 |  |  |  |  |  |  |
-        >| 10 |  |  |  |  |  |  |
-        >
-      > *Final Scores*
-        >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 
-        >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-        >| score |  |  |  |  |  |  |  |  |  |  |
-        >
+      >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
+      >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
+      >| 1 |  |  |  |  |  |  |
+      >| 2 |  |  |  |  |  |  |
+      >| 3 |  |  |  |  |  |  |
+      >| 4 |  |  |  |  |  |  |
+      >| 5 |  |  |  |  |  |  |
+      >| 6 |  |  |  |  |  |  |
+      >| 7 |  |  |  |  |  |  |
+      >| 8 |  |  |  |  |  |  |
+      >| 9 |  |  |  |  |  |  |
+      >| 10 |  |  |  |  |  |  |
+      >
+    > *Final Scores*
+      >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 
+      >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+      >| score |  |  |  |  |  |  |  |  |  |  |
+      >
 
-* Hard mode
+ * Hard mode
     > *Scores*
-        >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
-        >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
-        >| 1 |  |  |  |  |  |  |
-        >| 2 |  |  |  |  |  |  |
-        >| 3 |  |  |  |  |  |  |
-        >| 4 |  |  |  |  |  |  |
-        >| 5 |  |  |  |  |  |  |
-        >| 6 |  |  |  |  |  |  |
-        >| 7 |  |  |  |  |  |  |
-        >| 8 |  |  |  |  |  |  |
-        >| 9 |  |  |  |  |  |  |
-        >| 10 |  |  |  |  |  |  |
-        >
-      > *Final Scores*
-        >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-        >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-        >| score |  |  |  |  |  |  |  |  |  |  |
-        >
+      >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
+      >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
+      >| 1 |  |  |  |  |  |  |
+      >| 2 |  |  |  |  |  |  |
+      >| 3 |  |  |  |  |  |  |
+      >| 4 |  |  |  |  |  |  |
+      >| 5 |  |  |  |  |  |  |
+      >| 6 |  |  |  |  |  |  |
+      >| 7 |  |  |  |  |  |  |
+      >| 8 |  |  |  |  |  |  |
+      >| 9 |  |  |  |  |  |  |
+      >| 10 |  |  |  |  |  |  |
+      >
+    > *Final Scores*
+      >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+      >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+      >| score |  |  |  |  |  |  |  |  |  |  |
+      >
 
-> **Analysis between easy and hard mode**
+> **Analysis between easy and hard mode**  
 > 
-> *Wilcoxon sign-ranked test*
+> *Wilcoxon sign-ranked test*  
   >Step 1: calculate the difference between NASA TLX score
-    >| Easy Score | Hard Score | Difference (easy - hard)|
-    >| ----- | ----- | ----- |
-    >|  |  |  |
-    >|  |  |  |
-    >|  |  |  |
-    >|  |  |  |
-    >|  |  |  |
-    >|  |  |  |
-    >|  |  |  |
-    >|  |  |  |
-    >|  |  |  |
-    >|  |  |  |
-    >
+   >| Easy Score | Hard Score | Difference (easy - hard)|
+   >| ----- | ----- | ----- |
+   >|  |  |  |
+   >|  |  |  |
+   >|  |  |  |
+   >|  |  |  |
+   >|  |  |  |
+   >|  |  |  |
+   >|  |  |  |
+   >|  |  |  |
+   >|  |  |  |
+   >|  |  |  |
+   >
 >
-  >Step 2: sort and rank previous table by "difference"
-    >| Rank |  Difference | Rank (after) |
-    >| ---- | ---- | ---- |
-    >| 1 |  |  |
-    >| 2 |  |  |
-    >| 3 |  |  |
-    >| 4 |  |  |
-    >| 5 |  |  |
-    >| 6 |  |  |
-    >| 7 |  |  |
-    >| 8 |  |  |
-    >| 9 |  |  |
-    >| 10 |  |  |
-    >
+  >Step 2: sort and rank previous table by "difference"  
+   >| Rank |  Difference | Rank (after) |
+   >| ---- | ---- | ---- |
+   >| 1 |  |  |
+   >| 2 |  |  |
+   >| 3 |  |  |
+   >| 4 |  |  |
+   >| 5 |  |  |
+   >| 6 |  |  |
+   >| 7 |  |  |
+   >| 8 |  |  |
+   >| 9 |  |  |
+   >| 10 |  |  |
+   >
 > -(Analysis result and conclusion)
 
 **2. SUS**
 
   > *Scores*
-    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
-    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-    >| 1 |  |  |  |  |  |  |  |  |  |  |
-    >| 2 |  |  |  |  |  |  |  |  |  |  |
-    >| 3 |  |  |  |  |  |  |  |  |  |  |
-    >| 4 |  |  |  |  |  |  |  |  |  |  |
-    >| 5 |  |  |  |  |  |  |  |  |  |  |
-    >| 6 |  |  |  |  |  |  |  |  |  |  |
-    >| 7 |  |  |  |  |  |  |  |  |  |  |
-    >| 8 |  |  |  |  |  |  |  |  |  |  |
-    >| 9 |  |  |  |  |  |  |  |  |  |  |
-    >| 10 |  |  |  |  |  |  |  |  |  |  |
-    >
-  > *Score contribution*
-    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
-    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-    >| 1 |  |  |  |  |  |  |  |  |  |  |
-    >| 2 |  |  |  |  |  |  |  |  |  |  |
-    >| 3 |  |  |  |  |  |  |  |  |  |  |
-    >| 4 |  |  |  |  |  |  |  |  |  |  |
-    >| 5 |  |  |  |  |  |  |  |  |  |  |
-    >| 6 |  |  |  |  |  |  |  |  |  |  |
-    >| 7 |  |  |  |  |  |  |  |  |  |  |
-    >| 8 |  |  |  |  |  |  |  |  |  |  |
-    >| 9 |  |  |  |  |  |  |  |  |  |  |
-    >| 10 |  |  |  |  |  |  |  |  |  |  |
-    >
-  > *Final Scores*
-    >|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Avg. |
-    >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-    >| Score |  |  |  |  |  |  |  |  |  |  | 
-    >
+   >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
+   >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+   >| 1 |  |  |  |  |  |  |  |  |  |  |
+   >| 2 |  |  |  |  |  |  |  |  |  |  |
+   >| 3 |  |  |  |  |  |  |  |  |  |  |
+   >| 4 |  |  |  |  |  |  |  |  |  |  |
+   >| 5 |  |  |  |  |  |  |  |  |  |  |
+   >| 6 |  |  |  |  |  |  |  |  |  |  |
+   >| 7 |  |  |  |  |  |  |  |  |  |  |
+   >| 8 |  |  |  |  |  |  |  |  |  |  |
+   >| 9 |  |  |  |  |  |  |  |  |  |  |
+   >| 10 |  |  |  |  |  |  |  |  |  |  |
+   >
+ > *Score contribution*
+   >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
+   >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+   >| 1 |  |  |  |  |  |  |  |  |  |  |
+   >| 2 |  |  |  |  |  |  |  |  |  |  |
+   >| 3 |  |  |  |  |  |  |  |  |  |  |
+   >| 4 |  |  |  |  |  |  |  |  |  |  |
+   >| 5 |  |  |  |  |  |  |  |  |  |  |
+   >| 6 |  |  |  |  |  |  |  |  |  |  |
+   >| 7 |  |  |  |  |  |  |  |  |  |  |
+   >| 8 |  |  |  |  |  |  |  |  |  |  |
+   >| 9 |  |  |  |  |  |  |  |  |  |  |
+   >| 10 |  |  |  |  |  |  |  |  |  |  |
+   >
+ > *Final Scores*
+   >|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Avg. |
+   >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+   >| Score |  |  |  |  |  |  |  |  |  |  | 
+   >
 
 
 
 > **Analysis**
+> 
 > -(Analysis result and conclusion)
 
 ---
