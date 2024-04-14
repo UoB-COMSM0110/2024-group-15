@@ -207,12 +207,12 @@ Then we extened the tutorial mode at the game main page. An Arraylist was used t
 
 ## Evaluation
 
-We divided this part into **Qualitative Analysis** and **Quantitative Analysis**.
-(TBC...)
+We segmented this section into two components: **Qualitative Analysis** and **Quantitative Analysis**. Employing these analyses throughout our development phase facilitated the identification and resolution of various issues such as user interface, user experience, and game logic.
+
 
 ### 1. Qualitative Analysis 
 
-For this part, Heuristic analysis was chosen as the methods of evaluation. (S1/ S2)...
+For this section, Heuristic Analysis was selected as the evaluation method. The analysis was conducted in two stages: Stage 1, during the early development phase, and Stage 2, during the later development stage following Easter. The dual-stage approach was implemented to capture shortcomings and subsequent improvements throughout the process.
 
 
 #### Stage 1: Heuristic Analysis (11/03/24)
@@ -220,30 +220,40 @@ For this part, Heuristic analysis was chosen as the methods of evaluation. (S1/ 
 
 | Interface        | Issue                                                                               | Heuristic(s) | Frequency (0-4) | Impact (0-4, easy-difficult) | Persistence (0-4, once-repeated) | Severity=AVG(Freq+Impact+Persistence) |
 |------------------|-------------------------------------------------------------------------------------|--------------|-----------------|------------------------------|----------------------------------|---------------------------------------|
-| UI               | Visually Unclear (Who is P1, P2, is it even 2 player? no UI etc, Where do I shoot?) | 1, 3, 10     | 4               | 3                            | 4                                | 3.66                                  |
-| Arrow (Obj)      | Arrow hitbox glitches sometimes                                                     | 5, 7         | 1               | 2                            | 2                                | 1.66                                  |
-| Game Logic (App) | Game flow is unclear                                                                | 1, 3, 10     | 3               | 3                            | 1 (when learning)                | 2.33                                  |
-| Camera           | Camera movement with arrow keys doesn't make sense                                  | 3, 4, 10     | 1               | 4                            | 1                                | 2                                     |
+| UI               | visually unclear  | 1, 3, 10     | 4               | 3                            | 4                                | 3.66                                  |
+| Arrow (Obj)      | arrow hitbox glitches sometimes                                                     | 2, 7         | 1               | 2                            | 2                                | 1.66                                  |
+| Game Logic (App) | game flow is unclear                                                                | 1, 3, 10     | 3               | 3                            | 1 (when learning)                | 2.33                                  |
+| Camera           | camera movement with arrow keys doesn't make sense                                  | 4     | 1               | 4                            | 1                                | 2                                     |
 
-From this table, we observed that...
+In our early development stage, we identified the visual clarity of the user interface as the most prominent issue. This included a lack of indication for Player 1 and Player 2, unclear instructions on gameplay, and the absence of a start page and navigation page essential for a comprehensive gaming experience. 
 
-#### Stage 2: Heuristic Analysis (?)
+Additionally, the unclearance in the game flow emerged as another significant issue. The player often get lost when learing how to play the game and the main cause of the issue is related to the UI design problem mentioned above. Both issues violated the principle of *visibility of system status*, *user control and freedom* and *help and documentation* in Heuristics Evaluation.
+
+Moreover, issues with arrow mechanics and camera functionality also impacted usability. Arrows occasionally passed through players without inflicting damage, indicating glitches in the arrow hitbox, categorized under the principles of match between system and real world and flexibility and efficiency of use. Additionally, the camera movement via arrow keys was unnecessary. In our initial design, the random positioning of planets in each game meant that players might not always see their opponent. Allowing users to control the camera with arrow keys violated the principle of *consistency and standards*, as it disrupted established norms within the game environment.
+
+
+
+
+#### Stage 2: Heuristic Analysis (13/04/24)
 
 | Interface        | Issue                                                                               | Heuristic(s) | Frequency (0-4) | Impact (0-4, easy-difficult) | Persistence (0-4, once-repeated) | Severity=AVG(Freq+Impact+Persistence) |
 |------------------|-------------------------------------------------------------------------------------|--------------|-----------------|------------------------------|----------------------------------|---------------------------------------|
+| Game Logic               | cannot skip tutorial or exit during the game | 1, 3     | 2               | 1                            | 4                                | 2.33                                  |
 
 
-Compared to the stage 1 table...(is solved)
-We can notice that... (new problem)
+During stage 1 and stage 2, we have solved all the issues occured in stage 1 table. After the second Heuristic Anaysis, one more issue related to game logic was found. During the game or tutorial, the system didn't provide any skip or exit button, which broke the principle of *visibility of system status* and *user control and freedom*.
+
+Overall, our experience with Heuristic Analysis proved invaluable to the development process. After pinpointing issues within the game, this method provided a comprehensive evaluation of usability, allowing us to concentrate our efforts on specific principles for improvement. Moreover, the severity indication, determined by frequency, impact, and persistence, enabled us to prioritize issues effectively, addressing those with the highest importance promptly.
+
 
 
 ### 2. Quantitative Analysis 
 
-**NASA TLX** and **System Usablility Survey (SUS)** were conducted in this part. Each anaylsis was divided into stage 1 (18/03/24) and stage 2. For each stage, easy mode and hard mode were tested separately.
+**NASA TLX** and **System Usablility Survey (SUS)** were conducted in this part. Each anaylsis was divided into stage 1 (18/03/24) and stage 2. For the NASA TLX, both the easy mode and hard mode were individually tested in each stage of development. However, for the SUS, we conducted only one test in each stage since there was minimal difference in the user interface between the two modes.
 
-NASA TLX is used to .... On the other hand, SUS is adopted to...
+NASA TLX is a multi-dimensional rating tool used to measure the workload a person experienced when performing a task. On the other hand, SUS is a reliable tool used to measure usability.
 
-In stage 1, the main difference between easy mode and hard mode is whether the pathfinder is opened. As for stage 2, ...
+In stage 1, the main difference between easy mode and hard mode is whether the *pathfinder* is opened. As for stage 2, ...
 
 
 
@@ -261,13 +271,122 @@ In stage 1, the main difference between easy mode and hard mode is whether the p
         >| 5 | 50 | 20 | 25 | 0 | 0 | 0 |
         >| 6 | 50 | 25 | 5 | 50 | 75 | 35 |
         >| 7 | 50 | 50 | 15 | 60 | 65 | 50 |
-        >| 8 |  |  |  |  |  |  |
-        >| 9 |  |  |  |  |  |  |
-        >| 10 |  |  |  |  |  |  |
+        >| 8 | 55 | 30 | 15 | 50 | 60 | 25 |
+        >| 9 | 60 | 40 | 10 | 65 | 70 | 30 |
+        >| 10 | 50 | 30 | 20 | 50 | 20 | 35 |
+        >
+      > *Final Scores*
+        >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+        >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+        >| score | 48 | 50 | 56 | 53 | 16 | 40 | 48 | 39 | 46 | 34 |
         >
 
+   * Hard mode
+       > *Scores*
+          >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
+          >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
+          >| 1 | 65 | 40 | 20 | 65 | 70 | 30 |
+          >| 2 | 60 | 0 | 0 | 0 | 40 | 40 |
+          >| 3 | 75 | 25 | 10 | 90 | 60 | 75 |
+          >| 4 | 65 | 25 | 40 | 75 | 50 | 60 |
+          >| 5 | 45 | 15 | 25 | 0 | 5 | 0 |
+          >| 6 | 50 | 30 | 10 | 50 | 80 | 35 |
+          >| 7 | 50 | 50 | 10 | 60 | 60 | 55 |
+          >| 8 | 60 | 30 | 25 | 50 | 60 | 35 |
+          >| 9 | 60 | 50 | 10 | 70 | 70 | 30 |
+          >| 10 | 55 | 40 | 30 | 50 | 30 | 45 |
+          >
+      > 
+       > *Final Scores*
+        >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+        >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+        >| score | 48 | 23 | 56 | 53 | 15 | 43 | 48 | 43 | 48 | 43 |
+        >
 
-      > *Dimension weighting*
+  > **Analysis between easy and hard mode**
+  > During the game's development, we aimed to ensure users experienced noticeable differences between the easy and hard modes. To achieve this objective, we employed the Wilcoxon signed-rank test to determine whether the difference is significant or not. This tool allowed us to analyze the final scores of the NASA TLX in a rigorous and statistical manner. The decision to use the Wilcoxon signed-rank test was inspired by the approach adopted by the 2023-group-1 team.
+  >
+  > *Wilcoxon sign-ranked test*
+  >Step 1: calculate the difference between NASA TLX score
+    >| Easy Score | Hard Score | Difference (easy - hard)|
+    >| ----- | ----- | ----- |
+    >| 48 | 48 | 0 |
+    >| 50 | 23 | 27 |
+    >| 56 | 56 | 0 |
+    >| 53 | 53 | 0 |
+    >| 16 | 15 | 1 |
+    >| 40 | 43 | -3 |
+    >| 48 | 48 | 0 |
+    >| 39 | 43 | -4 |
+    >| 46 | 48 | -2 |
+    >| 34 | 43 | -9 |
+    >
+>
+  >Step 2: sort and rank previous table by "difference"
+    >| Rank |  Difference | Rank (after) |
+    >| ---- | ---- | ---- |
+    >| 1 | 0 | 2.5 |
+    >| 2 | 0 | 2.5 |
+    >| 3 | 0 | 2.5 |
+    >| 4 | 0 | 2.5 |
+    >| 5 | 1 | 5 |
+    >| 6 | -2 | -6 |
+    >| 7 | -3 | -7 |
+    >| 8 | -4 | -8 |
+    >| 9 | -9 | -9 |
+    >| 10 | 27 | 10 |
+    >
+  > The sum of the positive signed rank is 25 and the absolute sum of negative signed rank is 30. We selected the smaller one, 25, as our 'W' to compare with critical value. Next, 0.1 was chosen as the "Two-Sided Test &alpha;" value. Referring to the critical values table provided [here](https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_nonparametric/BS704_Nonparametric6.html), our 'W' needed to be smaller than 11 to indicate a significant difference between the easy and hard modes. However, our 'W' was 25, which exceeded the threshold of 11. In essence, this suggests minimal difference between the easy and hard modes. Therefore, the outcome was not as anticipated, and we intend to address this in the next stage of development.
+
+  
+
+**2. SUS**
+
+  > *Scores*
+    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
+    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+    >| 1 | 4 | 1 | 4 | 2 | 5 | 1 | 4 | 1 | 4 | 1 |
+    >| 2 | 2 | 1 | 3 | 1 | 5 | 1 | 3 | 1 | 3 | 1 |
+    >| 3 | 3 | 5 | 2 | 5 | 4 | 2 | 2 | 4 | 1 | 3 |
+    >| 4 | 3 | 4 | 2 | 4 | 4 | 3 | 4 | 3 | 2 | 2 |
+    >| 5 | 5 | 1 | 5 | 2 | 5 | 1 | 4 | 1 | 5 | 1 |
+    >| 6 | 5 | 1 | 5 | 1 | 5 | 1 | 3 | 1 | 3 | 3 |
+    >| 7 | 3 | 1 | 1 | 2 | 5 | 1 | 4 | 1 | 4 | 2 |
+    >| 8 | 2 | 4 | 2 | 5 | 2 | 3 | 2 | 4 | 4 | 4 |
+    >| 9 | 3 | 3 | 1 | 2 | 3 | 3 | 2 | 4 | 4 | 3 |
+    >| 10 | 1 | 3 | 2 | 4 | 3 | 2 | 4 | 3 | 3 | 4 |
+    >
+  > *Score contribution*
+    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
+    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+    >| 1 | 3 | 4 | 3 | 3 | 4 | 4 | 3 | 4 | 3 | 4 |
+    >| 2 | 1 | 4 | 2 | 4 | 4 | 4 | 2 | 4 | 2 | 4 |
+    >| 3 | 2 | 0 | 1 | 0 | 3 | 3 | 1 | 1 | 0 | 2 |
+    >| 4 | 2 | 1 | 1 | 1 | 3 | 2 | 3 | 2 | 1 | 3 |
+    >| 5 | 4 | 4 | 4 | 3 | 4 | 4 | 3 | 4 | 4 | 4 |
+    >| 6 | 4 | 4 | 4 | 4 | 4 | 4 | 2 | 4 | 2 | 2 |
+    >| 7 | 2 | 4 | 0 | 3 | 4 | 4 | 3 | 4 | 3 | 3 |
+    >| 8 | 1 | 1 | 1 | 0 | 1 | 2 | 1 | 1 | 3 | 1 |
+    >| 9 | 2 | 2 | 0 | 3 | 2 | 2 | 1 | 1 | 3 | 2 |
+    >| 10 | 0 | 2 | 1 | 1 | 2 | 3 | 3 | 2 | 2 | 1 |
+    >
+  > *Final Scores*
+    >|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Avg. |
+    >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+    >| Score | 87.5 | 77.5 | 32.5 | 47.5 | 95 | 85 | 75 | 30 | 45 | 42.5 | 61.8
+    >
+
+  > **Analysis**
+  > Based on the five different SUS score interpretation methods outlined [here](https://measuringu.com/interpret-sus-score/), we opted for the "Adjective" method proposed by [Bangor et al](https://uxpajournal.org/determining-what-individual-sus-scores-mean-adding-an-adjective-rating-scale/). This approach categorizes SUS scores into seven adjective scales: worst imaginable, awful, poor, OK, good, excellent, and best imaginable. The SUS score of our system falls into the "OK" category. While this is an acceptable score for us, we would like to have further improvement in the next stage of development.
+ 
+
+
+#### Stage 2 (?)
+
+**1. NASA TLX**
+
+* Easy mode
+    > *Scores*
         >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
         >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
         >| 1 |  |  |  |  |  |  |
@@ -281,217 +400,106 @@ In stage 1, the main difference between easy mode and hard mode is whether the p
         >| 9 |  |  |  |  |  |  |
         >| 10 |  |  |  |  |  |  |
         >
-
       > *Final Scores*
-        >| Score Type | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+        >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 
         >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-        >| raw |  |  |  |  |  |  |  |  |  |  |
-        >| weighted |  |  |  |  |  |  |  |  |  |  |
+        >| score |  |  |  |  |  |  |  |  |  |  |
         >
-
-   * Hard mode
-       > *Scores*
-          >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
-          >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
-          >| 1 | 65 | 40 | 20 | 65 | 70 | 30 |
-          >| 2 | 60 | 0 | 0 | 0 | 40 | 40 |
-          >| 3 | 75 | 25 | 10 | 90 | 60 | 75 |
-          >| 4 | 65 | 25 | 40 | 75 | 50 | 60 |
-          >| 5 |  |  |  |  |  |  |
-          >| 6 |  |  |  |  |  |  |
-          >| 7 |  |  |  |  |  |  |
-          >| 8 |  |  |  |  |  |  |
-          >| 9 |  |  |  |  |  |  |
-          >| 10 |  |  |  |  |  |  |
-          >
-
-       > *Dimension weighting*
-         >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
-          >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
-          >| 1 |  |  |  |  |  |  |
-          >| 2 |  |  |  |  |  |  |
-          >| 3 |  |  |  |  |  |  |
-          >| 4 |  |  |  |  |  |  |
-          >| 5 |  |  |  |  |  |  |
-          >| 6 |  |  |  |  |  |  |
-          >| 7 |  |  |  |  |  |  |
-          >| 8 |  |  |  |  |  |  |
-          >| 9 |  |  |  |  |  |  |
-          >| 10 |  |  |  |  |  |  |
-          >
-
-       > *Final Scores*
-        >| Score Type | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-        >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-        >| raw |  |  |  |  |  |  |  |  |  |  |
-        >| weighted |  |  |  |  |  |  |  |  |  |  |
-        >
-
-  > **Statistical analysis of different difficulties**
-  > -(introduce "Wilcoxon" and why we use it to analyze)
-
-  > *Wilcoxon sign-ranked test*
-  >Step 1: ...
-    (table here)
-
-  >Step 2: ...
-    (table here)
-
-  > -(Analysis result and conclusion)
-
-
-**2. SUS**
-
-* Easy mode
-    > *Scores*
-      >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
-      >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-      >| 1 | 4 | 1 | 4 | 2 | 5 | 1 | 4 | 1 | 4 | 1 |
-      >| 2 | 2 | 1 | 3 | 1 | 5 | 1 | 3 | 1 | 3 | 1 |
-      >| 3 | 3 | 5 | 2 | 5 | 4 | 2 | 2 | 4 | 1 | 3 |
-      >| 4 | 3 | 4 | 2 | 4 | 4 | 3 | 4 | 3 | 2 | 2 |
-      >| 5 | 5 | 1 | 5 | 2 | 5 | 1 | 4 | 1 | 5 | 1 |
-      >| 6 | 5 | 1 | 5 | 1 | 5 | 1 | 3 | 1 | 3 | 3 |
-      >| 7 | 3 | 1 | 1 | 2 | 5 | 1 | 4 | 1 | 4 | 2 |
-      >| 8 |  |  |  |  |  |  |  |  |  |  |
-      >| 9 |  |  |  |  |  |  |  |  |  |  |
-      >| 10 |  |  |  |  |  |  |  |  |  |  |
-      >
-
-    > *Score contribution*
-      >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
-      >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-      >| 1 | 3 | 4 | 3 | 3 | 4 | 4 | 3 | 4 | 3 | 4 |
-      >| 2 | 1 | 4 | 2 | 4 | 4 | 4 | 2 | 4 | 2 | 4 |
-      >| 3 | 2 | 0 | 1 | 0 | 3 | 3 | 1 | 1 | 0 | 2 |
-      >| 4 | 2 | 1 | 1 | 1 | 3 | 2 | 3 | 2 | 1 | 3 |
-      >| 5 | 4 | 4 | 4 | 3 | 4 | 4 | 3 | 4 | 4 | 4 |
-      >| 6 | 4 | 4 | 4 | 4 | 4 | 4 | 2 | 4 | 2 | 2 |
-      >| 7 | 2 | 4 | 0 | 3 | 4 | 4 | 3 | 4 | 3 | 3 |
-      >| 8 |  |  |  |  |  |  |  |  |  |  |
-      >| 9 |  |  |  |  |  |  |  |  |  |  |
-      >| 10 |  |  |  |  |  |  |  |  |  |  |
-      >
-
-    > *Final Scores*
-      >| Score | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-      >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-      >|  |  |  |  |  |  |  |  |  |  |  |
-      >
-
- * Hard mode
-     > *Scores*
-       >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
-      >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-      >| 1 | 3 | 1 | 4 | 2 | 5 | 1 | 4 | 1 | 4 | 1 |
-      >| 2 | 2 | 1 | 3 | 1 | 5 | 1 | 3 | 1 | 3 | 1 |
-      >| 3 | 3 | 5 | 2 | 5 | 4 | 2 | 2 | 4 | 1 | 3 |
-      >| 4 | 3 | 4 | 2 | 4 | 4 | 3 | 4 | 3 | 2 | 2 |
-      >| 5 |  |  |  |  |  |  |  |  |  |  |
-      >| 6 |  |  |  |  |  |  |  |  |  |  |
-      >| 7 |  |  |  |  |  |  |  |  |  |  |
-      >| 8 |  |  |  |  |  |  |  |  |  |  |
-      >| 9 |  |  |  |  |  |  |  |  |  |  |
-      >| 10 |  |  |  |  |  |  |  |  |  |  |
-      >
-
-    > *Score contribution*
-      >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
-      >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-      >| 1 | 2 | 4 | 3 | 3 | 4 | 4 | 3 | 4 | 3 | 4 |
-      >| 2 | 1 | 4 | 2 | 4 | 4 | 4 | 2 | 4 | 2 | 4 |
-      >| 3 | 2 | 0 | 1 | 0 | 3 | 3 | 1 | 1 | 0 | 2 |
-      >| 4 | 2 | 1 | 1 | 1 | 3 | 2 | 3 | 2 | 1 | 3 |
-      >| 5 |  |  |  |  |  |  |  |  |  |  |
-      >| 6 |  |  |  |  |  |  |  |  |  |  |
-      >| 7 |  |  |  |  |  |  |  |  |  |  |
-      >| 8 |  |  |  |  |  |  |  |  |  |  |
-      >| 9 |  |  |  |  |  |  |  |  |  |  |
-      >| 10 |  |  |  |  |  |  |  |  |  |  |
-      >
-
-    > *Final Scores*
-      >| Score | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-      >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-      >|  |  |  |  |  |  |  |  |  |  |  |
-      >
-
-
-  > **Statistical analysis of different difficulties**
-  > -(introduce "..." and why we use it to analyze)
-
-  > *Wilcoxon sign-ranked test*
-  > Step 1: ...
-    (table here)
-
-  > Step 2: ...
-    (table here)
-
-  >-(Analysis result and conclusion)
-
-
-#### Stage 2 (?)
-
-**1. NASA TLX**
-
-* Easy mode
-    > *Scores*
-      (table here)
-
-    > *Dimension weighting*
-      (table here)
-
-    > *Final Scores*
-      (table here)
 
 * Hard mode
     > *Scores*
-      (table here)
+        >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
+        >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
+        >| 1 |  |  |  |  |  |  |
+        >| 2 |  |  |  |  |  |  |
+        >| 3 |  |  |  |  |  |  |
+        >| 4 |  |  |  |  |  |  |
+        >| 5 |  |  |  |  |  |  |
+        >| 6 |  |  |  |  |  |  |
+        >| 7 |  |  |  |  |  |  |
+        >| 8 |  |  |  |  |  |  |
+        >| 9 |  |  |  |  |  |  |
+        >| 10 |  |  |  |  |  |  |
+        >
+      > *Final Scores*
+        >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+        >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+        >| score |  |  |  |  |  |  |  |  |  |  |
+        >
 
-    > *Dimension weighting*
-      (table here)
-
-    > *Final Scores*
-      (table here)
-
-> **Statistical analysis of different difficulties**
+> **Analysis between easy and hard mode**
+> 
 > *Wilcoxon sign-ranked test*
-> Step 1: ...
-  (table here)
-
-> Step 2: ...
-  (table here)
-
+  >Step 1: calculate the difference between NASA TLX score
+    >| Easy Score | Hard Score | Difference (easy - hard)|
+    >| ----- | ----- | ----- |
+    >|  |  |  |
+    >|  |  |  |
+    >|  |  |  |
+    >|  |  |  |
+    >|  |  |  |
+    >|  |  |  |
+    >|  |  |  |
+    >|  |  |  |
+    >|  |  |  |
+    >|  |  |  |
+    >
+>
+  >Step 2: sort and rank previous table by "difference"
+    >| Rank |  Difference | Rank (after) |
+    >| ---- | ---- | ---- |
+    >| 1 |  |  |
+    >| 2 |  |  |
+    >| 3 |  |  |
+    >| 4 |  |  |
+    >| 5 |  |  |
+    >| 6 |  |  |
+    >| 7 |  |  |
+    >| 8 |  |  |
+    >| 9 |  |  |
+    >| 10 |  |  |
+    >
 > -(Analysis result and conclusion)
 
 **2. SUS**
 
-* Easy mode
-    > *Scores*
-      (table here)
+  > *Scores*
+    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
+    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+    >| 1 |  |  |  |  |  |  |  |  |  |  |
+    >| 2 |  |  |  |  |  |  |  |  |  |  |
+    >| 3 |  |  |  |  |  |  |  |  |  |  |
+    >| 4 |  |  |  |  |  |  |  |  |  |  |
+    >| 5 |  |  |  |  |  |  |  |  |  |  |
+    >| 6 |  |  |  |  |  |  |  |  |  |  |
+    >| 7 |  |  |  |  |  |  |  |  |  |  |
+    >| 8 |  |  |  |  |  |  |  |  |  |  |
+    >| 9 |  |  |  |  |  |  |  |  |  |  |
+    >| 10 |  |  |  |  |  |  |  |  |  |  |
+    >
+  > *Score contribution*
+    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
+    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+    >| 1 |  |  |  |  |  |  |  |  |  |  |
+    >| 2 |  |  |  |  |  |  |  |  |  |  |
+    >| 3 |  |  |  |  |  |  |  |  |  |  |
+    >| 4 |  |  |  |  |  |  |  |  |  |  |
+    >| 5 |  |  |  |  |  |  |  |  |  |  |
+    >| 6 |  |  |  |  |  |  |  |  |  |  |
+    >| 7 |  |  |  |  |  |  |  |  |  |  |
+    >| 8 |  |  |  |  |  |  |  |  |  |  |
+    >| 9 |  |  |  |  |  |  |  |  |  |  |
+    >| 10 |  |  |  |  |  |  |  |  |  |  |
+    >
+  > *Final Scores*
+    >|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Avg. |
+    >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+    >| Score |  |  |  |  |  |  |  |  |  |  | 
+    >
 
-    > *Score contribution*
-
-    > *Final Scores*
 
 
- * Hard mode
-     > *Scores*
-       (table here)
-
-    > *Score contribution*
-
-    > *Final Scores*
-
-
-> **Statistical analysis of different difficulties**
-> *Wilcoxon sign-ranked test*
-> Step 1: ...
-  (table here)
-
-> Step 2: ...
-  (table here)
-
+> **Analysis**
 > -(Analysis result and conclusion)
 
 ---
