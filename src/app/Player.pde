@@ -232,6 +232,9 @@ public class Player extends Entity {
     public int getSkipTurns(){
         return roundsOfSkip;
     }
+    public void setRoundsOfSkip(int num){
+        roundsOfSkip = num;
+    }
 
     public void addShopItem(ShopItemRow item) {
         if (item.cost > this.points) {

@@ -462,7 +462,7 @@ public void finishPlayerTurn()
 }
 
 public void handleSkipTurn(){
-    int minSkipRoundsBetweenTwoPlayers = Integer.MAX_VALUE;
+    int minSkipRoundsBetweenTwoPlayers = 0;
     for(Player p: players){
         minSkipRoundsBetweenTwoPlayers = (int)Math.min(minSkipRoundsBetweenTwoPlayers, p.getSkipTurns());
     }
