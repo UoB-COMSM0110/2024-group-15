@@ -2,6 +2,10 @@ class Audio {
     SoundFile wind;
     SoundFile fire;
     SoundFile hit;
+    SoundFile button;
+    SoundFile mainPage;
+    SoundFile success;
+    SoundFile scream;
     boolean start = false;
     boolean stop = false;
     float vol = 0;
@@ -11,6 +15,11 @@ class Audio {
         wind = new SoundFile(app, ASSETS_PATH+"wind.wav");
         fire = new SoundFile(app, ASSETS_PATH+"fire.mp3");
         hit = new SoundFile(app, ASSETS_PATH+"hit.wav");
+        button= new SoundFile(app, ASSETS_PATH+"button.mp3");
+        mainPage= new SoundFile(app, ASSETS_PATH+"mainPage.mp3");
+        success= new SoundFile(app, ASSETS_PATH+"sucess.mp3");
+        scream= new SoundFile(app, ASSETS_PATH+"scream.mp3");
+        
     }
 
     void playWind() {
