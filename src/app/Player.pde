@@ -98,6 +98,8 @@ public class Player extends Entity {
             }
         }
 
+        int indexOfHealthPotion = -1;
+
         for (PlayerItem i: items) {
             switch (i) {
                 case PATHFINDER:
@@ -106,7 +108,14 @@ public class Player extends Entity {
                         pf.draw();
                     }
                     break;
+                case HEALTHPOTION:
+                    indexOfHealthPotion = items.indexOf(i);
+                    break;
             }
+        }
+
+        if(indexOfHealthPotion != -1){
+            useHealthPotion(indexOfHealthPotion);
         }
     }
 
@@ -248,5 +257,13 @@ public class Player extends Entity {
         rotated_x -= 2;
 
         return -halfWidth <= rotated_x && rotated_x <= halfWidth && -halfHeight <= rotated_y && rotated_y <= halfHeight;
+    }
+
+    private void useHealthPotion(int index){
+        if(health < maxHealth){
+            health++;
+        }
+        items.remove(index);
+        finishPlayerTurn();
     }
 }
