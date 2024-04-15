@@ -112,8 +112,8 @@ class StartMenu {
                 hardMode.show();
                 break;
             case NAMES:
-                p1Text.content = "";
-                p2Text.content = "";
+                p1Text.typed = "";
+                p2Text.typed = "";
                 p1Text.show();
                 p2Text.show();
                 startButton.show();

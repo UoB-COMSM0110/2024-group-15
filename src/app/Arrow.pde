@@ -63,7 +63,8 @@ public class Arrow extends Entity {
         }
         previousAngle = degrees;
 
-
+        float speed = sqrt((velocity.x*velocity.x)+(velocity.y*velocity.y));
+        if (!audio.start) audio.wind.amp(speed/50);
         // speed threshold
         if (!speedIsChecked) {
             startFrameCount += 1;
@@ -71,7 +72,6 @@ public class Arrow extends Entity {
                 finishInvalidPlayerTurn();
                 return;
             }
-            float speed = sqrt((velocity.x*velocity.x)+(velocity.y*velocity.y));
             if (speed > 4) {
                 speedAboveThresholdCount += 1;
                 if (speedAboveThresholdCount > 20) {
