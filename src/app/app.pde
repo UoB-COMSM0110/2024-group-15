@@ -420,6 +420,15 @@ public boolean updatePlayerHealths() {
 
             int pointsToAdd = p == activePlayer ? -activePlayer.roundPoints : activePlayer.roundPoints;
             activePlayer.updatePoints(activePlayer.points+pointsToAdd);
+
+            //hit and skip (The arrow hitting the target will cause the target, whoever it is, to skip a turn.)
+            if(activePlayer.items.contains(PlayerItem.HITSKIP)){
+                p.setRoundsOfSkip(p.getSkipTurns() + 1);
+            }
+            // if(!hitThemself && activePlayer.items.contains(PlayerItem.HITSKIP)){
+            //     p.setRoundsOfSkip(p.getSkipTurns() + 1);
+            // }
+
             break;
         }
     }
