@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 /*
 *  the main file where the program is run from
 */
@@ -68,6 +70,8 @@ GameOverPage gameOverPage;
 PlayerMover playerMover;
 GameMenu gameMenu;
 OptionsMenu optionsMenu;
+Audio audio;
+
 
 int shopX, shopY, shopWidth, shopHeight;    // TODO idk about this
 
@@ -108,11 +112,12 @@ public void loadAssets() {
     SFPro = createFont(ASSETS_PATH+"Pixellari.ttf", 24);
 }
 
-
 public void setup()
 {
     frameRate(60);
     loadAssets();
+
+    audio = new Audio(this);
 
     pg0 = createGraphics(
         width,
@@ -306,6 +311,8 @@ public void draw()
 
     gameMenu.draw();
     optionsMenu.draw();
+
+    audio.render();
 }
 
 // Key press handling
@@ -438,6 +445,8 @@ public boolean updatePlayerHealths() {
 
 public void finishPlayerTurn()
 {
+    audio.playHit();
+    audio.stopWind();
     int frameWait = updatePlayerHealths() ? 120 : 60;
     spentArrows.add(new Arrow(activePlayer.getArrow()));
     activePlayer.getArrow().isMoving = false;
