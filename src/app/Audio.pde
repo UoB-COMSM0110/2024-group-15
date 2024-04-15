@@ -9,8 +9,6 @@ class Audio {
     boolean start = false;
     boolean stop = false;
     float vol = 0;
-    float currentVolume = 0.05;
-    float transitionSpeed = 0.01;
 
 
     Audio(PApplet app) {
@@ -55,7 +53,7 @@ class Audio {
 
     void playButton(){
         button.play();
-        button.amp(0.2);
+        button.amp(0.01);
     }
 
     void playSuccess(){

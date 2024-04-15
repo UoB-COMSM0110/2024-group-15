@@ -75,6 +75,11 @@ class StartMenu {
     
 
     void draw() {
+
+        if (!audio.mainPage.isPlaying()) {
+            audio.playmainPage();
+        }
+
         pushStyle();
         fill(255, 255, 255);
         gameTitle.draw();
