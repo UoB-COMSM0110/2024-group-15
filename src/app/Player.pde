@@ -44,6 +44,7 @@ public class Player extends Entity {
     float multiplier = 1;
     PointsBar pointsBar;
 
+    int roundsOfSkip = 0;
 
     Player(Planet planet, int planetAngle, PlayerNum playerNum) {
         super(planet.x, planet.y, 30, 60);
@@ -228,6 +229,9 @@ public class Player extends Entity {
     public float getHitBoxY() {
         return y-hitBoxHeight/2;
     }
+    public int getSkipTurns(){
+        return roundsOfSkip;
+    }
 
     public void addShopItem(ShopItemRow item) {
         if (item.cost > this.points) {
@@ -264,6 +268,11 @@ public class Player extends Entity {
             health++;
         }
         items.remove(index);
+        roundsOfSkip = 3;
         finishPlayerTurn();
+    }
+
+    public void skipTurn(){
+        roundsOfSkip--;
     }
 }
