@@ -39,7 +39,7 @@ public class Player extends Entity {
     int health = maxHealth;
     HealthBar healthBar;
 
-    int points = 0;
+    int points = 1000;
     int roundPoints = 0;
     float multiplier = 1;
     PointsBar pointsBar;
@@ -276,6 +276,9 @@ public class Player extends Entity {
     }
 
     public void skipTurn(){
+        if(roundsOfSkip <= 0){
+            return;
+        }
         roundsOfSkip--;
     }
 }
