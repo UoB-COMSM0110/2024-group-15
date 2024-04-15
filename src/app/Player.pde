@@ -191,6 +191,9 @@ public class Player extends Entity {
     }
 
     public void removeHeart() {
+        if(health == 0){
+            return; 
+        }
         health--;
         healthBar.animateHealthBarLoss();
 
