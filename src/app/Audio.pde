@@ -9,6 +9,8 @@ class Audio {
     boolean start = false;
     boolean stop = false;
     float vol = 0;
+    float currentVolume = 0.05;
+    float transitionSpeed = 0.01;
 
 
     Audio(PApplet app) {
@@ -17,7 +19,7 @@ class Audio {
         hit = new SoundFile(app, ASSETS_PATH+"hit.wav");
         button= new SoundFile(app, ASSETS_PATH+"button.mp3");
         mainPage= new SoundFile(app, ASSETS_PATH+"mainPage.mp3");
-        success= new SoundFile(app, ASSETS_PATH+"sucess.mp3");
+        success= new SoundFile(app, ASSETS_PATH+"success.mp3");
         scream= new SoundFile(app, ASSETS_PATH+"scream.mp3");
         
     }
@@ -32,6 +34,15 @@ class Audio {
         stop = true;
     }
 
+    void playmainPage() {
+        mainPage.loop();
+        mainPage.amp(0.05);
+    }
+
+    void stopmainPage() {
+        mainPage.stop();
+    }
+
     void playFire() {
         fire.play();
         fire.amp(0.25);
@@ -40,6 +51,21 @@ class Audio {
     void playHit() {
         hit.play();
         hit.amp(0.1);
+    }
+
+    void playButton(){
+        button.play();
+        button.amp(0.2);
+    }
+
+    void playSuccess(){
+        success.play();
+        success.amp(0.3);
+    }
+
+    void playScream(){
+        scream.play();
+        scream.amp(0.4);
     }
 
     void render() {

@@ -206,6 +206,7 @@ public class Player extends Entity {
         }
         health--;
         healthBar.animateHealthBarLoss();
+        audio.playScream();
 
         if (status != PlayerStatus.HIT) {
             setSprite(PlayerStatus.HIT);
