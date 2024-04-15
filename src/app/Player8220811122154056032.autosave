@@ -109,7 +109,7 @@ public class Player extends Entity {
                     }
                     break;
                 case HEALTHPOTION:
-                    indexOfHealthPotion = items.indexOf(i);
+                    indexOfHealthPotion = ;
                     break;
             }
         }
@@ -260,10 +260,10 @@ public class Player extends Entity {
     }
 
     private void useHealthPotion(int index){
-        if(health < maxHealth){
-            health++;
+        if(health == maxHealth){
+            return;
         }
+        health++;
         items.remove(index);
-        finishPlayerTurn();
     }
 }

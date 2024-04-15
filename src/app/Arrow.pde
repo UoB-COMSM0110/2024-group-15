@@ -17,7 +17,7 @@ public class Arrow extends Entity {
   boolean speedIsChecked;
   int speedAboveThresholdCount;
   int startFrameCount;
-
+  
   Arrow(float x, float y) {
     super(x, y);
     sprite = imgs.get("arrow");
@@ -102,6 +102,7 @@ public class Arrow extends Entity {
             }
         }
         
+
         super.move();
         camera.setXY(x, y);
     }
