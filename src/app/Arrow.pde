@@ -32,7 +32,7 @@ public class Arrow extends Entity {
     velocity.x = a.velocity.x;
     velocity.y = a.velocity.y;
   }
-
+  
     void move() {
         if (!isMoving) {
             startedMoving = false;

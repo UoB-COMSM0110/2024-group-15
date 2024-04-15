@@ -44,6 +44,8 @@ class Shop extends Obj {
     boolean isOpen = false;
     Button shopCloseButton;
     List<ShopItemRow> shopItemRows = new ArrayList<>();
+    boolean isHintMessageOpen = false;
+    GUIComponent hintMessage = new GUIComponent("You don't have enough money to buy", shopX+shopWidth/2, shopY-50, 24);
 
     Shop() {
         super(shopX, shopY, shopWidth, shopHeight);
@@ -71,6 +73,9 @@ class Shop extends Obj {
         rect(x-20, y-40, shopWidth+20, shopHeight);
         for (ShopItemRow item: shopItemRows) {
             item.draw();
+        }
+        if(isHintMessageOpen){
+            hintMessage.draw();
         }
         shopCloseButton.draw();
         popStyle();
@@ -125,5 +130,9 @@ class Shop extends Obj {
             "recover one of your hearts,\nbut the enemy gets three shots.",
             0
         ));
+    }
+
+    private void showInformationIfMoneyIsNotEnough(){
+        
     }
 }
