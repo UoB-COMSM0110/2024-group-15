@@ -39,7 +39,7 @@ public class Player extends Entity {
     int health = maxHealth;
     HealthBar healthBar;
 
-    int points = 1000;
+    int points = 0;
     int roundPoints = 0;
     float multiplier = 1;
     PointsBar pointsBar;
