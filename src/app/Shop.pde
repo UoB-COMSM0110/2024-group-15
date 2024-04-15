@@ -57,7 +57,10 @@ class Shop extends Obj {
             shopX+shopWidth,
             shopY-50,
             SFPro,
-            () -> { open(false); }
+            () -> { 
+                open(false);
+                isHintMessageOpen = false;
+            }
         );
         shopCloseButton.center = false;
     }
@@ -85,6 +88,10 @@ class Shop extends Obj {
 
     boolean isOpen() {
         return this.isOpen;
+    }
+
+    void setHintMessageOpen(boolean val){
+        isHintMessageOpen = val;
     }
 
     void open(boolean val) {

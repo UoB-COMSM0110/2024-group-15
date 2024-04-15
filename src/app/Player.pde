@@ -223,12 +223,12 @@ public class Player extends Entity {
     public void addShopItem(ShopItemRow item) {
         if (item.cost > this.points) {
             //println("You don't have enough money to buy");
-            shop.isHintMessageOpen = true;
+            shop.setHintMessageOpen(true);
         } else {
             this.updatePoints(this.points-item.cost);
             items.add(item.playerItem);
             shop.open(false);
-            shop.isHintMessageOpen = false;
+            shop.setHintMessageOpen(false);
         }
     }
 
