@@ -44,6 +44,8 @@ class Shop extends Obj {
     boolean isOpen = false;
     Button shopCloseButton;
     List<ShopItemRow> shopItemRows = new ArrayList<>();
+    boolean isHintMessageOpen = false;
+    GUIComponent hintMessage = new GUIComponent("You don't have enough money to buy", shopX+shopWidth/2, shopY-50, 24);
 
     Shop() {
         super(shopX, shopY, shopWidth, shopHeight);
@@ -55,7 +57,10 @@ class Shop extends Obj {
             shopX+shopWidth,
             shopY-50,
             SFPro,
-            () -> { open(false); }
+            () -> { 
+                open(false);
+                isHintMessageOpen = false;
+            }
         );
         shopCloseButton.center = false;
     }
@@ -72,6 +77,9 @@ class Shop extends Obj {
         for (ShopItemRow item: shopItemRows) {
             item.draw();
         }
+        if(isHintMessageOpen){
+            hintMessage.draw();
+        }
         shopCloseButton.draw();
         popStyle();
         camera.apply();
@@ -80,6 +88,10 @@ class Shop extends Obj {
 
     boolean isOpen() {
         return this.isOpen;
+    }
+
+    void setHintMessageOpen(boolean val){
+        isHintMessageOpen = val;
     }
 
     void open(boolean val) {
@@ -125,5 +137,9 @@ class Shop extends Obj {
             "recover one of your hearts,\nbut the enemy gets three shots.",
             0
         ));
+    }
+
+    private void showInformationIfMoneyIsNotEnough(){
+        
     }
 }

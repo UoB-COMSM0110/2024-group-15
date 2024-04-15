@@ -76,6 +76,7 @@ Audio audio;
 int shopX, shopY, shopWidth, shopHeight;    // TODO idk about this
 
 
+
 public void settings() {
     size(screenWidth, screenHeight);    // P2D seems to be too slow
     smooth(8);                          // Anti aliasing
@@ -426,6 +427,15 @@ public boolean updatePlayerHealths() {
 
             int pointsToAdd = p == activePlayer ? -activePlayer.roundPoints : activePlayer.roundPoints;
             activePlayer.updatePoints(activePlayer.points+pointsToAdd);
+
+            //hit and skip (The arrow hitting the target will cause the target, whoever it is, to skip a turn.)
+            if(activePlayer.items.contains(PlayerItem.HITSKIP)){
+                p.setRoundsOfSkip(p.getSkipTurns() + 1);
+            }
+            // if(!hitThemself && activePlayer.items.contains(PlayerItem.HITSKIP)){
+            //     p.setRoundsOfSkip(p.getSkipTurns() + 1);
+            // }
+
             break;
         }
     }
@@ -457,8 +467,26 @@ public void finishPlayerTurn()
         return;
     }
 
-    activePlayer = getOtherPlayer(activePlayer);
+    handleSkipTurn();
+
+    if(getOtherPlayer(activePlayer).roundsOfSkip == 0){
+        activePlayer.skipTurn();
+        activePlayer = getOtherPlayer(activePlayer);    
+    } else {
+        getOtherPlayer(activePlayer).skipTurn();    
+    }
     camera.animateCenterOnObject(activePlayer, frameWait, () -> gameMenu.open());
+    
+}
+
+public void handleSkipTurn(){
+    int minSkipRoundsBetweenTwoPlayers = Integer.MAX_VALUE;
+    for(Player p: players){
+        minSkipRoundsBetweenTwoPlayers = (int)Math.min(minSkipRoundsBetweenTwoPlayers, p.getSkipTurns());
+    }
+    for(Player p: players){
+        p.setRoundsOfSkip(p.getSkipTurns() - minSkipRoundsBetweenTwoPlayers);
+    }
 }
 
 public void finishInvalidPlayerTurn() {
