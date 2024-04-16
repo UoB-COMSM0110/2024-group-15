@@ -148,10 +148,13 @@ Furthermore, these design prototypes help us to focus on one function to impleme
 
 ## Implementation
 
-There are three challenges we defined of the :
-1. Camera movement: a virtual camera should be generated including functions like zoom in and zoom out, centering on specific objects.
-2. Physics engine: 
-3. Gameplay additions
+There were three challenges that we highlighted before the development stage:
+1. Create a camera with functions of centering on specific objects.
+2. Implement physics engine of gravity calculation and collision detection.
+3. Add extra systems of points collection to trade for special skills in a shop system.
+
+During the implementation process, we have also added animations, sound effects, dynamic background and user-specified name function to further enhance users' experiences.
+
 
 ### 1. Camera movement:
   
@@ -186,7 +189,8 @@ As for collision detection, we used self-defined hitboxes of planets, players an
 </p>
 
 ### 3. Gameplay additions:
-Other from the three main challenges, we also added some interesting functions that worth mentioning:
+
+After the basic implementation we improved our game by adding extra contents mentioned below:
 
 1. Shops:  
  
@@ -194,7 +198,7 @@ Initially, we made a pathfinder for debugging which provides a dotted curve line
 
 Moreover, we further broadened the shop system by adding "Health Potion", "Double Strike", "Hit and Skip" functions and its detailed messages. These functions related to players' turn and HP bar so it's quite easy to implement.
 
-2. Points Systems:
+2. Points System:
   
 At the outset, we used the arrow numbers on planets as "points" to trade for skills in the shop.
 Then we thought about linked the magnification to the rotation of the arrow and multiple it to a score when the arrow hit the other player.
@@ -205,8 +209,7 @@ Additionally, we added the *PointsSplash* to add visual effects. It will have a 
 
 3. Moving around the planets:
 
-The *PlayerMover* class is added to let the player move around the planet.
-By clicking on the circular area with the same radius as the planet, we can then calculate the angle between the current and selected positions based on the mouse click.
+The *PlayerMover* class is added to let the player move around the planet. By clicking on the circular area with the same radius as the planet, we can then calculate the angle between the current and selected positions based on the mouse click.
 Then the angle is used for animating the player's movement to the selected position.
 
 <p align="center">
@@ -215,7 +218,7 @@ Then the angle is used for animating the player's movement to the selected posit
 	<em>Player's move, points collection and shop system</em>
 </p>
 
-1. Tutorials:
+4. Tutorials:
 
 During the first heuristic analysis we have received complaints about being confused of operations so we thought about adding some tutorial contents.
 
@@ -271,7 +274,7 @@ Overall, our experience with Heuristic Analysis proved invaluable to the develop
 
 
 
-### 2. Quantitative Analysis 
+### 2. Quantitative Analysis
 
 **NASA TLX** and **System Usablility Survey (SUS)** were conducted in this part. Each analysis was divided into stage 1 (18/03/24) and stage 2. For the NASA TLX, both the easy mode and hard mode were individually tested in each stage of development. However, for the SUS, we conducted only one test in each stage since there was minimal difference in the user interface between the two modes.
 
