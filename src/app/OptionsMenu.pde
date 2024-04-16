@@ -55,6 +55,7 @@ class OptionsMenu extends Obj {
         exitButton.show();
     }
 
+
     void close() {
         isOpen = false;
         playAgainButton.hide();
