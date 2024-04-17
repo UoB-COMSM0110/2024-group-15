@@ -380,6 +380,7 @@ boolean handleButtonClick() {
         }
         else if (b.mouseHovering()) {
             b.handleClick();
+            audio.playButton();
             return true;
         }
     }
