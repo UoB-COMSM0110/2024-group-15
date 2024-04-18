@@ -17,7 +17,7 @@ public class Arrow extends Entity {
   boolean speedIsChecked;
   int speedAboveThresholdCount;
   int startFrameCount;
-
+  
   Arrow(float x, float y) {
     super(x, y);
     sprite = imgs.get("arrow");
@@ -32,7 +32,7 @@ public class Arrow extends Entity {
     velocity.x = a.velocity.x;
     velocity.y = a.velocity.y;
   }
-
+  
     void move() {
         if (!isMoving) {
             startedMoving = false;
@@ -63,7 +63,8 @@ public class Arrow extends Entity {
         }
         previousAngle = degrees;
 
-
+        float speed = sqrt((velocity.x*velocity.x)+(velocity.y*velocity.y));
+        if (!audio.start) audio.wind.amp(speed/50);
         // speed threshold
         if (!speedIsChecked) {
             startFrameCount += 1;
@@ -71,7 +72,6 @@ public class Arrow extends Entity {
                 finishInvalidPlayerTurn();
                 return;
             }
-            float speed = sqrt((velocity.x*velocity.x)+(velocity.y*velocity.y));
             if (speed > 4) {
                 speedAboveThresholdCount += 1;
                 if (speedAboveThresholdCount > 20) {
@@ -102,6 +102,7 @@ public class Arrow extends Entity {
             }
         }
         
+
         super.move();
         camera.setXY(x, y);
     }

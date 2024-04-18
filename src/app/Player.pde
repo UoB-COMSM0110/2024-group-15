@@ -44,6 +44,7 @@ public class Player extends Entity {
     float multiplier = 1;
     PointsBar pointsBar;
 
+    int roundsOfSkip = 0;
 
     Player(Planet planet, int planetAngle, PlayerNum playerNum) {
         super(planet.x, planet.y, 30, 60);
@@ -98,6 +99,8 @@ public class Player extends Entity {
             }
         }
 
+        int indexOfHealthPotion = -1;
+
         for (PlayerItem i: items) {
             switch (i) {
                 case PATHFINDER:
@@ -106,7 +109,14 @@ public class Player extends Entity {
                         pf.draw();
                     }
                     break;
+                case HEALTHPOTION:
+                    indexOfHealthPotion = items.indexOf(i);
+                    break;
             }
+        }
+
+        if(indexOfHealthPotion != -1){
+            useHealthPotion(indexOfHealthPotion);
         }
     }
 
@@ -191,8 +201,12 @@ public class Player extends Entity {
     }
 
     public void removeHeart() {
+        if(health == 0){
+            return; 
+        }
         health--;
         healthBar.animateHealthBarLoss();
+        audio.playScream();
 
         if (status != PlayerStatus.HIT) {
             setSprite(PlayerStatus.HIT);
@@ -216,14 +230,22 @@ public class Player extends Entity {
     public float getHitBoxY() {
         return y-hitBoxHeight/2;
     }
+    public int getSkipTurns(){
+        return roundsOfSkip;
+    }
+    public void setRoundsOfSkip(int num){
+        roundsOfSkip = num;
+    }
 
     public void addShopItem(ShopItemRow item) {
         if (item.cost > this.points) {
-            println("You don't have enough money to buy");
+            //println("You don't have enough money to buy");
+            shop.setHintMessageOpen(true);
         } else {
             this.updatePoints(this.points-item.cost);
             items.add(item.playerItem);
             shop.open(false);
+            shop.setHintMessageOpen(false);
         }
     }
 
@@ -243,5 +265,21 @@ public class Player extends Entity {
         rotated_x -= 2;
 
         return -halfWidth <= rotated_x && rotated_x <= halfWidth && -halfHeight <= rotated_y && rotated_y <= halfHeight;
+    }
+
+    private void useHealthPotion(int index){
+        if(health < maxHealth){
+            health++;
+        }
+        items.remove(index);
+        roundsOfSkip = 3;
+        finishPlayerTurn();
+    }
+
+    public void skipTurn(){
+        if(roundsOfSkip <= 0){
+            return;
+        }
+        roundsOfSkip--;
     }
 }

@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 /*
 *  the main file where the program is run from
 */
@@ -68,8 +70,11 @@ GameOverPage gameOverPage;
 PlayerMover playerMover;
 GameMenu gameMenu;
 OptionsMenu optionsMenu;
+Audio audio;
+
 
 int shopX, shopY, shopWidth, shopHeight;    // TODO idk about this
+
 
 
 public void settings() {
@@ -107,11 +112,12 @@ public void loadAssets() {
     SFPro = createFont(ASSETS_PATH+"Pixellari.ttf", 24);
 }
 
-
 public void setup()
 {
     frameRate(60);
     loadAssets();
+
+    audio = new Audio(this);
 
     pg0 = createGraphics(
         width,
@@ -305,6 +311,8 @@ public void draw()
 
     gameMenu.draw();
     optionsMenu.draw();
+
+    audio.render();
 }
 
 // Key press handling
@@ -372,6 +380,7 @@ boolean handleButtonClick() {
         }
         else if (b.mouseHovering()) {
             b.handleClick();
+            audio.playButton();
             return true;
         }
     }
@@ -419,6 +428,15 @@ public boolean updatePlayerHealths() {
 
             int pointsToAdd = p == activePlayer ? -activePlayer.roundPoints : activePlayer.roundPoints;
             activePlayer.updatePoints(activePlayer.points+pointsToAdd);
+
+            //hit and skip (The arrow hitting the target will cause the target, whoever it is, to skip a turn.)
+            if(activePlayer.items.contains(PlayerItem.HITSKIP)){
+                p.setRoundsOfSkip(p.getSkipTurns() + 1);
+            }
+            // if(!hitThemself && activePlayer.items.contains(PlayerItem.HITSKIP)){
+            //     p.setRoundsOfSkip(p.getSkipTurns() + 1);
+            // }
+
             break;
         }
     }
@@ -428,6 +446,8 @@ public boolean updatePlayerHealths() {
 
 public void finishPlayerTurn()
 {
+    audio.playHit();
+    audio.stopWind();
     int frameWait = updatePlayerHealths() ? 120 : 60;
     spentArrows.add(new Arrow(activePlayer.getArrow()));
     activePlayer.getArrow().isMoving = false;
@@ -448,8 +468,26 @@ public void finishPlayerTurn()
         return;
     }
 
-    activePlayer = getOtherPlayer(activePlayer);
+    handleSkipTurn();
+
+    if(getOtherPlayer(activePlayer).roundsOfSkip == 0){
+        activePlayer.skipTurn();
+        activePlayer = getOtherPlayer(activePlayer);    
+    } else {
+        getOtherPlayer(activePlayer).skipTurn();    
+    }
     camera.animateCenterOnObject(activePlayer, frameWait, () -> gameMenu.open());
+    
+}
+
+public void handleSkipTurn(){
+    int minSkipRoundsBetweenTwoPlayers = Integer.MAX_VALUE;
+    for(Player p: players){
+        minSkipRoundsBetweenTwoPlayers = (int)Math.min(minSkipRoundsBetweenTwoPlayers, p.getSkipTurns());
+    }
+    for(Player p: players){
+        p.setRoundsOfSkip(p.getSkipTurns() - minSkipRoundsBetweenTwoPlayers);
+    }
 }
 
 public void finishInvalidPlayerTurn() {
@@ -494,4 +532,3 @@ public void randomisePlanetLocations() {
         }
     }
 }
-

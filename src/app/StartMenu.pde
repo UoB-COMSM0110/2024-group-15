@@ -33,6 +33,7 @@ class StartMenu {
 
     StartMenu() {
         gameTitle = new GUIComponent("BOWMAN", 70*2, 70);
+        audio.playmainPage();
 
         vsHuman = new Button("vs Human", width/2, height/2+100, SFPro, () -> {
             gameSettings.put("player_mode", Settings.VSHUMAN);
@@ -69,14 +70,17 @@ class StartMenu {
 
         p1Text = new TextBox("Player 1: ", width/2, height/2-100, SFPro);
         p2Text = new TextBox("Player 2: ", width/2, height/2, SFPro);
-
         setState(StartMenuState.VS);
     }
     
 
     void draw() {
-        pushStyle();
 
+        if (!audio.mainPage.isPlaying()) {
+            audio.playmainPage();
+        }
+
+        pushStyle();
         fill(255, 255, 255);
         gameTitle.draw();
 
@@ -94,7 +98,6 @@ class StartMenu {
         // stroke(255);
         // line(width/2, 0, width/2, height);
         // line(0, height/2, width, height/2);
-
         popStyle();
     }
 
@@ -112,8 +115,8 @@ class StartMenu {
                 hardMode.show();
                 break;
             case NAMES:
-                p1Text.content = "";
-                p2Text.content = "";
+                p1Text.typed = "";
+                p2Text.typed = "";
                 p1Text.show();
                 p2Text.show();
                 startButton.show();

@@ -22,10 +22,6 @@ class OptionsMenu extends Obj {
 
     OptionsMenu() {
         super(0, 0);
-        // playAgainButton.center = false;
-        // mainMenuButton.center = false;
-        // exitButton.center = false;
-
         playAgainButton.realPositioning(true);
         mainMenuButton.realPositioning(true);
         exitButton.realPositioning(true);
@@ -58,6 +54,7 @@ class OptionsMenu extends Obj {
         mainMenuButton.show();
         exitButton.show();
     }
+
 
     void close() {
         isOpen = false;

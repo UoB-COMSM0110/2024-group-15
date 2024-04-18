@@ -1,5 +1,8 @@
 # Software Engineering - Group 15
 
+[TODO:game video]
+
+
 ## Team
 
 Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
@@ -11,8 +14,9 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 Our game is a two-player game based on a flash game *Bowman*.
 Normally, the game-play is that players drag the mouse to pull back the bow and shoot, then a camera will follow the arrow to check whether you have shot the target.
 
-We've transformed the game into a space-themed version by introducing a gravity engine to calculate gravity between planets as well as special functions like pathfinder to enhance the original game-play.
-[add more things]
+We've transformed the game into a space-themed version by introducing a gravity engine to calculate gravity between planets as well as points collected system and further shop system to trade for skills like *Pathfinder*. Additionally, the players can also move around the planet for a better position.
+
+During the whole progress, we have put many software engineering techniques into practice, including user-case diagram, class diagram and communication diagram in early design and ideation stage, and Agile workflow and Kanban board was used throughout the developing process, Github is also used for working branches and version control. Better comprehension of software engineering is gained after the group work.
 
 ## Requirements
 
@@ -20,7 +24,7 @@ We've transformed the game into a space-themed version by introducing a gravity 
 
 We have two game ideas at the beginning proposed by two of our team members, which are the two-player bowman game with camera movement and gravity physical engine, and a RPG-like two-player game with storyline, interactions with the environment and boss fights.
 
-We used paper prototype to mock the outline of these two game's workflow in class to grasp concepts of each. Soon after the mock and discussions, we collectively decided to pursue the *Bowman* game due to its more specified enhancement and requirements, and its solid gameplay foundation.
+Our team used paper prototype to mock the outline of these two game's workflow in class to grasp concepts of each. Soon after the mock and discussions, we collectively decided to pursue the *Bowman* game due to its more specified enhancement and requirements, and its solid gameplay foundation.
 
 [![](./assets/thumbnails/Game2_pic.png)](https://drive.google.com/file/d/1X9CZkVwlnULj-P8qy6iIerfCmLlt9J-E/view?usp=sharing )
 
@@ -111,7 +115,6 @@ Additionally, we want to introduced a points collection system to raise the shop
 The first obstacle that might occur is the gravity calculation methods that involve physics. So we should take a look into the escape velocity formula for planets, luckily we only have two planets and one object to model.
 
 Another barrier is the camera zoom in or zoom out function. The core design is that the other player's position is invisible in this player's turn. So the camera should keep this player at the center of the screen and move follows the arrow after firing.
-[AI player???]
 
 #### TODO list
 
@@ -129,7 +132,7 @@ We defined the *App* class as the main class that initialization and constantly 
 
  ![](assets/game-idea-imgs/file.png)
 
-### Modelling behaviour: Communication diagrams
+### Modelling behaviour: Communication diagram
 
 To more clarify the relationships between the classes of the system, we use the communication diagram to help us specify the interactions between classes. This diagram has gived us more detailed insights how classes communicate.
 
@@ -145,7 +148,13 @@ Furthermore, these design prototypes help us to focus on one function to impleme
 
 ## Implementation
 
-[three areas of challenging]-[needed simplify to under 750 words...]
+There were three challenges that we highlighted before the development stage:
+1. Create a camera with functions of centering on specific objects.
+2. Implement physics engine of gravity calculation and collision detection.
+3. Add extra systems of points collection to trade for special skills in a shop system.
+
+During the implementation process, we have also added animations, sound effects, dynamic background and user-specified name function to further enhance users' experiences.
+
 
 ### 1. Camera movement:
   
@@ -159,9 +168,13 @@ We also implemented zoom functions to dynamically adjust the camera's scale base
 
 As bunded with the camera movements after firing, we added texts to display the distance that the arrow has flown and magnification related to the points system.
 
-[demonstration video]
+<p align="center">
+	<img width="60%" src="assets/readme/camera.gif">
+	<br />
+	<em>Camera's movements during the game</em>
+</p>
 
-### 2. Gravity engine:
+### 2. Physics engine:
 
 Gravity mechanics would need to be implemented for this idea (as it is set in space) and the balance between realism and difficulty would need to be found. Also, we need to set hit boxes to detect collision and change further status.
 
@@ -169,12 +182,15 @@ We used the *PVector* (a built-in class in Processing to handle operations on 2D
 
 As for collision detection, we used self-defined hitboxes of planets, players and arrows and calculate the distance among objects to detect any collision.
 
-### 3. AI enemy:
+<p align="center">
+	<img width="60%" src="assets/readme/engine.gif">
+	<br />
+	<em>The demonstration of gravity calculation and collistion detection</em>
+</p>
 
-[The gameplay additions can be the third challenges? ]
+### 3. Gameplay additions:
 
-### 4. Gameplay additions:
-Other from the three main challenges, we also added some interesting functions that worth mentioning:
+After the basic implementation we improved our game by adding extra contents mentioned below:
 
 1. Shops:  
  
@@ -182,7 +198,7 @@ Initially, we made a pathfinder for debugging which provides a dotted curve line
 
 Moreover, we further broadened the shop system by adding "Health Potion", "Double Strike", "Hit and Skip" functions and its detailed messages. These functions related to players' turn and HP bar so it's quite easy to implement.
 
-2. Points Systems:
+2. Points System:
   
 At the outset, we used the arrow numbers on planets as "points" to trade for skills in the shop.
 Then we thought about linked the magnification to the rotation of the arrow and multiple it to a score when the arrow hit the other player.
@@ -193,9 +209,14 @@ Additionally, we added the *PointsSplash* to add visual effects. It will have a 
 
 3. Moving around the planets:
 
-The *PlayerMover* class is added to let the player move around the planet.
-By clicking on the circular area with the same radius as the planet, we can then calculate the angle between the current and selected positions based on the mouse click.
+The *PlayerMover* class is added to let the player move around the planet. By clicking on the circular area with the same radius as the planet, we can then calculate the angle between the current and selected positions based on the mouse click.
 Then the angle is used for animating the player's movement to the selected position.
+
+<p align="center">
+	<img width="60%" src="assets/readme/additions.gif">
+	<br />
+	<em>Player's move, points collection and shop system</em>
+</p>
 
 4. Tutorials:
 
@@ -204,6 +225,12 @@ During the first heuristic analysis we have received complaints about being conf
 At first, we managed to add a tutorial content that is shown all the way during the gameplay at the left-down side of the screen.
 
 Then we extended the tutorial mode at the game main page. An Arraylist was used to store all the tutorial messages and each boxed was selected and printed to inform the player what to do, and we created a class named *GUI* to draw any GUI-related contents on the screen.
+
+<p align="center">
+	<img width="60%" src="assets/readme/tutorials.gif">
+	<br />
+	<em>Tutorial demonstration</em>
+</p>
 
 ## Evaluation
 
@@ -247,7 +274,7 @@ Overall, our experience with Heuristic Analysis proved invaluable to the develop
 
 
 
-### 2. Quantitative Analysis 
+### 2. Quantitative Analysis
 
 **NASA TLX** and **System Usablility Survey (SUS)** were conducted in this part. Each analysis was divided into stage 1 (18/03/24) and stage 2. For the NASA TLX, both the easy mode and hard mode were individually tested in each stage of development. However, for the SUS, we conducted only one test in each stage since there was minimal difference in the user interface between the two modes.
 
