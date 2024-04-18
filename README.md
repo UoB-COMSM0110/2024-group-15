@@ -253,7 +253,7 @@ Overall, our experience with Heuristic Analysis proved invaluable to the develop
 
 NASA TLX is a multi-dimensional rating tool used to measure the workload a person experienced when performing a task. On the other hand, SUS is a reliable tool used to measure usability.
 
-In stage 1, the main difference between easy mode and hard mode is whether the *pathfinder* is opened. As for stage 2, ...
+In stage 1, the main difference between easy mode and hard mode is whether the *pathfinder* is opened. **As for stage 2, we adjust the distance between two planets, easy mode would be closer and hard mode would be far. In essence, this setting make player not able to see each other when playing in hard mode.**
 
 
 
@@ -504,6 +504,9 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
 > **Analysis**
 > 
 > -(Analysis result and conclusion)
+>
+### 3. Unit Testing
+
 
 ---
 ## Process
