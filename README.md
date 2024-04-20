@@ -248,8 +248,8 @@ For this section, Heuristic Analysis was selected as the evaluation method. The 
 | Interface        | Issue                                                                               | Heuristic(s) | Frequency (0-4) | Impact (0-4, easy-difficult) | Persistence (0-4, once-repeated) | Severity=AVG(Freq+Impact+Persistence) |
 |------------------|-------------------------------------------------------------------------------------|--------------|-----------------|------------------------------|----------------------------------|---------------------------------------|
 | UI               | visually unclear  | 1, 3, 10     | 4               | 3                            | 4                                | 3.66                                  |
-| Arrow (Obj)      | arrow hitbox glitches sometimes                                                     | 2, 7         | 1               | 2                            | 2                                | 1.66                                  |
 | Game Logic (App) | game flow is unclear                                                                | 1, 3, 10     | 3               | 3                            | 1 (when learning)                | 2.33                                  |
+| Arrow (Obj)      | arrow hitbox glitches sometimes                                                     | 2, 7         | 2               | 3                            | 2                                | 2.33                                  |
 | Camera           | camera movement with arrow keys doesn't make sense                                  | 4     | 1               | 4                            | 1                                | 2                                     |
 
 In our early development stage, we identified the visual clarity of the user interface as the most prominent issue. This included a lack of indication for Player 1 and Player 2, unclear instructions on gameplay, and the absence of a start page and navigation page essential for a comprehensive gaming experience. 
@@ -261,26 +261,26 @@ Moreover, issues with arrow mechanics and camera functionality also impacted usa
 
 
 
-#### Stage 2: Heuristic Analysis (13/04/24)
+#### Stage 2: Heuristic Analysis (19/04/24)
 
 | Interface        | Issue                                                                               | Heuristic(s) | Frequency (0-4) | Impact (0-4, easy-difficult) | Persistence (0-4, once-repeated) | Severity=AVG(Freq+Impact+Persistence) |
 |------------------|-------------------------------------------------------------------------------------|--------------|-----------------|------------------------------|----------------------------------|---------------------------------------|
-| Game Logic               | cannot skip tutorial or exit during the game | 1, 3     | 2               | 1                            | 4                                | 2.33                                  |
+| Game Logic               | cannot skip tutorial or exit during the game | 1, 3     | 1               | 1                            | 4                                | 2                                  |
 
 
-During stage 1 and stage 2, we have solved all the issues occured in stage 1 table. After the second Heuristic Anaysis, one more issue related to game logic was found. During the game or tutorial, the system didn't provide any skip or exit button, which broke the principle of *visibility of system status* and *user control and freedom*.
+During stage 1 and stage 2, we have solved all the issues occured in stage 1 table. After the second Heuristic Anaysis, one more issue related to game logic was found. During the game or tutorial, the system didn't provide any skip or exit button, which broke the principle of *visibility of system status* and *user control and freedom*. Given the relatively low severity, we intend to address the improvement of this issue in future work.
 
 Overall, our experience with Heuristic Analysis proved invaluable to the development process. After pinpointing issues within the game, this method provided a comprehensive evaluation of usability, allowing us to concentrate our efforts on specific principles for improvement. Moreover, the severity indication, determined by frequency, impact, and persistence, enabled us to prioritize issues effectively, addressing those with the highest importance promptly.
 
 
 
-### 2. Quantitative Analysis
+### 2. Quantitative Analysis 
 
-**NASA TLX** and **System Usablility Survey (SUS)** were conducted in this part. Each analysis was divided into stage 1 (18/03/24) and stage 2. For the NASA TLX, both the easy mode and hard mode were individually tested in each stage of development. However, for the SUS, we conducted only one test in each stage since there was minimal difference in the user interface between the two modes.
+**NASA TLX** and **System Usablility Survey (SUS)** were conducted in this part. Each analysis was divided into two stages. For the NASA TLX, both the easy mode and hard mode were individually tested in each stage of development. However, for the SUS, we conducted only one test in each stage since there was minimal difference in the user interface between the two modes.
 
 NASA TLX is a multi-dimensional rating tool used to measure the workload a person experienced when performing a task. On the other hand, SUS is a reliable tool used to measure usability.
 
-In stage 1, the main difference between easy mode and hard mode is whether the *pathfinder* is opened. **As for stage 2, we adjust the distance between two planets, easy mode would be closer and hard mode would be far. In essence, this setting make player not able to see each other when playing in hard mode.**
+In stage 1, the main difference between easy mode and hard mode is whether the *pathfinder* is opened. As for stage 2, we adjust the distance between two planets, easy mode would be closer and hard mode would be farther. In essence, this setting prevents players from seeing each other when playing in hard mode.
 
 
 
@@ -332,7 +332,7 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
 
 > **Analysis between easy and hard mode**
 > 
-> During the game's development, we aimed to ensure users experienced noticeable differences between the easy and hard modes. To achieve this objective, we employed the Wilcoxon signed-rank test to determine whether the difference is significant or not. This tool allowed us to analyze the final scores of the NASA TLX in a rigorous and statistical manner. The decision to use the Wilcoxon signed-rank test was inspired by the approach adopted by the 2023-group-1 team.
+> During the game's development, we aimed to ensure users experienced noticeable differences between the easy and hard modes. To achieve this objective, we employed the Wilcoxon signed-rank test to determine whether the difference is significant or not. This tool allowed us to analyze the final scores of the NASA TLX in a rigorous and statistical manner.
 >
 > *Wilcoxon sign-ranked test*  
 >Step 1: calculate the difference between NASA TLX score
@@ -410,7 +410,7 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
  
  
 
-#### Stage 2 (?)
+#### Stage 2 (20/04/24)
 
 **1. NASA TLX**
 
@@ -418,42 +418,42 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
     > *Scores*
       >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
       >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
-      >| 1 |  |  |  |  |  |  |
-      >| 2 |  |  |  |  |  |  |
-      >| 3 |  |  |  |  |  |  |
-      >| 4 |  |  |  |  |  |  |
-      >| 5 |  |  |  |  |  |  |
-      >| 6 |  |  |  |  |  |  |
-      >| 7 |  |  |  |  |  |  |
-      >| 8 |  |  |  |  |  |  |
-      >| 9 |  |  |  |  |  |  |
-      >| 10 |  |  |  |  |  |  |
+      >| 1 | 35 | 25 | 15 | 55 | 45 | 40 |
+      >| 2 | 55 | 20 | 15 | 60 | 50 | 35 |
+      >| 3 | 50 | 0 | 45 | 60 | 75 | 25 |
+      >| 4 | 25 | 30 | 30 | 40 | 25 | 20 |
+      >| 5 | 30 | 15 | 30 | 65 | 50 | 40 |
+      >| 6 | 50 | 30 | 15 | 60 | 70 | 45 |
+      >| 7 | 55 | 40 | 50 | 65 | 50 | 50 |
+      >| 8 | 20 | 25 | 35 | 50 | 50 | 45 |
+      >| 9 | 30 | 35 | 20 | 35 | 40 | 25 |
+      >| 10 | 60 | 55 | 70 | 75 | 75 | 70 |
       >
     > *Final Scores*
       >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 
       >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-      >| score |  |  |  |  |  |  |  |  |  |  |
+      >| score | 36 | 39 | 43 | 28 | 38 | 45 | 52 | 38 | 31 | 68 |
       >
 
  * Hard mode
     > *Scores*
       >| Participant Number | Mental demand | Physical demand | Temporal demand | Performance | Effort | Frustration |
       >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
-      >| 1 |  |  |  |  |  |  |
-      >| 2 |  |  |  |  |  |  |
-      >| 3 |  |  |  |  |  |  |
-      >| 4 |  |  |  |  |  |  |
-      >| 5 |  |  |  |  |  |  |
-      >| 6 |  |  |  |  |  |  |
-      >| 7 |  |  |  |  |  |  |
-      >| 8 |  |  |  |  |  |  |
-      >| 9 |  |  |  |  |  |  |
-      >| 10 |  |  |  |  |  |  |
+      >| 1 | 65 | 25 | 15 | 65 | 70 | 60 |
+      >| 2 | 50 | 20 | 25 | 40 | 60 | 50 |
+      >| 3 | 75 | 10 | 75 | 60 | 100 | 50 |
+      >| 4 | 30 | 45 | 35 | 40 | 40 | 35 |
+      >| 5 | 50 | 40 | 30 | 80 | 80 | 75 |
+      >| 6 | 65 | 35 | 40 | 70 | 90 | 75 |
+      >| 7 | 70 | 40 | 70 | 85 | 70 | 85 |
+      >| 8 | 40 | 30 | 50 | 75 | 75 | 65 |
+      >| 9 | 30 | 40 | 20 | 35 | 40 | 25 |
+      >| 10 | 65 | 60 | 75 | 75 | 85 | 85 |
       >
     > *Final Scores*
       >| Participant Number | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
       >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-      >| score |  |  |  |  |  |  |  |  |  |  |
+      >| score | 51 | 41 | 62 | 38 | 59 | 63 | 70 | 56 | 32 | 74 |
       >
 
 > **Analysis between easy and hard mode**  
@@ -462,75 +462,77 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
   >Step 1: calculate the difference between NASA TLX score
    >| Easy Score | Hard Score | Difference (easy - hard)|
    >| ----- | ----- | ----- |
-   >|  |  |  |
-   >|  |  |  |
-   >|  |  |  |
-   >|  |  |  |
-   >|  |  |  |
-   >|  |  |  |
-   >|  |  |  |
-   >|  |  |  |
-   >|  |  |  |
-   >|  |  |  |
+   >| 36 | 51 | -15 |
+   >| 39 | 41 | -2 |
+   >| 43 | 62 | -19 |
+   >| 28 | 38 | -10 |
+   >| 38 | 59 | -21 |
+   >| 45 | 63 | -18 |
+   >| 52 | 70 | -18 |
+   >| 38 | 56 | -18 |
+   >| 31 | 32 | -1 |
+   >| 68 | 74 | -6 |
    >
 >
   >Step 2: sort and rank previous table by "difference"  
    >| Rank |  Difference | Rank (after) |
    >| ---- | ---- | ---- |
-   >| 1 |  |  |
-   >| 2 |  |  |
-   >| 3 |  |  |
-   >| 4 |  |  |
-   >| 5 |  |  |
-   >| 6 |  |  |
-   >| 7 |  |  |
-   >| 8 |  |  |
-   >| 9 |  |  |
-   >| 10 |  |  |
+   >| 1 | -1 | -1 |
+   >| 2 | -2 | -2 |
+   >| 3 | -6 | -3 |
+   >| 4 | -10 | -4 |
+   >| 5 | -15 | -5 |
+   >| 6 | -18 | -7 |
+   >| 7 | -18 | -7 |
+   >| 8 | -18 | -7 |
+   >| 9 | -19 | -9 |
+   >| 10 | -21 | -10 |
    >
-> -(Analysis result and conclusion)
+> The sum of the positive signed ranks is 0, and the absolute sum of the negative signed ranks is 55. We selected the smaller value, 0, as our 'W' for comparison with the critical value. Subsequently, a "Two-Sided Test α" value of 0.1 was chosen. Our 'W' needed to be smaller than 11 to indicate a significant difference between the easy and hard modes. In this case, our 'W' is smaller than the critical value, indicating a significant difference between the easy and hard modes. This result demonstrates a clear distinction between the two modes.
+
 
 **2. SUS**
 
   > *Scores*
    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-   >| 1 |  |  |  |  |  |  |  |  |  |  |
-   >| 2 |  |  |  |  |  |  |  |  |  |  |
-   >| 3 |  |  |  |  |  |  |  |  |  |  |
-   >| 4 |  |  |  |  |  |  |  |  |  |  |
-   >| 5 |  |  |  |  |  |  |  |  |  |  |
-   >| 6 |  |  |  |  |  |  |  |  |  |  |
-   >| 7 |  |  |  |  |  |  |  |  |  |  |
-   >| 8 |  |  |  |  |  |  |  |  |  |  |
-   >| 9 |  |  |  |  |  |  |  |  |  |  |
-   >| 10 |  |  |  |  |  |  |  |  |  |  |
+   >| 1 | 5 | 1 | 4 | 1 | 4 | 1 | 4 | 2 | 5 | 1 |
+   >| 2 | 4 | 1 | 5 | 1 | 5 | 1 | 5 | 2 | 4 | 1 |
+   >| 3 | 3 | 2 | 4 | 1 | 4 | 3 | 5 | 3 | 3 | 1 |
+   >| 4 | 3 | 2 | 4 | 2 | 4 | 2 | 4 | 1 | 4 | 1 |
+   >| 5 | 4 | 2 | 5 | 1 | 5 | 2 | 5 | 1 | 5 | 1 |
+   >| 6 | 3 | 1 | 5 | 2 | 4 | 2 | 4 | 1 | 3 | 2 |
+   >| 7 | 4 | 2 | 4 | 1 | 4 | 3 | 4 | 1 | 5 | 2 |
+   >| 8 | 3 | 1 | 4 | 3 | 4 | 2 | 4 | 2 | 3 | 1 |
+   >| 9 | 4 | 2 | 4 | 1 | 5 | 2 | 5 | 1 | 5 | 1 |
+   >| 10 | 2 | 2 | 3 | 2 | 5 | 1 | 3 | 2 | 3 | 2 |
    >
  > *Score contribution*
    >| Participant Number | like to use frequently | unnecessarily complex | easy to use | need technical support | functions well integrated | too much inconsistency | learn to use quickly | cumbersome to use | confident to use | need to learn a lot before using |
    >| ----------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
-   >| 1 |  |  |  |  |  |  |  |  |  |  |
-   >| 2 |  |  |  |  |  |  |  |  |  |  |
-   >| 3 |  |  |  |  |  |  |  |  |  |  |
-   >| 4 |  |  |  |  |  |  |  |  |  |  |
-   >| 5 |  |  |  |  |  |  |  |  |  |  |
-   >| 6 |  |  |  |  |  |  |  |  |  |  |
-   >| 7 |  |  |  |  |  |  |  |  |  |  |
-   >| 8 |  |  |  |  |  |  |  |  |  |  |
-   >| 9 |  |  |  |  |  |  |  |  |  |  |
-   >| 10 |  |  |  |  |  |  |  |  |  |  |
+   >| 1 | 4 | 4 | 3 | 4 | 3 | 4 | 3 | 3 | 4 | 4 |
+   >| 2 | 3 | 4 | 4 | 4 | 4 | 4 | 4 | 3 | 3 | 4 |
+   >| 3 | 2 | 3 | 3 | 4 | 3 | 2 | 4 | 2 | 2 | 4 |
+   >| 4 | 2 | 3 | 3 | 3 | 3 | 3 | 3 | 4 | 3 | 4 |
+   >| 5 | 3 | 3 | 4 | 4 | 4 | 3 | 4 | 4 | 4 | 4 |
+   >| 6 | 2 | 4 | 4 | 3 | 3 | 3 | 3 | 4 | 2 | 3 |
+   >| 7 | 3 | 3 | 3 | 4 | 3 | 2 | 3 | 4 | 4 | 3 |
+   >| 8 | 2 | 4 | 3 | 2 | 3 | 3 | 3 | 3 | 2 | 4 |
+   >| 9 | 3 | 3 | 3 | 4 | 4 | 3 | 4 | 4 | 4 | 4 |
+   >| 10 | 1 | 3 | 2 | 3 | 4 | 4 | 2 | 3 | 2 | 3 |
    >
  > *Final Scores*
    >|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Avg. |
    >| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-   >| Score |  |  |  |  |  |  |  |  |  |  | 
+   >| Score | 90 | 92.5 | 72.5 | 77.5 | 92.5 | 77.5 | 80 | 72.5 | 90 | 67.5 | 81.25 |
    >
 
 
 
 > **Analysis**
 > 
-> -(Analysis result and conclusion)
+> Based on the "Adjective" method, the SUS score of our system falls into the "Excellent" category. Compared to the "OK" result we obtained in stage 1, the usability of our system has shown a noticeable improvement. Specifically, the latest score is almost 20 points higher than the previous SUS score, indicating that users feel more confident and comfortable while using our improved interface.
+
 >
 ### 3. Unit Testing
 
@@ -582,6 +584,12 @@ Our team collaborated effectively and gained valuable insights using the Agile d
 
 ---
 ## Conclusion
+We have learned a great deal throughout the development process. In the early stages, we invested considerable effort in crafting user stories, creating use-case diagrams, and designing class diagrams. This allowed us to maintain a clear perspective and objectives while implementing functionalities.
+
+Moreover, we greatly benefited from the flexibility offered by the agile workflow when we recognized the complexity and the potential time investment required for certain functionalities were too substantial. By leveraging the agile methodology, we opted to prioritize other essential functionalities in the game rather than becoming entrenched in a single feature.
+
+
+In the future, we plan to implement features such as character customization, which will provide a series of different characters for players to choose from. Each character will possess unique skills and weapons, enhancing the diversity and strategy within the game. Additionally, we aim to introduce varying AI difficulty levels, offering players the option to challenge themselves at different skill levels. Finally, we aspire to develop an online version of the game, allowing people to enjoy the gameplay experience with their friends even when they are physically apart.
 
 ---
 # Game idea
