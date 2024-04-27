@@ -535,6 +535,28 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
 
 >
 ### 3. Unit Testing
+In our testing process, we employed Equivalence Partitioning (EP) to ensure that the system delivers the desired output based on the input. We categorized the core features of the game and created both valid and invalid conditions according to different input scenarios, enabling us to thouroughly test their behavior. These features cover UI text input, player health, attack actions, shopping actions and moving actions. By adopting this Black Box approach, we were able to achieve comprehensive coverage of the system's functionalities. The test case specification table below demonstrates the categories, partitions, and expected outputs for our testing.
+
+| Category   |    Partition   || Expected Output |
+|------------|----------------|-|-----------------|
+| Valid Name Input | Alphabetical character || Textfield shows text|
+| Invalid Name Input | Number || Textfield no response|
+| Invalid Name Input | Special character || Textfield no response|
+|  |  || |
+| Valid Player Health | 0 < Health <= 3 || Game keeps going|
+| Invalid Player Health | Health > 3 || Max health stays at 3 |
+| Invalid Player Health | Health <= 0 || Game over|
+| |  || |
+| Valid Shopping Action| User's money >= item's price ||Successfully buy|
+| Invalid Shopping Action | User's money < item's price || Show "don't have enough money to buy"|
+|  |  || |
+| Valid Moving Action | User clicks on the path around the planet || User move to the direct spot|
+| Valid Moving Action | User clicks inside the planet || User move to the closest point on the path|
+| Invalid Moving Action | User clicks outside the planet || User will not move|
+|  |  || |
+| Valid Attack | User's arrow shoot on the hitbox || Health decreases by 1|
+| Invalid Attack | User's arrow misses the hitbox || Health remains the same| 
+
 
 
 ---
