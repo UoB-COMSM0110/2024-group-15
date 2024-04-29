@@ -31,6 +31,7 @@ public class Arrow extends Entity {
     this.spentArrow = true;
     velocity.x = a.velocity.x;
     velocity.y = a.velocity.y;
+    angleRadians = a.angleRadians;
   }
   
     void move() {
@@ -52,10 +53,13 @@ public class Arrow extends Entity {
             cannotBeCollidedWith = false;
         }
 
+        angleRadians = atan2(velocity.y, velocity.x);
+        if (angleRadians < 0) angleRadians += TWO_PI;
+
         float arrowHeadRadius = (objWidth/2)*0.8;
 
-        normalizedX = x+arrowHeadRadius*cos(radians(270)+angleRadians);
-        normalizedY = y+arrowHeadRadius*sin(radians(270)+angleRadians);
+        normalizedX = x+arrowHeadRadius*cos(angleRadians);
+        normalizedY = y+arrowHeadRadius*sin(angleRadians);
 
         float degrees = degrees(angleRadians);
         if (!cannotBeCollidedWith) {
@@ -104,19 +108,27 @@ public class Arrow extends Entity {
     }
 
     void draw() {
-        angleRadians = (float)Math.atan2(velocity.x, -velocity.y);
+
 
         if (!isMoving && !spentArrow) return;
 
         pushMatrix();
 
         translate(x, y);
-        rotate(radians(270));
+        // rotate(radians(270));
         rotate(angleRadians);
         imageMode(CENTER);
         image(sprite, 0, 0, objWidth, objHeight);
 
         popMatrix();
+
+        // if (keyPressed) {
+        //     fill(0, 255, 0);
+        //     rect(x, y, 2, 2);
+        //     fill(255, 0, 0);
+        //     rect(normalizedX-5, normalizedY-5, 10, 10);
+        //     println("WIDTH "+objWidth);
+        // }
     }
 
     public float getAmountRotated() {

@@ -161,7 +161,7 @@ public void setup()
 public void gameInit() {
     if (gameSettings.get("difficulty") == Settings.EASY) {
         minDistanceBetweenPlanets = 200;
-        maxXDistanceBetweenPlanets = 600;
+        maxXDistanceBetweenPlanets = 500;
         maxYDistanceBetweenPlanets = 300;
     }
     else {

@@ -147,11 +147,11 @@ public class Player extends Entity {
                 break;
         }
 
-        // if (frameCount % 2 == 0) {           // debug code to draw hitbox
+        // if (frameCount % 2 == 0 && keyPressed) {           // debug code to draw hitbox
         // stroke(255);
         // for (int x=0; x<width; x++) {
         //         for (int y=0; y<height; y++) {
-        //             if (collidingWithTest(x, y)) {
+        //             if (isCollidingWith(x, y)) {
         //                 rect(x, y, 1, 1);
         //             }
         //         }
