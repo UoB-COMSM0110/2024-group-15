@@ -1,6 +1,7 @@
 // in-game menu that appears near the player
 
 class GameMenu extends Obj {
+
     boolean isOpen = false;
     Button shopOpenButton = new Button("Shop", 0, 0, SFPro,
         () -> {
@@ -18,6 +19,9 @@ class GameMenu extends Obj {
 
     GameMenu() {
         super(0, 0);
+        if(audio.mainPage.isPlaying()){
+            audio.stopmainPage();
+        }
         shopOpenButton.center = false;
         playerMoveButton.center = false;
 

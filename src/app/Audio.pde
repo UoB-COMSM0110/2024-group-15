@@ -22,7 +22,6 @@ class Audio {
         success= new SoundFile(app, ASSETS_PATH+"success.mp3");
         scream= new SoundFile(app, ASSETS_PATH+"scream.mp3");
         playerHit= new SoundFile(app, ASSETS_PATH+"player-hit.wav");
-        
     }
 
     void playWind() {

@@ -19,6 +19,7 @@ class GameOverPage {
     
     void setWinner(String winner) {
         winTitle.content = "Player " + winner + " wins!";
+        audio.playSuccess();
     }
     
   void draw() {
