@@ -54,7 +54,7 @@ static final Set<Button> activeButtons = new HashSet<>();
 
 PGraphics pg0;
 PShape HEART_SHAPE;
-PFont SFPro; // TODO put the other ones here as well
+PFont SFPro;
 
 Camera camera;
 StartMenu startMenu;
@@ -73,7 +73,7 @@ OptionsMenu optionsMenu;
 Audio audio;
 
 
-int shopX, shopY, shopWidth, shopHeight;    // TODO idk about this
+int shopX, shopY, shopWidth, shopHeight;
 
 
 
@@ -201,11 +201,6 @@ public void gameInit() {
     playerMover = new PlayerMover();
     gameMenu = new GameMenu();
     if (!tutorialActive) gameMenu.open();
-
-
-    // players[0].points = 10000;
-    // players[1].points = 10000;
-
 
     if (tutorialActive) {
         players[0].updatePoints(150);
@@ -432,10 +427,6 @@ public boolean updatePlayerHealths() {
             if(activePlayer.items.contains(PlayerItem.HITSKIP)){
                 p.setRoundsOfSkip(p.getSkipTurns() + 1);
             }
-            // if(!hitThemself && activePlayer.items.contains(PlayerItem.HITSKIP)){
-            //     p.setRoundsOfSkip(p.getSkipTurns() + 1);
-            // }
-
             break;
         }
     }
@@ -490,7 +481,6 @@ public void handleSkipTurn(){
 }
 
 public void finishInvalidPlayerTurn() {
-    println("[TODO] Arrow too slow!");
     finishPlayerTurn();
     spentArrows.remove(spentArrows.get(spentArrows.size()-1));
 }

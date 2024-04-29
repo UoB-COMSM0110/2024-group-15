@@ -250,7 +250,7 @@ public class Player extends Entity {
         }
     }
 
-    public boolean collidingWithTest(int x, int y) {
+    public boolean isCollidingWith(float x, float y) {
         float halfWidth = getHitBoxWidth()/2;
         float halfHeight = getHitBoxHeight()/2;
 

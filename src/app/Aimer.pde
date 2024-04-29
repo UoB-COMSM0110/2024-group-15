@@ -54,7 +54,7 @@ public class Aimer {
         audio.playFire();
         audio.playWind();
 
-        player.setSprite(PlayerStatus.IDLE); // TODO really this should be firing animation
+        player.setSprite(PlayerStatus.IDLE);
         return;
     }
 

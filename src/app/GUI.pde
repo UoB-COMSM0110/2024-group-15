@@ -182,13 +182,6 @@ class TextBox extends Button {
 
     public void draw() {
         if (!active) return;
-            // if (center) {
-            //    rect(x-objWidth/2-4, y-fontSize, objWidth+7, objHeight+YPAD);
-            // }
-            // else {
-            //     rect(x, y-fontSize, objWidth, objHeight+YPAD);
-            // }
-
         fill(textColor);
         textFont(font);
         if (center) {
@@ -209,10 +202,8 @@ class TextBox extends Button {
     public void handleClick() {
         if (mouseHovering()) {
             inFocus = true;
-            println("true");
         }
         else {
-            println("flase");
             inFocus = false;
         }
     }

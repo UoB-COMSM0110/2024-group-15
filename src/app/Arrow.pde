@@ -80,20 +80,16 @@ public class Arrow extends Entity {
             }
         }
 
-
-
         // collision detection
 
         if (!cannotBeCollidedWith) {
             for (Player p: players) {
-                if (p.isCollidingWith(this)) {      // call overrided method in Arrow (this)
+                if (p.isCollidingWith(getHitBoxX(), getHitBoxY())) {      // call overrided method in Arrow (this)
                     finishPlayerTurn();
                     return;
                 }
             }
         }
-
-
 
         for (Planet planet : planets) {
             if (planet.isCollidingWith(this)) {     // call overrided method in Planet

@@ -38,12 +38,5 @@ public class Pathfinder extends Entity {
         }
 
         popStyle();
-
-        // for (int i=0; i<200; i++) {
-        // 	move();
-        //     ellipse(x, y, 10, 10);
-        // }
     }
-
-    
 }
