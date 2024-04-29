@@ -23,13 +23,6 @@ class Planet extends Entity {
         this.r = radius;
     }
 
-    public void increaseNumberOfArrowsHit(){   //(cheating point related)
-        ++numberOfArrowsOnMe;
-        //if (numberOfArrowOnMe == 10){ // Enter shop mode when arrow count reaches 10
-        //    enterShopMode();
-        //}
-    }
-
     public int getNumberOfArrowsOnMe() {
         return numberOfArrowsOnMe;
     }

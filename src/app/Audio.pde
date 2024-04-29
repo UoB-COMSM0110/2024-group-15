@@ -6,6 +6,8 @@ class Audio {
     SoundFile mainPage;
     SoundFile success;
     SoundFile scream;
+    SoundFile playerHit;
+
     boolean start = false;
     boolean stop = false;
     float vol = 0;
@@ -19,7 +21,7 @@ class Audio {
         mainPage= new SoundFile(app, ASSETS_PATH+"mainPage.mp3");
         success= new SoundFile(app, ASSETS_PATH+"success.mp3");
         scream= new SoundFile(app, ASSETS_PATH+"scream.mp3");
-        
+        playerHit= new SoundFile(app, ASSETS_PATH+"player-hit.wav");
     }
 
     void playWind() {
@@ -34,7 +36,7 @@ class Audio {
 
     void playmainPage() {
         mainPage.loop();
-        mainPage.amp(0.05);
+        mainPage.amp(0.02);
     }
 
     void stopmainPage() {
@@ -51,19 +53,24 @@ class Audio {
         hit.amp(0.1);
     }
 
-    void playButton(){
-        button.play();
-        button.amp(0.01);
+    void playButton() {
+        button.jump(0);
+        button.amp(0.1);
     }
 
     void playSuccess(){
         success.play();
-        success.amp(0.3);
+        success.amp(0.1);
     }
 
     void playScream(){
         scream.play();
         scream.amp(0.4);
+    }
+
+    void playPlayerHit() {
+        playerHit.play();
+        playerHit.amp(0.2);
     }
 
     void render() {

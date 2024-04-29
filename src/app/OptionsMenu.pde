@@ -25,6 +25,9 @@ class OptionsMenu extends Obj {
         playAgainButton.realPositioning(true);
         mainMenuButton.realPositioning(true);
         exitButton.realPositioning(true);
+        playAgainButton.blackBackground = true;
+        mainMenuButton.blackBackground = true;
+        exitButton.blackBackground = true;
 
     }
 
