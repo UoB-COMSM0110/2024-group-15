@@ -535,6 +535,28 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
 
 >
 ### 3. Unit Testing
+In our testing process, we employed Equivalence Partitioning (EP) to ensure that the system delivers the desired output based on the input. We categorized the core features of the game and created both valid and invalid conditions according to different input scenarios, enabling us to thouroughly test their behavior. These features cover UI text input, player health, attack actions, shopping actions and moving actions. By adopting this Black Box approach, we were able to achieve comprehensive coverage of the system's functionalities. The test case specification table below demonstrates the categories, partitions, and expected outputs for our testing.
+
+| Category   |    Partition   || Expected Output |
+|------------|----------------|-|-----------------|
+| Valid Name Input | Alphabetical character || Textfield shows text|
+| Invalid Name Input | Number || Textfield no response|
+| Invalid Name Input | Special character || Textfield no response|
+|  |  || |
+| Valid Player Health | 0 < Health <= 3 || Game keeps going|
+| Invalid Player Health | Health > 3 || Max health stays at 3 |
+| Invalid Player Health | Health <= 0 || Game over|
+| |  || |
+| Valid Shopping Action| User's money >= item's price ||Successfully buy|
+| Invalid Shopping Action | User's money < item's price || Show "don't have enough money to buy"|
+|  |  || |
+| Valid Moving Action | User clicks on the path around the planet || User move to the direct spot|
+| Valid Moving Action | User clicks inside the planet || User move to the closest point on the path|
+| Invalid Moving Action | User clicks outside the planet || User will not move|
+|  |  || |
+| Valid Attack | User's arrow shoot on the hitbox || Health decreases by 1|
+| Invalid Attack | User's arrow misses the hitbox || Health remains the same| 
+
 
 
 ---
@@ -589,67 +611,17 @@ We have learned a great deal throughout the development process. In the early st
 Moreover, we greatly benefited from the flexibility offered by the agile workflow when we recognized the complexity and the potential time investment required for certain functionalities were too substantial. By leveraging the agile methodology, we opted to prioritize other essential functionalities in the game rather than becoming entrenched in a single feature.
 
 
-In the future, we plan to implement features such as character customization, which will provide a series of different characters for players to choose from. Each character will possess unique skills and weapons, enhancing the diversity and strategy within the game. Additionally, we aim to introduce varying AI difficulty levels, offering players the option to challenge themselves at different skill levels. Finally, we aspire to develop an online version of the game, allowing people to enjoy the gameplay experience with their friends even when they are physically apart.
+In the future, we plan to implement features such as character customization, which will provide a series of different characters for players to choose from. Each character will possess unique skills and weapons, enhancing the diversity and strategy within the game. Additionally, we aim to introduce varying AI difficulty levels, offering players the option to challenge themselves at different skill levels. It's worth mentioning that some of the current designs like "Pathfinder", "player abstraction" and so on are actually the fundamental of the future AI implementation.
+Finally, we aspire to develop an online version of the game, allowing people to enjoy the gameplay experience with their friends even when they are physically apart.
 
 ---
-# Game idea
-## Game idea 1 - 2 player cooperative game
 
-It is a game involving both puzzles and actions. Similar to this part "Ice and Fire" of "It takes two" gameplay, but make it 2D.
-https://www.youtube.com/watch?v=LaLqVvRAuSA
-* The main plot is: the mage twins receive a quest to find the kingdom's hidden treasure, a task that requires them to traverse through fields imbued with fire and ice. It the story can be told by giving the players a few slides at first (kinda like the start of HELLTAKER).
-  ![](assets/game-idea-imgs/game-idea-1-1.png)
-* the first room should be a tutorial room, with simple instructions and punching bags for players to try how to manipulate.
-* the second big room can be a field with environmental interaction(the players can figure out puzzles together and use their specialty to solve it) and of course there are some Minion to beat.
-  ![](assets/game-idea-imgs/game-idea-1-2.png)
-* the third room can be "BOSS ROOM", the twins finally get to the treasure, but first they are going to beat a giant dragon first...(by the way, The BOSS can switch between ice and fire attributes)
+## Individual contribution:
 
-### The twist
-It is a game with interations with the environment(puzzles) and BOSS fight. especially as the mage twins finally approach the treasure in the 'BOSS ROOM,' they discover that the giant dragon guarding it has the ability to not only switch between ice and fire attributes but also to merge these elements
-
-### Challenges
-### Challenge 1: Environmental Interaction
-Make the ice and fire elements interact with the environment differently. For instance, in the fiery domain, players might need to utilize flames to propel mechanisms, while in the icy realm, they may have to freeze bodies of water or use ice to create pathways.
-
-### Challenge 2: Multiple players
-We aim to encourage players to collaborate with each other and leverage the unique strengths of their characters.
-
-### Challenge 3: Actions
-So...there should be "Attack Range Detection" and he teams should come up with a method to calculate the mathematical relation among Boss HP, attack damage and attributes.
-And after being attaked, the players' HP should also be calculated.
-
-
-**To be discussed...**
-![](assets/game-idea-imgs/game-idea-1-3.png)
-![](assets/game-idea-imgs/game-idea-1-4.png)
-https://www.youtube.com/watch?v=Hmw73vcUzsg&list=PLqPLyUreLV8C59RyVDRESJtefspPi-eXq
-![](assets/game-idea-imgs/game-idea-1-5.png)
-Should we make the game undertale-like or the mario-like
-
-### Prototype
-[![](./assets/thumbnails/Game1_pic.png)](https://drive.google.com/file/d/1vBCwzy2BSnOHUgJ7MrSeeB4-8P2UUbyQ/view?usp=drive_link )
-
-
-## Game Idea 2 - 2 player versus game
-
-* A classic turn based 2d game, in the style of old flash games such as Raft Wars, Bowman, Fleabag and Mutt, etc.
-
-![raft wares](assets/game-idea-imgs/raftwars.jpg)
-![image](assets/game-idea-imgs/bowman.jpg)
-![image](assets/game-idea-imgs/fleabag-vs-mutt.jpg)
-
-
-### Twist idea
-* Set in space, with each player located on a different planet. This would mean that each player would have to account for gravity and other planets when they shoot!
-
-### Challenges
-  * **Camera movement**; in bowman and raft wars, the camera moves with the projectile so the shooting player cannot see exactly where they need to hit
-  * **Gravity engine**; Gravity mechanics would need to be implemented for this idea (if it is set in space) and the balance between realism and difficulty would need to be found
-  * **AI enemy**; allowing a single player to fight against a computer would add more depth to this game, and it would pose a challenge to create the computer player.
-
-### Prototype
-[![](./assets/thumbnails/Game2_pic.png)](https://drive.google.com/file/d/1X9CZkVwlnULj-P8qy6iIerfCmLlt9J-E/view?usp=sharing )
-
-
+- Ada : 1.00
+- Li-Hshin(Janet) : 1.00 
+- Louis : 1.00 
+- Xinyu : 1.00 
+- Yining : 1.00 
 
 

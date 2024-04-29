@@ -70,7 +70,7 @@ class StartMenu {
 
         p1Text = new TextBox("Player 1: ", width/2, height/2-100, SFPro);
         p2Text = new TextBox("Player 2: ", width/2, height/2, SFPro);
-        setState(StartMenuState.VS);
+        setState(StartMenuState.DIFFICULTY);
     }
     
 
@@ -111,8 +111,10 @@ class StartMenu {
                 tutorialButton.show();
                 break;
             case DIFFICULTY:
+                tutorialActive = false;
                 easyMode.show();
                 hardMode.show();
+                tutorialButton.show();
                 break;
             case NAMES:
                 p1Text.typed = "";

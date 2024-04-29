@@ -12,7 +12,7 @@ class OptionsMenu extends Obj {
         () -> {
             close();
             gameState = GameState.STARTPAGE;
-            startMenu.setState(StartMenuState.VS);
+            startMenu.setState(StartMenuState.DIFFICULTY);
         });
     Button exitButton = new Button("EXIT GAME", 0, 0, SFPro,
         () -> {
