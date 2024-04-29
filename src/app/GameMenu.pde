@@ -23,6 +23,9 @@ class GameMenu extends Obj {
 
         shopOpenButton.realPositioning(true);
         playerMoveButton.realPositioning(true);
+
+        shopOpenButton.blackBackground = true;
+        playerMoveButton.blackBackground = true;
     }
 
     void draw() {

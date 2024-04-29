@@ -89,6 +89,8 @@ class Button extends GUIComponent {
 
     boolean active = false;
     boolean mouseDownOnButton = false;
+    color strokeColor = color(255, 255, 255);
+    boolean blackBackground = false;
 
     Button(String name, float x, float y, int fontSize, Runnable callback){
         super(name, x, y, fontSize);
@@ -106,6 +108,7 @@ class Button extends GUIComponent {
 
     public void handleClick() {
         if (!mousePressed && mouseHovering()) {
+            audio.playButton();
             callback.run();
         }
     }
@@ -114,7 +117,10 @@ class Button extends GUIComponent {
         if (!active) return;
 
         stroke(255);
-        if (!mouseHovering()) noFill();
+        if (!mouseHovering()) {
+            if (blackBackground) fill(0,0,0);
+            else noFill();
+        }
         else fill(100, 100, 100);
 
         super.draw();
@@ -194,7 +200,7 @@ class TextBox extends Button {
 
         if (inFocus) fill(255, 255, 255);
         else noFill();
-        stroke(255);
+        stroke(strokeColor);
         rect(x+textWidth(content)-objWidth/2+10, y-fontSize, 120, objHeight+YPAD);
         fill(inFocus ? 0 : 255);
         text(typed, x+textWidth(content)-objWidth/2+18, y);
