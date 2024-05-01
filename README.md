@@ -59,6 +59,10 @@ Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 Our game is a two-player game based on a flash game named *Bowman*.
 Originally, the game-play is that players drag the mouse to pull back the bow and shoot each other, then a camera will follow the arrow to check whether you have shot the target.
 
+We've transformed the game into a space-themed version as out twist in game-play by introducing a gravity engine to calculate gravity between planets as well as points collected system and further shop system to trade for skills like *Pathfinder*. The point collection is calculated by arrow rotation count linked to the gravity after it hit somebody, we also have punishments of losing two hearts after the player hit himself.
+
+Additionally, the players can also move around the planet for a better position, whether to hide or move for a better shot. So in each person's turn, he would have to choose between "move" and "shop" before fire, this adds to gameplay strategy.
+
 Also we have implemented two difficulty levels, for "easy mode", the two players can easily see each other's position, while the "difficult mode" don't. Through evalution, there are significant differences in player performance and mental preparation between these two difficulty levels.
 
 During the whole process, we have put many software engineering techniques into practice, including user-case diagrams, class diagrams and communication diagrams in the early design and ideation stage, and Agile workflow and Kanban board were used throughout the developing process, Github is also used for working branches and version control. Better comprehension of software engineering is gained after the group work.
