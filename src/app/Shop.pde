@@ -72,7 +72,7 @@ class Shop extends Obj {
         pushStyle();
 
         stroke(255);
-        noFill();
+        fill(0);
         rect(x-20, y-40, shopWidth+20, shopHeight);
         for (ShopItemRow item: shopItemRows) {
             item.draw();

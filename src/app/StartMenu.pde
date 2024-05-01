@@ -28,8 +28,6 @@ class StartMenu {
     Button startButton;
     TextBox p1Text;
     TextBox p2Text;
-    // PImage backgroundImage = loadImage("./start-menu-idea/background.jpg");
-
 
     StartMenu() {
         gameTitle = new GUIComponent("BOWMAN", 70*2, 70);
@@ -70,7 +68,7 @@ class StartMenu {
 
         p1Text = new TextBox("Player 1: ", width/2, height/2-100, SFPro);
         p2Text = new TextBox("Player 2: ", width/2, height/2, SFPro);
-        setState(StartMenuState.VS);
+        setState(StartMenuState.DIFFICULTY);
     }
     
 
@@ -93,11 +91,6 @@ class StartMenu {
         p2Text.draw();
         startButton.draw();
 
-        
-        // DEBUG draw cross for centering
-        // stroke(255);
-        // line(width/2, 0, width/2, height);
-        // line(0, height/2, width, height/2);
         popStyle();
     }
 
@@ -111,8 +104,10 @@ class StartMenu {
                 tutorialButton.show();
                 break;
             case DIFFICULTY:
+                tutorialActive = false;
                 easyMode.show();
                 hardMode.show();
+                tutorialButton.show();
                 break;
             case NAMES:
                 p1Text.typed = "";

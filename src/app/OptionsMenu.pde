@@ -12,7 +12,7 @@ class OptionsMenu extends Obj {
         () -> {
             close();
             gameState = GameState.STARTPAGE;
-            startMenu.setState(StartMenuState.VS);
+            startMenu.setState(StartMenuState.DIFFICULTY);
         });
     Button exitButton = new Button("EXIT GAME", 0, 0, SFPro,
         () -> {
@@ -25,6 +25,9 @@ class OptionsMenu extends Obj {
         playAgainButton.realPositioning(true);
         mainMenuButton.realPositioning(true);
         exitButton.realPositioning(true);
+        playAgainButton.blackBackground = true;
+        mainMenuButton.blackBackground = true;
+        exitButton.blackBackground = true;
 
     }
 
