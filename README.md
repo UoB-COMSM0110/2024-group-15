@@ -55,13 +55,13 @@ Normally, the game-play is that players drag the mouse to pull back the bow and 
 
 We've transformed the game into a space-themed version by introducing a gravity engine to calculate gravity between planets as well as points collected system and further shop system to trade for skills like *Pathfinder*. Additionally, the players can also move around the planet for a better position.
 
-During the whole process, we have put many software engineering techniques into practice, including user-case diagram, class diagram and communication diagram in early design and ideation stage, and Agile workflow and Kanban board was used throughout the developing process, Github is also used for working branches and version control. Better comprehension of software engineering is gained after the group work.
+During the whole process, we have put many software engineering techniques into practice, including user-case diagrams, class diagrams and communication diagrams in the early design and ideation stage, and Agile workflow and Kanban board were used throughout the developing process, Github is also used for working branches and version control. Better comprehension of software engineering is gained after the group work.
 
 <h2 id = "3">Requirements</h2>
 
 <h3 id = "4">Ideation Process</h3>
 
-We have two game ideas at the beginning proposed by two of our team members, which are the two-player bowman game with camera movement and gravity physical engine, and a RPG-like two-player game with storyline, interactions with the environment and boss fights.
+We have two game ideas at the beginning proposed by two of our team members, which are the two-player bowman game with camera movement and gravity physical engine, and an RPG-like two-player game with storyline, interactions with the environment and boss fights.
 
 Our team used paper prototype to mock the outline of these two game's workflow in class to grasp concepts of each. Soon after the mock and discussions, we collectively decided to pursue the *Bowman* game due to its more specified enhancement and requirements, and its solid gameplay foundation.
 
@@ -70,7 +70,7 @@ Our team used paper prototype to mock the outline of these two game's workflow i
 <h3 id = "5">User Stories</h3>
 
 >"As a player, I want to have personalised choices at the start of the game so that I can choose the game's difficulty based on my preferences."  
->"As a player, I want to gain resources through some special behaviours in the game, and these resources can be able to trade for special skills, so it is bit more fun."  
+>"As a player, I want to gain resources through some special behaviours in the game, and these resources can be able to trade for special skills, so it is a bit more fun."  
 >"As a player, I want to know the force and the direction of my arrow, so I need a sign to acknowledge that."  
 >"As a second player, I want to be able to play the game with my friends, so that I can have fun with two players other than play against the computer."  
 >"As a player, I want to have cases or tutorial examples telling me some of special designs of the game."  
@@ -116,7 +116,7 @@ Our team used paper prototype to mock the outline of these two game's workflow i
 | **Basic Flow**       | Shoot your opponent until his/her HP becomes zero                                                               | Shoot the computer until its HP becomes zero, or your own becomes zero                                          |
 | 1.                   | Players can choose their own planet, each planet has different gravity                                          | Players can choose their own planet, each planet has different gravity                                          |
 | 2.                   | LEFT-CLICK and drag the mouse to control throwing power and angle (User can choose to hit the star or opponent) | LEFT-CLICK and drag the mouse to control throwing power and angle (User can choose to hit the star or opponent) |
-| 3.                   | May appear strong wind and change the trajectory of the arrow                                                   | ay appear strong wind and change the trajectory of the arrow                                                    |
+| 3.                   | May appear strong wind and change the trajectory of the arrow                                                   | May appear strong wind and change the trajectory of the arrow                                                   |
 | 4.                   | Hit opponent, their HP will be reduced [A1, A2, A3]                                                             | Hit opponent, their HP will be reduced [A1, A2, A3]                                                             |
 | 5.                   | Change sides                                                                                                    | Change sides, computer will take their turn                                                                     |
 |                      |                                                                                                                 |                                                                                                                 |
@@ -133,9 +133,9 @@ Our team used paper prototype to mock the outline of these two game's workflow i
 
 <h3 id = "8">Early Stage Design</h3>
 
-We sat down and brainstormed about additional content ideas beyond the original concept, as well as any potential problems that might arise during the  game development progress.
+We sat down and brainstormed about additional content ideas beyond the original concept, as well as any potential problems that might arise during the game development progress.
 
-Then we discussed about what to implement and used Kanban Board to assign tasks and track the progress of our work and timely updated information into our chat group.
+Then we discussed about what to implement and used Kanban Board to assign tasks and track the progress of our work and timely updated information in our chat group.
 
 <h4 id = "9">Core Gameplay</h4>
 
@@ -147,7 +147,7 @@ Users' input mainly comes from mouse move and click, including aiming, selecting
 
 2. After that, the player clicks and drags the mouse to control the bow's tension and direction, and then releases the mouse to fire. The camera will then focus on the arrow until it shot on any bounding shape.
 
-Additionally, we want to introduce a points collection system to raise the shop system where players can buy some skills. How the gravity works was also being discussed. There are proposals like whether to do a half and half screen where one side has negative gravity or use the escape velocity formula for planets, we chose the latter eventually.
+Additionally, we want to introduce a points collection system to incorporate a shop system where players can buy some skills. How gravity works was also being discussed. There are proposals like whether to do a half and half screen where one side has negative gravity or use the escape velocity formula for planets, we chose the latter eventually.
 
 <h4 id = "10">Obstacles</h4>
 
@@ -165,17 +165,17 @@ The highest priority tasks include implementing the physics engine to calculate 
 
 <h3 id = "13">Class diagram</h3>
 
-We use the class diagram to help us understand the structures of the system at the very first stage. During the later development process some methods and class might be added or deleted but the main idea remains to our final stage.
+We use the class diagram to help us understand the structures of the system at the very first stage. During the later development process, some methods and classes might be added or deleted but the main idea remains until the final stage.
 
-We defined the *App* class as the main class that initialization and constantly being called and updated during the whole game process. Also, we used the *Obj* class as the parent class of *Arrow*, *Pathfinder*, *Planet*, *Player* and so on as they share the same position at some point.
+We defined the *App* class as the main class that initialises and is constantly being called and updated during the whole game process. Also, we used the *Obj* class as the parent class of *Arrow*, *Pathfinder*, *Planet*, *Player* and so on as they share the same position at some point.
 
  ![](assets/game-idea-imgs/file.png)
 
 <h3 id = "14">Modelling behaviour: Communication diagram</h3>
 
-To more clarify the relationships between the classes of the system, we use the communication diagram to help us specify the interactions between classes. This diagram has gived us more detailed insights how classes communicate.
+To clarify the relationships between the classes of the system, we use the communication diagram to help us specify the interactions between classes. This diagram has given us more detailed insights into how classes communicate.
 
-Normally, after the mouse drag and release, the *Amier* will update the tension and direction to *Arrow*, then the *Camera* will move to follow wherever the arrow goes. Also, the position and movement of the arrow will update the *Planet* to calculate the gravity of the arrow to define its movement in the next frame. Ultimately all the information will be updated in the *App*, the main class to puruse any further movements.
+Normally, after the mouse drag and release, the *Aimer* will update the tension and direction to *Arrow*, then the *Camera* will move to follow wherever the arrow goes. Also, the position and movement of the arrow will update the *Planet* to calculate the gravity of the arrow to define its movement in the next frame. Ultimately all the information will be updated in the *App*, the main class, to pursue any further movements.
 
 ![](assets/game-idea-imgs/CD.png)
 
@@ -183,7 +183,7 @@ Normally, after the mouse drag and release, the *Amier* will update the tension 
 
 Although the final product might be slightly different from our original design, we still find it really useful to introduce these two diagrams to help us understand the relationships and interactions of the entire system.
 
-Furthermore, these design prototypes help us to focus on one function to implement, one class to code at a time, greatly simplify the progress of coding and debugging in later development.
+Furthermore, these design prototypes help us to focus on one function to implement, one class to code at a time, greatly simplifying the progress of coding and debugging in later development.
 
 <h2 id = "16">Implementation</h2>
 
@@ -229,18 +229,18 @@ As for collision detection, we used self-defined hitboxes of planets, players an
 
 <h3 id = "19">3. Gameplay additions:</h3>
 
-After the basic implementation we improved our game by adding extra contents mentioned below:
+After the basic implementation we improved our game by adding extra content mentioned below:
 
 1. Shops:  
  
-Initially, we made a pathfinder for debugging which provides a dotted curve line of the arrow's detected movements. It stored every X and Y positions at the maximum of 200 with pre-calculation of its movements with current velocity, mouse-controlled force and gravity vector of each planet, and printed them out with dots.
+Initially, we made a pathfinder for debugging which provides a dotted curve line of the arrow's detected movements. It stored every X and Y position at the maximum of 200 with pre-calculation of its movements with current velocity, mouse-controlled force and gravity vector of each planet, and printed them out with dots.
 
 Moreover, we further broadened the shop system by adding "Health Potion", "Double Strike", "Hit and Skip" functions and its detailed messages. These functions related to players' turn and HP bar so it's quite easy to implement.
 
 1. Points System:
   
 At the outset, we used the arrow numbers on planets as "points" to trade for skills in the shop.
-Then we thought about linked the magnification to the rotation of the arrow and multiple it to a score when the arrow hit the other player.
+Then we thought about linking the magnification to the rotation of the arrow and multiple it to a score when the arrow hit the other player.
 
 To implement this, we defined the *rotationAmount* in the *Arrow* Class, and updated the absolute value of the current degree minus the previous angle. Then we used the amount to calculate the magnification and updated it in every frame of the arrow's movements.
 
@@ -324,6 +324,7 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
 
 
 <h4 id = "25">Stage 1 (18/03/24)</h4>
+
 **1. NASA TLX**
 
    * Easy mode
@@ -574,7 +575,7 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
 
 >
 <h3 id = "27">3. Unit Testing</h3>
-In our testing process, we employed Equivalence Partitioning (EP) to ensure that the system delivers the desired output based on the input. We categorized the core features of the game and created both valid and invalid conditions according to different input scenarios, enabling us to thouroughly test their behavior. These features cover UI text input, player health, attack actions, shopping actions and moving actions. By adopting this Black Box approach, we were able to achieve comprehensive coverage of the system's functionalities. The test case specification table below demonstrates the categories, partitions, and expected outputs for our testing.
+In our testing process, we employed Equivalence Partitioning (EP) to ensure that the system delivers the desired output based on the input. We categorized the core features of the game and created both valid and invalid conditions according to different input scenarios, enabling us to thoroughly test their behavior. These features cover UI text input, player health, attack actions, shopping actions and moving actions. By adopting this Black Box approach, we were able to achieve comprehensive coverage of the system's functionalities. The test case specification table below demonstrates the categories, partitions, and expected outputs for our testing.
 
 <br />
 
@@ -653,7 +654,7 @@ Besides, we greatly benefited from the flexibility offered by the agile workflow
 
 Moreover, throughout the development process, utilizing evaluations such as Heuristic Analysis, NASA TLX, SUS analysis and Equivalence Partitioning testing proved to be extremely beneficial. Conducting Heuristic Analysis ourselves allowed us to identify the severity and priority of the problems we encountered. For example, by identifying the user interface issue as the most serious problem after the initial stage of evaluation, we were able to focus on improving it first. This targeted approach helped us streamline our efforts and make the necessary adjustments to enhance the overall user experience.
 
-On the other hand, NASA TLX and SUS analysis provided us with valuable feedback and insights from the players' perspective. Through the first stage of NASA TLX analysis, we noticed that the difference between the easy and hard modes was not noticeable enough. This allowed us to obtain statistical results on how different the hard and easy modes were, so that we can make timely adjustments. SUS analysis also provided us with invaluable information to check if our system is user-friendly enough, and this allowed us to make our game more integrated and easy to use (SUS score grew from 61 to 83). These evaluations not only helped us address issues promptly but also ensured that the final product met the expectations and needs of our players. Finally, Equivalence Partitioning enabled us to make thorough test cases by categorize the core features of our game, enhancing the testing process.
+On the other hand, NASA TLX and SUS analysis provided us with valuable feedback and insights from the players' perspective. Through the first stage of NASA TLX analysis, we noticed that the difference between the easy and hard modes was not noticeable enough. This allowed us to obtain statistical results on how different the hard and easy modes were, so that we can make timely adjustments. SUS analysis also provided us with invaluable information to check if our system is user-friendly enough, and this allowed us to make our game more integrated and easy to use (SUS score grew from 61 to 83). These evaluations not only helped us address issues promptly but also ensured that the final product met the expectations and needs of our players. Finally, Equivalence Partitioning enabled us to make thorough test cases by categorising the core features of our game, hence enhancing the testing process.
 
 Overall, our team effectively communicated and collaborated, with each member fulfilling their role. Using Kanban boards and WhatsApp, we managed tasks and shared updates efficiently. Pair programming sessions and role distribution ensured all aspects of development were covered. Also, through consistent coding standards and meaningful comments, our code remained understandable and maintainable. Our teamwork and methodology led to a successful project.
 
