@@ -575,9 +575,8 @@ In stage 1, the main difference between easy mode and hard mode is whether the *
 
 >
 <h3 id = "27">3. Unit Testing</h3>
-In our testing process, we employed Equivalence Partitioning (EP) to ensure that the system delivers the desired output based on the input. We categorized the core features of the game and created both valid and invalid conditions according to different input scenarios, enabling us to thoroughly test their behavior. These features cover UI text input, player health, attack actions, shopping actions and moving actions. By adopting this Black Box approach, we were able to achieve comprehensive coverage of the system's functionalities. The test case specification table below demonstrates the categories, partitions, and expected outputs for our testing.
 
-<br />
+In our testing process, we employed Equivalence Partitioning (EP) to ensure that the system delivers the desired output based on the input. We categorized the core features of the game and created both valid and invalid conditions according to different input scenarios, enabling us to thoroughly test their behavior. These features cover UI text input, player health, attack actions, shopping actions and moving actions. By adopting this Black Box approach, we were able to achieve comprehensive coverage of the system's functionalities. The test case specification table below demonstrates the categories, partitions, and expected outputs for our testing.
 
 | Category                | Partition                                 | Expected Output                            |
 | ----------------------- | ----------------------------------------- | ------------------------------------------ |
