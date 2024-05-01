@@ -1,7 +1,12 @@
 # Software Engineering - Group 15
 
-[TODO:game video]
+![](assets/readme/Title.png)
 
+<p align="center">
+  <a href = "https://youtu.be/Z4eMyTQEbB0">
+Click here for our game video
+  </a>
+</p>
 
 <details>
   <summary>Table of Contents</summary>
@@ -47,13 +52,14 @@
 Yining Xu, Li-Hshin Chien, Ada Liang, Louis Nutt-Wilson, Xinyu Hu
 
 ![](assets/Group%20Photo.png)
+![](assets/readme/comic.png)
 
 <h2 id = "2">Introduction</h2>
 
-Our game is a two-player game based on a flash game *Bowman*.
-Normally, the game-play is that players drag the mouse to pull back the bow and shoot, then a camera will follow the arrow to check whether you have shot the target.
+Our game is a two-player game based on a flash game named *Bowman*.
+Originally, the game-play is that players drag the mouse to pull back the bow and shoot each other, then a camera will follow the arrow to check whether you have shot the target.
 
-We've transformed the game into a space-themed version by introducing a gravity engine to calculate gravity between planets as well as points collected system and further shop system to trade for skills like *Pathfinder*. Additionally, the players can also move around the planet for a better position.
+Also we have implemented two difficulty levels, for "easy mode", the two players can easily see each other's position, while the "difficult mode" don't. Through evalution, there are significant differences in player performance and mental preparation between these two difficulty levels.
 
 During the whole process, we have put many software engineering techniques into practice, including user-case diagrams, class diagrams and communication diagrams in the early design and ideation stage, and Agile workflow and Kanban board were used throughout the developing process, Github is also used for working branches and version control. Better comprehension of software engineering is gained after the group work.
 
@@ -131,6 +137,9 @@ Our team used paper prototype to mock the outline of these two game's workflow i
 |                      | 3. Back to Basic Flow 5.                                                                                        |                                                                                                                 |
 
 
+
+<h2 id = "12">Design</h2>
+
 <h3 id = "8">Early Stage Design</h3>
 
 We sat down and brainstormed about additional content ideas beyond the original concept, as well as any potential problems that might arise during the game development progress.
@@ -161,13 +170,14 @@ After putting all the designs and concerns on the table, we wrote an idea list t
 
 The highest priority tasks include implementing the physics engine to calculate gravity and 2D bounding collision detection, and the camera movements as well. Then we will add the shop system, the HP detection, tutorials and any other things.
 
-<h2 id = "12">Design</h2>
 
 <h3 id = "13">Class diagram</h3>
 
 We use the class diagram to help us understand the structures of the system at the very first stage. During the later development process, some methods and classes might be added or deleted but the main idea remains until the final stage.
 
-We defined the *App* class as the main class that initialises and is constantly being called and updated during the whole game process. Also, we used the *Obj* class as the parent class of *Arrow*, *Pathfinder*, *Planet*, *Player* and so on as they share the same position at some point.
+We defined the *App* class as the main class that initialises and it is constantly being called and updated during the whole game process. Also, we used the *Obj* class as the parent class of *Arrow*, *Pathfinder*, *Planet*, *Player* and so on as they share the same position at some point.
+
+The game end and reset is linked to the health in *Player*, after the player's health becomes zero, a reset game page will appear and allow players to choose from restart or exit.
 
  ![](assets/game-idea-imgs/file.png)
 
@@ -645,7 +655,6 @@ Each group member voluntarily takes on a specific role. While we had separate ta
 Our team collaborated effectively and gained valuable insights using the Agile development methodology. We acknowledged several good practices during the development of the game. Use of the Kanban board, concise and meaningful documentation of code, and creation of branches and pull requests in the version control system to coordinate tasks all facilitated the workflow and led to desirable outcomes.
 
 
-
 <h3 id = "32">Conclusion</h3>
 We have learned a great deal throughout the development process. In the early stages, we invested considerable effort in crafting user stories, creating use-case diagrams, and designing class diagrams. This allowed us to maintain a clear perspective and objectives while implementing functionalities.
 
@@ -658,8 +667,6 @@ On the other hand, NASA TLX and SUS analysis provided us with valuable feedback 
 Overall, our team effectively communicated and collaborated, with each member fulfilling their role. Using Kanban boards and WhatsApp, we managed tasks and shared updates efficiently. Pair programming sessions and role distribution ensured all aspects of development were covered. Also, through consistent coding standards and meaningful comments, our code remained understandable and maintainable. Our teamwork and methodology led to a successful project.
 
 In the future, we plan to implement features such as character customization, which will provide a series of different characters for players to choose from. Each character will possess unique skills and weapons, enhancing the diversity and strategy within the game. Additionally, we aim to introduce varying AI difficulty levels, offering players the option to challenge themselves at different skill levels. It's worth mentioning that some of the current designs like "Pathfinder", "player abstraction" and so on are actually the fundamental of the future AI implementation. Finally, we aspire to develop an online version of the game, allowing people to enjoy the gameplay experience with their friends even when they are physically apart.
-
-
 
 <h2 id = "33">Individual contribution:</h2>
 
